@@ -1,0 +1,59 @@
+name: kick24
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  gap: ^3.0.1
+  intl: ^0.20.2
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  fonts:
+    - family: PoppinsThin
+      fonts:
+        - asset: assets/fonts/Poppins-Thin.ttf
+          style: normal
+    - family: PoppinsRegular
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+          style: normal
+    - family: PoppinsMedium
+      fonts:
+        - asset: assets/fonts/Poppins-Medium.ttf
+          style: normal
+    - family: PoppinsSemiBold
+      fonts:
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          style: normal
+    - family: PoppinsBold
+      fonts:
+        - asset: assets/fonts/Poppins-Bold.ttf
+          style: normal
+    - family: PoppinsExtraBold
+      fonts:
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
+          style: normal
+    - family: PoppinsLight
+      fonts:
+        - asset: assets/fonts/Poppins-Light.ttf
+          style: normal
+    - family: PoppinsExtraLight
+      fonts:
+        - asset: assets/fonts/Poppins-ExtraLight.ttf
+          style: normal
