@@ -8,9 +8,9 @@ import 'package:kick24/src/common/colors.dart';
 import 'package:kick24/src/common/fonts_family.dart';
 import 'package:kick24/src/common/icon_paths.dart';
 import 'package:kick24/src/common/image_paths.dart';
+import 'package:kick24/src/common/widgets/flip_player_card_widget.dart';
 import 'package:kick24/src/common/widgets/gold_gradient.dart';
 import 'package:kick24/src/common/widgets/list_tile_player_widget.dart';
-import 'package:kick24/src/common/widgets/player_card_widget.dart';
 import 'package:kick24/src/data/models/player_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(left: 16),
                   itemBuilder: (context, index) {
                     final player = players[index];
-                    return PlayerCardWidget(player: player);
+                    return FlipPlayerCardWidget(player: player);
                   },
                 ),
               ),

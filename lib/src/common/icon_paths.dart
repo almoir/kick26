@@ -3,6 +3,7 @@ const String _basePath = 'assets/icons';
 class IconPaths {
   static General general = const General();
   static Home home = const Home();
+  static Market market = const Market();
 }
 
 class General {
@@ -28,4 +29,10 @@ class Home {
   String get ss => '$_basePath/ss.png';
   String get file => '$_basePath/file.png';
   String get graph => '$_basePath/graph.png';
+}
+
+class Market {
+  const Market();
+
+  String get search => '$_basePath/search.png';
 }

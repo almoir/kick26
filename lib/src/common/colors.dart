@@ -13,6 +13,7 @@ class ConstColors {
   static const baseColorDark2 = Color(0xFF0F0F0F);
   static const baseColorDark3 = Color(0xFF1E1E1E);
   static const baseColorDark4 = Color(0xFF0B0B0B);
+  static const baseColorDark5 = Color(0xFF313131);
   static const baseTextDark1 = Color(0xFF1F1F1F);
   static const orange = Color(0xFFFF6565);
   static const green = Color(0xFF00FF99);

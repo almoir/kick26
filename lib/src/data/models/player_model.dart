@@ -2,6 +2,15 @@ import 'dart:math';
 
 import 'package:kick24/src/common/dummy.dart';
 
+const Map<String, dynamic> dummyStats = {
+  "rating": 91,
+  "speed": 85,
+  "shooting": 92,
+  "dribble": 94,
+  "defense": 34,
+  "passing": 90,
+};
+
 class PlayerModel {
   final String name;
   double price; // bukan final -> bisa diupdate
@@ -11,6 +20,7 @@ class PlayerModel {
   final String countryCode;
   double trend; // current percent change (mis. 2.34)
   bool isUp;
+  final Map<String, dynamic> stats;
 
   PlayerModel({
     required this.name,
@@ -21,6 +31,7 @@ class PlayerModel {
     required this.countryCode,
     required this.trend,
     required this.isUp,
+    this.stats = dummyStats,
   });
 
   // helper: buat dari map dummy (yang price-nya string seperti "€99,999.99")
