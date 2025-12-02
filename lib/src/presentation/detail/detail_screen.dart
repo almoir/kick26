@@ -17,7 +17,6 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   String choosenMenu = 'Overview';
-
   late PlayerModel player;
 
   @override
@@ -34,13 +33,11 @@ class _DetailScreenState extends State<DetailScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () => Navigator.of(context).pop(),
           icon: const Icon(Icons.arrow_back_ios, color: ConstColors.light),
         ),
         title: Text(
-          widget.player.name.toUpperCase(),
+          player.name.toUpperCase(),
           style: TextStyle(
             color: ConstColors.light,
             fontFamily: poppinsSemiBold,
@@ -49,122 +46,51 @@ class _DetailScreenState extends State<DetailScreen> {
         ),
         centerTitle: true,
       ),
+
+      // BODY
       body: Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Image.asset(
-                    player.image,
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.cover,
+                  // =======================
+                  // HERO ENLARGE IMAGE
+                  // =======================
+                  Hero(
+                    tag: "player_${widget.player.hashCode}",
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset(
+                        player.image,
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
+
+                  const Gap(10),
+
+                  // =======================
+                  // MENU TABS
+                  // =======================
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              choosenMenu = 'Overview';
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color:
-                                    choosenMenu == 'Overview'
-                                        ? ConstColors.lightgreen
-                                        : const Color.fromRGBO(0, 0, 0, 0),
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Overview',
-                                style: TextStyle(
-                                  color:
-                                      choosenMenu == 'Overview'
-                                          ? ConstColors.lightgreen
-                                          : ConstColors.gray,
-                                  fontFamily: poppinsSemiBold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        _buildMenuButton('Overview'),
                         const Gap(5),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              choosenMenu = 'Statistics';
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color:
-                                    choosenMenu == 'Statistics'
-                                        ? ConstColors.lightgreen
-                                        : Colors.transparent,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Statistics',
-                                style: TextStyle(
-                                  color:
-                                      choosenMenu == 'Statistics'
-                                          ? ConstColors.lightgreen
-                                          : ConstColors.gray,
-                                  fontFamily: poppinsSemiBold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        _buildMenuButton('Statistics'),
                         const Gap(5),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              choosenMenu = 'History';
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color:
-                                    choosenMenu == 'History'
-                                        ? ConstColors.lightgreen
-                                        : Colors.transparent,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'History',
-                                style: TextStyle(
-                                  color:
-                                      choosenMenu == 'History'
-                                          ? ConstColors.lightgreen
-                                          : ConstColors.gray,
-                                  fontFamily: poppinsSemiBold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        _buildMenuButton('History'),
                       ],
                     ),
                   ),
+
+                  // =======================
+                  // TAB CONTENT
+                  // =======================
                   Padding(
                     padding: const EdgeInsets.all(15),
                     child: widgetTab(),
@@ -173,6 +99,10 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
           ),
+
+          // =======================
+          // BUY BUTTON
+          // =======================
           Container(
             margin: const EdgeInsets.all(15),
             height: 40,
@@ -196,7 +126,44 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  widgetTab() {
+  // ============================================================
+  // MENU BUTTON BUILDER
+  // ============================================================
+  Widget _buildMenuButton(String label) {
+    final bool active = choosenMenu == label;
+
+    return InkWell(
+      onTap: () {
+        setState(() {
+          choosenMenu = label;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: active ? ConstColors.lightgreen : Colors.transparent,
+          ),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(
+              color: active ? ConstColors.lightgreen : ConstColors.gray,
+              fontFamily: poppinsSemiBold,
+              fontSize: 12,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ============================================================
+  // TAB CONTENT
+  // ============================================================
+  Widget widgetTab() {
     switch (choosenMenu) {
       case 'Overview':
         return Image.asset(
@@ -204,20 +171,23 @@ class _DetailScreenState extends State<DetailScreen> {
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,
         );
+
       case 'Statistics':
         return Image.asset(
           ImagePaths.home.mbapeStatistic,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,
         );
+
       case 'History':
         return Image.asset(
           ImagePaths.home.mbapeHistory,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,
         );
+
       default:
-        Image.asset(
+        return Image.asset(
           ImagePaths.home.mbapeOverview,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,

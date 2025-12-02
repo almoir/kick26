@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kick24/src/common/colors.dart';
-import 'package:kick24/src/presentation/bottom_navigation/bottom_navigation.dart';
+import 'package:kick24/src/presentation/screens/splash_screen/splash_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -22,7 +22,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       debugShowMaterialGrid: false,
       showSemanticsDebugger: false,
-      home: BottomNavigation(),
+      home: SplashScreen(),
     );
   }
 }

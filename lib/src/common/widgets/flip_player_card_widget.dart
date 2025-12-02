@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:kick24/src/common/colors.dart';
@@ -8,6 +9,7 @@ import 'package:kick24/src/common/icon_paths.dart';
 import 'package:kick24/src/common/image_paths.dart';
 import 'package:kick24/src/common/widgets/gold_gradient.dart';
 import 'package:kick24/src/data/models/player_model.dart';
+import 'package:kick24/src/presentation/detail/detail_screen.dart';
 
 class FlipPlayerCardWidget extends StatefulWidget {
   const FlipPlayerCardWidget({super.key, required this.player});
@@ -19,74 +21,128 @@ class FlipPlayerCardWidget extends StatefulWidget {
 }
 
 class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+    with TickerProviderStateMixin {
+  late AnimationController flipController;
+  late Animation<double> flipAnim;
 
-  bool get isFront => _controller.value < 0.5;
+  Timer? _tapTimer;
+  bool showFront = true;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 600),
+
+    flipController = AnimationController(
+      duration: const Duration(milliseconds: 650), // lebih smooth & panjang
       vsync: this,
     );
-  }
 
-  void flipCard() {
-    if (_controller.isCompleted) {
-      _controller.reverse();
-    } else {
-      _controller.forward();
-    }
+    flipAnim = Tween(begin: 0.0, end: pi).animate(
+      CurvedAnimation(parent: flipController, curve: Curves.easeInOutCubic),
+    );
+
+    flipController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() => showFront = !showFront);
+        flipController.reset(); // penting agar Hero tidak glitch
+      }
+    });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    flipController.dispose();
+    _tapTimer?.cancel();
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final player = widget.player;
+  // ===============================
+  // DOUBLE TAP → FLIP
+  // ===============================
+  void flipCard() {
+    if (!flipController.isAnimating) flipController.forward();
+  }
 
-    return GestureDetector(
-      onTap: flipCard,
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (_, __) {
-          final angle = _controller.value * pi;
-          final isFrontSide = angle <= (pi / 2);
-
-          return Transform(
-            alignment: Alignment.center,
-            transform:
-                Matrix4.identity()
-                  ..setEntry(3, 2, 0.001)
-                  ..rotateY(angle),
-            child:
-                isFrontSide
-                    ? _buildFront(player)
-                    : Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.identity()..rotateY(pi),
-                      child: _buildBack(player),
-                    ),
+  // ===============================
+  // SINGLE TAP → ENLARGE + NAVIGATE
+  // ===============================
+  void goToDetail() {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 550),
+        reverseTransitionDuration: const Duration(milliseconds: 450),
+        pageBuilder: (_, anim1, __) {
+          return FadeTransition(
+            opacity: anim1,
+            child: DetailScreen(player: widget.player),
           );
         },
       ),
     );
   }
 
-  // ==============================
-  // FRONT SIDE (Card Asli Kamu)
-  // ==============================
+  // ===============================
+  // HANDLE TAP LOGIC
+  // ===============================
+  void handleTap() {
+    if (_tapTimer != null && _tapTimer!.isActive) {
+      _tapTimer!.cancel();
+      flipCard(); // DOUBLE TAP
+    } else {
+      _tapTimer = Timer(const Duration(milliseconds: 230), () {
+        goToDetail(); // SINGLE TAP
+      });
+    }
+  }
+
+  // ===============================
+  // WIDGET
+  // ===============================
+  @override
+  Widget build(BuildContext context) {
+    final player = widget.player;
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: handleTap,
+      child: Hero(
+        tag: "player_${widget.player.hashCode}",
+        flightShuttleBuilder: _flightBuilder,
+        child: AnimatedBuilder(
+          animation: flipAnim,
+          builder: (_, __) {
+            final angle = flipAnim.value;
+            final isBack = angle > pi / 2;
+
+            return Transform(
+              alignment: Alignment.center,
+              transform:
+                  Matrix4.identity()
+                    ..setEntry(3, 2, 0.001)
+                    ..rotateY(angle),
+              child:
+                  isBack
+                      ? Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()..rotateY(pi),
+                        child: _buildBack(player),
+                      )
+                      : _buildFront(player),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  // =========================================================
+  // FRONT PART (Styled Card from your original design)
+  // =========================================================
   Widget _buildFront(PlayerModel player) {
     return Container(
       width: 140,
       height: 180,
-      margin: EdgeInsets.only(right: 10),
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -112,11 +168,11 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
             ),
           ),
 
+          // CONTENT FRONT
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Column(
               children: [
-                // SS TOP
                 Padding(
                   padding: const EdgeInsets.all(5),
                   child: Row(
@@ -136,8 +192,8 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                             child: Text(
                               "41",
                               style: TextStyle(
-                                fontSize: 10,
                                 fontFamily: poppinsRegular,
+                                fontSize: 10,
                               ),
                             ),
                           ),
@@ -150,8 +206,8 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                             "60",
                             style: TextStyle(
                               color: ConstColors.darkGray,
-                              fontSize: 10,
                               fontFamily: poppinsRegular,
+                              fontSize: 10,
                             ),
                           ),
                         ],
@@ -160,7 +216,6 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                   ),
                 ),
 
-                // PLAYER DETAILS
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.all(5),
@@ -174,6 +229,8 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                         end: Alignment.bottomCenter,
                       ),
                     ),
+
+                    // Bottom player info
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,11 +238,11 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                         GoldGradient(
                           child: Text(
                             player.name,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontFamily: poppinsRegular,
                               fontSize: 10,
                             ),
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         const Gap(4),
@@ -194,13 +251,12 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                           children: [
                             Text(
                               "€${formatPrice(player.price)}",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: ConstColors.light,
                                 fontFamily: poppinsMedium,
-                                fontSize: 12,
+                                fontSize: 10,
                               ),
                             ),
-
                             Row(
                               children: [
                                 Icon(
@@ -216,8 +272,8 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                                 Text(
                                   "${player.trend.toStringAsFixed(2)}%",
                                   style: TextStyle(
-                                    fontFamily: poppinsSemiBold,
                                     fontSize: 8,
+                                    fontFamily: poppinsSemiBold,
                                     color:
                                         player.isUp
                                             ? ConstColors.green
@@ -240,54 +296,42 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
     );
   }
 
-  // ==============================
-  // BACK SIDE (Stats Dinamis)
-  // ==============================
+  // =========================================================
+  // BACK PART (Stats)
+  // =========================================================
   Widget _buildBack(PlayerModel player) {
     return Container(
       width: 140,
       height: 180,
-      margin: EdgeInsets.only(right: 10),
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [ConstColors.baseColorDark3, ConstColors.baseColorDark4],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: ConstColors.baseColorDark4,
         borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          image: AssetImage(ImagePaths.home.borderCard),
-          fit: BoxFit.cover,
-        ),
+        border: Border.all(color: ConstColors.gold, width: 1.2),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GoldGradient(
-              child: Text(
-                "STATS",
-                style: TextStyle(fontSize: 12, fontFamily: poppinsSemiBold),
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GoldGradient(
+            child: Text(
+              "STATS",
+              style: TextStyle(fontSize: 12, fontFamily: poppinsSemiBold),
             ),
-            const Gap(10),
-
-            // === Contoh stats dinamis dari API player model ===
-            _statTile("PAC", player.stats["pac"] ?? 0),
-            _statTile("SHO", player.stats["sho"] ?? 0),
-            _statTile("PAS", player.stats["pas"] ?? 0),
-            _statTile("DRI", player.stats["dri"] ?? 0),
-            _statTile("DEF", player.stats["def"] ?? 0),
-            _statTile("PHY", player.stats["phy"] ?? 0),
-          ],
-        ),
+          ),
+          const Gap(10),
+          _tile("PAC", player.stats["pac"]),
+          _tile("SHO", player.stats["sho"]),
+          _tile("PAS", player.stats["pas"]),
+          _tile("DRI", player.stats["dri"]),
+          _tile("DEF", player.stats["def"]),
+          _tile("PHY", player.stats["phy"]),
+        ],
       ),
     );
   }
 
-  Widget _statTile(String title, int value) {
+  Widget _tile(String title, dynamic val) {
+    final value = val ?? 0;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
@@ -302,8 +346,8 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
             ),
           ),
           Text(
-            value.toString(),
-            style: const TextStyle(
+            "$value",
+            style: TextStyle(
               color: Colors.white,
               fontFamily: poppinsSemiBold,
               fontSize: 11,
@@ -311,6 +355,22 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
           ),
         ],
       ),
+    );
+  }
+
+  // =========================================================
+  // HERO – Prevent glitch during flip
+  // =========================================================
+  Widget _flightBuilder(
+    BuildContext context,
+    Animation<double> animation,
+    HeroFlightDirection direction,
+    BuildContext fromHero,
+    BuildContext toHero,
+  ) {
+    return FadeTransition(
+      opacity: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+      child: toHero.widget,
     );
   }
 }
