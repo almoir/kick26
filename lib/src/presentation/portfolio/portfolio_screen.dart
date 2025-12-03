@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:kick24/src/common/colors.dart';
-import 'package:kick24/src/common/dummy.dart';
-import 'package:kick24/src/common/fonts_family.dart';
-import 'package:kick24/src/common/image_paths.dart';
-import 'package:kick24/src/common/widgets/gold_gradient.dart';
-import 'package:kick24/src/presentation/portfolio_detail/portfolio_detail_screen.dart';
+import 'package:kick26/src/common/colors.dart';
+import 'package:kick26/src/common/dummy.dart';
+import 'package:kick26/src/common/fonts_family.dart';
+import 'package:kick26/src/common/image_paths.dart';
+import 'package:kick26/src/common/widgets/gold_gradient.dart';
+import 'package:kick26/src/presentation/portfolio_detail/portfolio_detail_screen.dart';
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({super.key});

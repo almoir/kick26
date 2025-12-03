@@ -3,15 +3,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:kick24/src/common/colors.dart';
-import 'package:kick24/src/common/fonts_family.dart';
-import 'package:kick24/src/common/icon_paths.dart';
-import 'package:kick24/src/common/widgets/flip_player_card_widget.dart';
-import 'package:kick24/src/common/widgets/gold_gradient.dart';
-import 'package:kick24/src/common/widgets/tab_bar_widget.dart';
-import 'package:kick24/src/data/models/player_model.dart';
-import 'package:kick24/src/presentation/market/widgets/list_player_widget.dart';
-import 'package:kick24/src/presentation/market/widgets/search_field_widget.dart';
+import 'package:kick26/src/common/colors.dart';
+import 'package:kick26/src/common/fonts_family.dart';
+import 'package:kick26/src/common/icon_paths.dart';
+import 'package:kick26/src/common/widgets/flip_player_card_widget.dart';
+import 'package:kick26/src/common/widgets/gold_gradient.dart';
+import 'package:kick26/src/common/widgets/tab_bar_widget.dart';
+import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/presentation/market/widgets/list_player_widget.dart';
+import 'package:kick26/src/presentation/market/widgets/search_field_widget.dart';
 
 void updatePlayerPrices(
   List<PlayerModel> players, {

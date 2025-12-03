@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kick24/src/common/widgets/flip_player_card_widget.dart';
-import 'package:kick24/src/data/models/player_model.dart';
+import 'package:kick26/src/common/widgets/flip_player_card_widget.dart';
+import 'package:kick26/src/data/models/player_model.dart';
 
 class ListPlayersWidget extends StatelessWidget {
   final List<PlayerModel> players;

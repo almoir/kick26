@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:kick24/src/common/colors.dart';
-import 'package:kick24/src/common/fonts_family.dart';
-import 'package:kick24/src/common/icon_paths.dart';
-import 'package:kick24/src/common/image_paths.dart';
-import 'package:kick24/src/common/widgets/gold_gradient.dart';
+import 'package:kick26/src/common/colors.dart';
+import 'package:kick26/src/common/fonts_family.dart';
+import 'package:kick26/src/common/icon_paths.dart';
+import 'package:kick26/src/common/image_paths.dart';
+import 'package:kick26/src/common/widgets/gold_gradient.dart';
 
 import '../home/home_screen.dart';
 import '../market/market_screen.dart';
@@ -80,7 +80,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         elevation: 0,
         title:
             _selectedIndex == 0
-                ? Image.asset(ImagePaths.general.kick24Logo, height: 24)
+                ? Image.asset(ImagePaths.general.kick26Logo, height: 24)
                 : Text(
                   appBarTitle(_selectedIndex),
                   style: const TextStyle(

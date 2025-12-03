@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import 'package:kick24/src/common/colors.dart';
-import 'package:kick24/src/common/fonts_family.dart';
-import 'package:kick24/src/common/image_paths.dart';
-import 'package:kick24/src/data/models/player_model.dart';
+import 'package:kick26/src/common/colors.dart';
+import 'package:kick26/src/common/fonts_family.dart';
+import 'package:kick26/src/common/image_paths.dart';
+import 'package:kick26/src/data/models/player_model.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({super.key, required this.player});

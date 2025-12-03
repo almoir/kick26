@@ -1,4 +1,4 @@
-import 'package:kick24/src/common/image_paths.dart';
+import 'package:kick26/src/common/image_paths.dart';
 
 final List<Map<String, dynamic>> dummyPlayers = [
   {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kick24/src/common/colors.dart';
-import 'package:kick24/src/common/fonts_family.dart';
+import 'package:kick26/src/common/colors.dart';
+import 'package:kick26/src/common/fonts_family.dart';
 
 const _errorStyleNoLabel = TextStyle(color: Colors.red, height: 0);
 

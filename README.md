@@ -1,3 +1,3 @@
-# kick24
+# kick26
 
 A new Flutter project.

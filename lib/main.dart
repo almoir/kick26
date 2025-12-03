@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kick24/src/common/colors.dart';
-import 'package:kick24/src/presentation/screens/splash_screen/splash_screen.dart';
+import 'package:kick26/src/common/colors.dart';
+import 'package:kick26/src/presentation/screens/splash_screen/splash_screen.dart';
 
 void main() {
   runApp(const MainApp());

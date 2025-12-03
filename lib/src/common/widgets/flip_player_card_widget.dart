@@ -4,14 +4,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import 'package:kick24/src/common/colors.dart';
-import 'package:kick24/src/common/fonts_family.dart';
-import 'package:kick24/src/common/helper.dart';
-import 'package:kick24/src/common/icon_paths.dart';
-import 'package:kick24/src/common/image_paths.dart';
-import 'package:kick24/src/common/widgets/gold_gradient.dart';
-import 'package:kick24/src/data/models/player_model.dart';
-import 'package:kick24/src/presentation/detail/detail_screen.dart';
+import 'package:kick26/src/common/colors.dart';
+import 'package:kick26/src/common/fonts_family.dart';
+import 'package:kick26/src/common/helper.dart';
+import 'package:kick26/src/common/icon_paths.dart';
+import 'package:kick26/src/common/image_paths.dart';
+import 'package:kick26/src/common/widgets/gold_gradient.dart';
+import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/presentation/detail/detail_screen.dart';
 
 class FlipPlayerCardWidget extends StatefulWidget {
   const FlipPlayerCardWidget({super.key, required this.player});

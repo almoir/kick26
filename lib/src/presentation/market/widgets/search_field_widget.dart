@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kick24/src/common/colors.dart';
-import 'package:kick24/src/common/fonts_family.dart';
-import 'package:kick24/src/common/icon_paths.dart';
+import 'package:kick26/src/common/colors.dart';
+import 'package:kick26/src/common/fonts_family.dart';
+import 'package:kick26/src/common/icon_paths.dart';
 
 import '../../../common/widgets/gold_gradient.dart';
 

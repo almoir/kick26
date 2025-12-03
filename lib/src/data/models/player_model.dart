@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:kick24/src/common/dummy.dart';
+import 'package:kick26/src/common/dummy.dart';
 
 const Map<String, dynamic> dummyStats = {
   "rating": 91,

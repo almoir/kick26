@@ -10,9 +10,9 @@ class ImagePaths {
 class General {
   const General();
 
-  String get splash => '$_basePath/kick24_splash.png';
+  String get splash => '$_basePath/kick26_splash.png';
   String get logo => '$_basePath/starinvest_logo.png';
-  String get kick24Logo => '$_basePath/kick24_logo.png';
+  String get kick26Logo => '$_basePath/kick26_logo.png';
 }
 
 class Home {
