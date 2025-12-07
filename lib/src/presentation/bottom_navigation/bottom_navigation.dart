@@ -5,6 +5,7 @@ import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
+import 'package:kick26/src/presentation/profile/profile_screen.dart';
 
 import '../home/home_screen.dart';
 import '../market/market_screen.dart';
@@ -21,18 +22,14 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
   int _marketTabIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
-    fontSize: 30,
-    fontWeight: FontWeight.bold,
-    color: Colors.white,
-  );
+
   List<Widget> _widgetOptions({int marketTabIndex = 0}) => <Widget>[
     HomeScreen(onTapTrending: _onTapTrending),
     MarketScreen(initialTab: marketTabIndex),
     const PortfolioScreen(),
     // const Center(child: Text('Portfolio', style: optionStyle)),
     const NewsScreen(),
-    const Center(child: Text('Profile', style: optionStyle)),
+    const ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -91,7 +88,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 ),
         actions: [
           Image.asset(IconPaths.home.notifications, height: 40, width: 40),
-          const Gap(15),
+          const Gap(16),
         ],
       ),
       body: _widgetOptions(marketTabIndex: _marketTabIndex)[_selectedIndex],

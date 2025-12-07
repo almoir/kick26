@@ -4,6 +4,8 @@ class IconPaths {
   static General general = const General();
   static Home home = const Home();
   static Market market = const Market();
+  static DetailPlayer detailPlayer = const DetailPlayer();
+  static Profile profile = const Profile();
 }
 
 class General {
@@ -35,4 +37,21 @@ class Market {
   const Market();
 
   String get search => '$_basePath/search.png';
+}
+
+class DetailPlayer {
+  const DetailPlayer();
+
+  String get calendar => '$_basePath/calendar.png';
+  String get awards => '$_basePath/awards.png';
+  String get height => '$_basePath/height.png';
+}
+
+class Profile {
+  const Profile();
+
+  String get accountSettings => '$_basePath/account_settings.png';
+  String get tradingAccount => '$_basePath/trading_account.png';
+  String get preferences => '$_basePath/preferences.png';
+  String get inviteSomeone => '$_basePath/invite_someone.png';
 }

@@ -14,9 +14,14 @@ import 'package:kick26/src/data/models/player_model.dart';
 import 'package:kick26/src/presentation/detail/detail_screen.dart';
 
 class FlipPlayerCardWidget extends StatefulWidget {
-  const FlipPlayerCardWidget({super.key, required this.player});
+  const FlipPlayerCardWidget({
+    super.key,
+    required this.player,
+    required this.players,
+  });
 
   final PlayerModel player;
+  final List<PlayerModel> players;
 
   @override
   State<FlipPlayerCardWidget> createState() => _FlipPlayerCardWidgetState();
@@ -95,7 +100,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
         pageBuilder: (_, anim1, __) {
           return FadeTransition(
             opacity: anim1,
-            child: DetailScreen(player: widget.player),
+            child: DetailScreen(player: widget.player, players: widget.players),
           );
         },
       ),
@@ -184,7 +189,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.45 * depth),
+                        color: Colors.black.withValues(alpha: 0.45 * depth),
                         offset: Offset(shadowOffsetX, 8 * depth),
                         blurRadius: shadowBlur,
                         spreadRadius: 1.5 * depth,
@@ -244,6 +249,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                   padding: const EdgeInsets.all(5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         children: [
@@ -392,12 +398,12 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
             ),
           ),
           const Gap(10),
-          _statTile("PAC", player.stats["pac"]),
-          _statTile("SHO", player.stats["sho"]),
-          _statTile("PAS", player.stats["pas"]),
-          _statTile("DRI", player.stats["dri"]),
-          _statTile("DEF", player.stats["def"]),
-          _statTile("PHY", player.stats["phy"]),
+          _statTile("Height", "${player.height}m"),
+          _statTile("Weight", "${player.weight}kg"),
+          _statTile("Age", "${player.age}yo"),
+          _statTile("Games", "${player.games}"),
+          _statTile("Goals", "${player.goals}"),
+          _statTile("Assits", "${player.assists}"),
         ],
       ),
     );
@@ -405,6 +411,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
 
   Widget _statTile(String title, dynamic val) {
     final value = val ?? 0;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(

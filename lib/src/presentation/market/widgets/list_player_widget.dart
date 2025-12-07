@@ -21,7 +21,7 @@ class ListPlayersWidget extends StatelessWidget {
         final player = players[index];
         return SizedBox(
           height: 180,
-          child: FlipPlayerCardWidget(player: player),
+          child: FlipPlayerCardWidget(player: player, players: players),
         );
       },
     );

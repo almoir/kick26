@@ -131,7 +131,10 @@ class _MarketScreenState extends State<MarketScreen>
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     itemBuilder: (context, index) {
                       final player = players.sublist(10, 20)[index];
-                      return FlipPlayerCardWidget(player: player);
+                      return FlipPlayerCardWidget(
+                        player: player,
+                        players: players,
+                      );
                     },
                   ),
                 ),
@@ -189,7 +192,10 @@ class _MarketScreenState extends State<MarketScreen>
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     itemBuilder: (context, index) {
                       final player = players.sublist(30, 40)[index];
-                      return FlipPlayerCardWidget(player: player);
+                      return FlipPlayerCardWidget(
+                        player: player,
+                        players: players,
+                      );
                     },
                   ),
                 ),

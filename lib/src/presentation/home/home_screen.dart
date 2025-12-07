@@ -263,7 +263,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(left: 16),
                   itemBuilder: (context, index) {
                     final player = players[index];
-                    return FlipPlayerCardWidget(player: player);
+                    return FlipPlayerCardWidget(
+                      player: player,
+                      players: players,
+                    );
                   },
                 ),
               ),

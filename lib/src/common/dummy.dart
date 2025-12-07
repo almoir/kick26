@@ -9,7 +9,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.liverpool,
     'trend': 4.25,
     'isUp': true,
-    'countryCode': 'GB', // England
+    'countryCode': 'GB',
+    'height': 175,
+    'weight': 69,
+    'age': 25,
+    'games': 320,
+    'goals': 18,
+    'assists': 81,
   },
   {
     'name': 'Kylian Mbappé',
@@ -19,7 +25,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.realMadrid,
     'trend': 42.35,
     'isUp': true,
-    'countryCode': 'FR', // France
+    'countryCode': 'FR',
+    'height': 178,
+    'weight': 75,
+    'age': 25,
+    'games': 350,
+    'goals': 270,
+    'assists': 110,
   },
   {
     'name': 'Viktor Gyökeres',
@@ -29,7 +41,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.sporting,
     'trend': 3.12,
     'isUp': true,
-    'countryCode': 'SE', // Sweden
+    'countryCode': 'SE',
+    'height': 187,
+    'weight': 86,
+    'age': 26,
+    'games': 240,
+    'goals': 105,
+    'assists': 40,
   },
   {
     'name': 'Julián Álvarez',
@@ -39,7 +57,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterCity,
     'trend': 7.45,
     'isUp': true,
-    'countryCode': 'AR', // Argentina
+    'countryCode': 'AR',
+    'height': 170,
+    'weight': 71,
+    'age': 24,
+    'games': 210,
+    'goals': 92,
+    'assists': 35,
   },
   {
     'name': 'Erling Haaland',
@@ -49,7 +73,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterCity,
     'trend': 18.22,
     'isUp': true,
-    'countryCode': 'NO', // Norway
+    'countryCode': 'NO',
+    'height': 194,
+    'weight': 94,
+    'age': 24,
+    'games': 240,
+    'goals': 210,
+    'assists': 45,
   },
   {
     'name': 'Vinícius Jr',
@@ -59,7 +89,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.realMadrid,
     'trend': 15.67,
     'isUp': true,
-    'countryCode': 'BR', // Brazil
+    'countryCode': 'BR',
+    'height': 176,
+    'weight': 73,
+    'age': 23,
+    'games': 260,
+    'goals': 75,
+    'assists': 70,
   },
   {
     'name': 'Bukayo Saka',
@@ -69,7 +105,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.arsenal,
     'trend': 12.85,
     'isUp': true,
-    'countryCode': 'GB', // England
+    'countryCode': 'GB',
+    'height': 178,
+    'weight': 72,
+    'age': 22,
+    'games': 220,
+    'goals': 58,
+    'assists': 51,
   },
   {
     'name': 'Pedri González',
@@ -79,7 +121,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.fcb,
     'trend': -2.15,
     'isUp': false,
-    'countryCode': 'ES', // Spain
+    'countryCode': 'ES',
+    'height': 174,
+    'weight': 62,
+    'age': 21,
+    'games': 160,
+    'goals': 18,
+    'assists': 20,
   },
   {
     'name': 'Florian Wirtz',
@@ -89,7 +137,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.leverkusen,
     'trend': 9.48,
     'isUp': true,
-    'countryCode': 'DE', // Germany
+    'countryCode': 'DE',
+    'height': 176,
+    'weight': 70,
+    'age': 21,
+    'games': 150,
+    'goals': 35,
+    'assists': 40,
   },
   {
     'name': 'Jude Bellingham',
@@ -99,7 +153,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.realMadrid,
     'trend': 25.75,
     'isUp': true,
-    'countryCode': 'GB', // England
+    'countryCode': 'GB',
+    'height': 186,
+    'weight': 75,
+    'age': 21,
+    'games': 200,
+    'goals': 55,
+    'assists': 30,
   },
   {
     'name': 'Phil Foden',
@@ -109,7 +169,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterCity,
     'trend': 10.25,
     'isUp': true,
-    'countryCode': 'GB', // England
+    'countryCode': 'GB',
+    'height': 171,
+    'weight': 70,
+    'age': 23,
+    'games': 260,
+    'goals': 65,
+    'assists': 45,
   },
   {
     'name': 'Lautaro Martínez',
@@ -119,7 +185,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.inter,
     'trend': 6.52,
     'isUp': true,
-    'countryCode': 'AR', // Argentina
+    'countryCode': 'AR',
+    'height': 174,
+    'weight': 72,
+    'age': 26,
+    'games': 280,
+    'goals': 150,
+    'assists': 50,
   },
   {
     'name': 'Khvicha Kvaratskhelia',
@@ -129,7 +201,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.napoli,
     'trend': -1.84,
     'isUp': false,
-    'countryCode': 'GE', // Georgia
+    'countryCode': 'GE',
+    'height': 183,
+    'weight': 76,
+    'age': 23,
+    'games': 170,
+    'goals': 45,
+    'assists': 50,
   },
   {
     'name': 'Rafael Leão',
@@ -139,7 +217,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.milan,
     'trend': 8.35,
     'isUp': true,
-    'countryCode': 'PT', // Portugal
+    'countryCode': 'PT',
+    'height': 188,
+    'weight': 81,
+    'age': 24,
+    'games': 240,
+    'goals': 65,
+    'assists': 55,
   },
   {
     'name': 'Jamal Musiala',
@@ -149,7 +233,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.bayern,
     'trend': 6.72,
     'isUp': true,
-    'countryCode': 'DE', // Germany
+    'countryCode': 'DE',
+    'height': 183,
+    'weight': 70,
+    'age': 21,
+    'games': 170,
+    'goals': 40,
+    'assists': 30,
   },
   {
     'name': 'Rodrygo Goes',
@@ -159,7 +249,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.realMadrid,
     'trend': 5.42,
     'isUp': true,
-    'countryCode': 'BR', // Brazil
+    'countryCode': 'BR',
+    'height': 174,
+    'weight': 70,
+    'age': 23,
+    'games': 210,
+    'goals': 48,
+    'assists': 35,
   },
   {
     'name': 'Martin Ødegaard',
@@ -169,7 +265,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.arsenal,
     'trend': 9.64,
     'isUp': true,
-    'countryCode': 'NO', // Norway
+    'countryCode': 'NO',
+    'height': 178,
+    'weight': 68,
+    'age': 25,
+    'games': 300,
+    'goals': 70,
+    'assists': 80,
   },
   {
     'name': 'João Félix',
@@ -179,7 +281,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.fcb,
     'trend': -4.38,
     'isUp': false,
-    'countryCode': 'PT', // Portugal
+    'countryCode': 'PT',
+    'height': 181,
+    'weight': 70,
+    'age': 24,
+    'games': 220,
+    'goals': 60,
+    'assists': 40,
   },
   {
     'name': 'Gavi',
@@ -189,7 +297,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.fcb,
     'trend': 3.47,
     'isUp': true,
-    'countryCode': 'ES', // Spain
+    'countryCode': 'ES',
+    'height': 173,
+    'weight': 68,
+    'age': 20,
+    'games': 130,
+    'goals': 10,
+    'assists': 12,
   },
   {
     'name': 'Marcus Rashford',
@@ -199,7 +313,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterUnited,
     'trend': -5.26,
     'isUp': false,
-    'countryCode': 'GB', // England
+    'countryCode': 'GB',
+    'height': 186,
+    'weight': 78,
+    'age': 26,
+    'games': 370,
+    'goals': 130,
+    'assists': 70,
   },
   {
     'name': 'Leroy Sané',
@@ -209,7 +329,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.bayern,
     'trend': 4.95,
     'isUp': true,
-    'countryCode': 'DE', // Germany
+    'countryCode': 'DE',
+    'height': 183,
+    'weight': 75,
+    'age': 28,
+    'games': 310,
+    'goals': 90,
+    'assists': 80,
   },
   {
     'name': 'Ferran Torres',
@@ -219,7 +345,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.fcb,
     'trend': -2.78,
     'isUp': false,
-    'countryCode': 'ES', // Spain
+    'countryCode': 'ES',
+    'height': 184,
+    'weight': 77,
+    'age': 24,
+    'games': 200,
+    'goals': 43,
+    'assists': 25,
   },
   {
     'name': 'Federico Valverde',
@@ -229,7 +361,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.realMadrid,
     'trend': 8.12,
     'isUp': true,
-    'countryCode': 'UY', // Uruguay
+    'countryCode': 'UY',
+    'height': 182,
+    'weight': 78,
+    'age': 25,
+    'games': 260,
+    'goals': 32,
+    'assists': 40,
   },
   {
     'name': 'Declan Rice',
@@ -239,7 +377,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.arsenal,
     'trend': 5.98,
     'isUp': true,
-    'countryCode': 'GB', // England
+    'countryCode': 'GB',
+    'height': 185,
+    'weight': 80,
+    'age': 25,
+    'games': 300,
+    'goals': 18,
+    'assists': 20,
   },
   {
     'name': 'Enzo Fernández',
@@ -249,7 +393,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.chelsea,
     'trend': -3.12,
     'isUp': false,
-    'countryCode': 'AR', // Argentina
+    'countryCode': 'AR',
+    'height': 178,
+    'weight': 73,
+    'age': 23,
+    'games': 150,
+    'goals': 12,
+    'assists': 18,
   },
   {
     'name': 'Christopher Nkunku',
@@ -259,7 +409,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.chelsea,
     'trend': 2.54,
     'isUp': true,
-    'countryCode': 'FR', // France
+    'countryCode': 'FR',
+    'height': 175,
+    'weight': 69,
+    'age': 27,
+    'games': 260,
+    'goals': 105,
+    'assists': 60,
   },
   {
     'name': 'Alejandro Garnacho',
@@ -269,7 +425,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterUnited,
     'trend': 10.15,
     'isUp': true,
-    'countryCode': 'AR', // Argentina
+    'countryCode': 'AR',
+    'height': 180,
+    'weight': 75,
+    'age': 20,
+    'games': 80,
+    'goals': 15,
+    'assists': 12,
   },
   {
     'name': 'Nico Williams',
@@ -279,7 +441,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.bilbao,
     'trend': 4.62,
     'isUp': true,
-    'countryCode': 'ES', // Spain
+    'countryCode': 'ES',
+    'height': 181,
+    'weight': 72,
+    'age': 21,
+    'games': 150,
+    'goals': 25,
+    'assists': 30,
   },
   {
     'name': 'Xavi Simons',
@@ -289,7 +457,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.rbl,
     'trend': 12.38,
     'isUp': true,
-    'countryCode': 'NL', // Netherlands
+    'countryCode': 'NL',
+    'height': 179,
+    'weight': 71,
+    'age': 21,
+    'games': 120,
+    'goals': 25,
+    'assists': 35,
   },
   {
     'name': 'Rasmus Højlund',
@@ -299,7 +473,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterUnited,
     'trend': 6.41,
     'isUp': true,
-    'countryCode': 'DK', // Denmark
+    'countryCode': 'DK',
+    'height': 191,
+    'weight': 84,
+    'age': 21,
+    'games': 110,
+    'goals': 32,
+    'assists': 10,
   },
   {
     'name': 'Frenkie de Jong',
@@ -309,7 +489,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.fcb,
     'trend': -1.92,
     'isUp': false,
-    'countryCode': 'NL', // Netherlands
+    'countryCode': 'NL',
+    'height': 181,
+    'weight': 74,
+    'age': 27,
+    'games': 340,
+    'goals': 23,
+    'assists': 30,
   },
   {
     'name': 'Joshua Kimmich',
@@ -319,7 +505,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.bayern,
     'trend': 2.73,
     'isUp': true,
-    'countryCode': 'DE', // Germany
+    'countryCode': 'DE',
+    'height': 177,
+    'weight': 72,
+    'age': 29,
+    'games': 410,
+    'goals': 48,
+    'assists': 90,
   },
   {
     'name': 'Casemiro',
@@ -329,7 +521,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterUnited,
     'trend': -3.88,
     'isUp': false,
-    'countryCode': 'BR', // Brazil
+    'countryCode': 'BR',
+    'height': 185,
+    'weight': 84,
+    'age': 32,
+    'games': 520,
+    'goals': 55,
+    'assists': 40,
   },
   {
     'name': 'Sandro Tonali',
@@ -339,7 +537,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.newcastle,
     'trend': -6.74,
     'isUp': false,
-    'countryCode': 'IT', // Italy
+    'countryCode': 'IT',
+    'height': 181,
+    'weight': 79,
+    'age': 23,
+    'games': 210,
+    'goals': 15,
+    'assists': 22,
   },
   {
     'name': 'Bernardo Silva',
@@ -349,7 +553,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterCity,
     'trend': 3.45,
     'isUp': true,
-    'countryCode': 'PT', // Portugal
+    'countryCode': 'PT',
+    'height': 173,
+    'weight': 64,
+    'age': 29,
+    'games': 520,
+    'goals': 80,
+    'assists': 95,
   },
   {
     'name': 'Jack Grealish',
@@ -359,7 +569,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterCity,
     'trend': -1.24,
     'isUp': false,
-    'countryCode': 'GB', // England
+    'countryCode': 'GB',
+    'height': 180,
+    'weight': 75,
+    'age': 28,
+    'games': 340,
+    'goals': 55,
+    'assists': 50,
   },
   {
     'name': 'Bruno Fernandes',
@@ -369,7 +585,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterUnited,
     'trend': 5.26,
     'isUp': true,
-    'countryCode': 'PT', // Portugal
+    'countryCode': 'PT',
+    'height': 179,
+    'weight': 69,
+    'age': 29,
+    'games': 430,
+    'goals': 135,
+    'assists': 120,
   },
   {
     'name': 'Mohamed Salah',
@@ -379,7 +601,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.liverpool,
     'trend': 11.24,
     'isUp': true,
-    'countryCode': 'EG', // Egypt
+    'countryCode': 'EG',
+    'height': 175,
+    'weight': 74,
+    'age': 32,
+    'games': 620,
+    'goals': 290,
+    'assists': 140,
   },
   {
     'name': 'Darwin Núñez',
@@ -389,7 +617,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.liverpool,
     'trend': 3.15,
     'isUp': true,
-    'countryCode': 'UY', // Uruguay
+    'countryCode': 'UY',
+    'height': 187,
+    'weight': 81,
+    'age': 25,
+    'games': 170,
+    'goals': 70,
+    'assists': 20,
   },
   {
     'name': 'Son Heung-min',
@@ -399,7 +633,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.tottenham,
     'trend': 8.63,
     'isUp': true,
-    'countryCode': 'KR', // South Korea
+    'countryCode': 'KR',
+    'height': 183,
+    'weight': 77,
+    'age': 32,
+    'games': 550,
+    'goals': 190,
+    'assists': 85,
   },
   {
     'name': 'Harry Kane',
@@ -409,7 +649,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.bayern,
     'trend': 14.52,
     'isUp': true,
-    'countryCode': 'GB', // England
+    'countryCode': 'GB',
+    'height': 188,
+    'weight': 86,
+    'age': 31,
+    'games': 620,
+    'goals': 380,
+    'assists': 90,
   },
   {
     'name': 'Mason Mount',
@@ -419,7 +665,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterUnited,
     'trend': -7.32,
     'isUp': false,
-    'countryCode': 'GB', // England
+    'countryCode': 'GB',
+    'height': 181,
+    'weight': 74,
+    'age': 25,
+    'games': 260,
+    'goals': 38,
+    'assists': 35,
   },
   {
     'name': 'Kai Havertz',
@@ -429,7 +681,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.arsenal,
     'trend': 1.74,
     'isUp': true,
-    'countryCode': 'DE', // Germany
+    'countryCode': 'DE',
+    'height': 193,
+    'weight': 82,
+    'age': 25,
+    'games': 340,
+    'goals': 90,
+    'assists': 55,
   },
   {
     'name': 'Raheem Sterling',
@@ -439,7 +697,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.chelsea,
     'trend': -4.91,
     'isUp': false,
-    'countryCode': 'GB', // England
+    'countryCode': 'GB',
+    'height': 172,
+    'weight': 69,
+    'age': 29,
+    'games': 570,
+    'goals': 160,
+    'assists': 95,
   },
   {
     'name': 'Antony',
@@ -449,7 +713,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.manchesterUnited,
     'trend': -5.67,
     'isUp': false,
-    'countryCode': 'BR', // Brazil
+    'countryCode': 'BR',
+    'height': 174,
+    'weight': 65,
+    'age': 24,
+    'games': 190,
+    'goals': 28,
+    'assists': 25,
   },
   {
     'name': 'Dominik Szoboszlai',
@@ -459,7 +729,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.liverpool,
     'trend': 7.13,
     'isUp': true,
-    'countryCode': 'HU', // Hungary
+    'countryCode': 'HU',
+    'height': 186,
+    'weight': 76,
+    'age': 23,
+    'games': 180,
+    'goals': 40,
+    'assists': 35,
   },
   {
     'name': 'Diogo Jota',
@@ -469,7 +745,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.liverpool,
     'trend': 3.65,
     'isUp': true,
-    'countryCode': 'PT', // Portugal
+    'countryCode': 'PT',
+    'height': 178,
+    'weight': 70,
+    'age': 27,
+    'games': 310,
+    'goals': 105,
+    'assists': 45,
   },
   {
     'name': 'Ousmane Dembélé',
@@ -479,7 +761,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.psg,
     'trend': 5.92,
     'isUp': true,
-    'countryCode': 'FR', // France
+    'countryCode': 'FR',
+    'height': 178,
+    'weight': 73,
+    'age': 27,
+    'games': 280,
+    'goals': 50,
+    'assists': 70,
   },
   {
     'name': 'Achraf Hakimi',
@@ -489,7 +777,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.psg,
     'trend': 2.14,
     'isUp': true,
-    'countryCode': 'MA', // Morocco
+    'countryCode': 'MA',
+    'height': 181,
+    'weight': 73,
+    'age': 26,
+    'games': 330,
+    'goals': 38,
+    'assists': 55,
   },
   {
     'name': 'Theo Hernández',
@@ -499,7 +793,13 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.milan,
     'trend': 6.23,
     'isUp': true,
-    'countryCode': 'FR', // France
+    'countryCode': 'FR',
+    'height': 184,
+    'weight': 78,
+    'age': 26,
+    'games': 320,
+    'goals': 28,
+    'assists': 32,
   },
   {
     'name': 'Eduardo Camavinga',
@@ -509,6 +809,12 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'clubImage': ImagePaths.home.realMadrid,
     'trend': 9.42,
     'isUp': true,
-    'countryCode': 'FR', // France (born Angola/Congo heritage)
+    'countryCode': 'FR',
+    'height': 182,
+    'weight': 68,
+    'age': 21,
+    'games': 160,
+    'goals': 6,
+    'assists': 12,
   },
 ];

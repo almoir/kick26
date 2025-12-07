@@ -20,7 +20,12 @@ class PlayerModel {
   final String countryCode;
   double trend; // current percent change (mis. 2.34)
   bool isUp;
-  final Map<String, dynamic> stats;
+  final int height;
+  final int weight;
+  final int age;
+  final int games;
+  final int goals;
+  final int assists;
 
   PlayerModel({
     required this.name,
@@ -31,7 +36,12 @@ class PlayerModel {
     required this.countryCode,
     required this.trend,
     required this.isUp,
-    this.stats = dummyStats,
+    required this.height,
+    required this.weight,
+    required this.age,
+    required this.games,
+    required this.goals,
+    required this.assists,
   });
 
   // helper: buat dari map dummy (yang price-nya string seperti "€99,999.99")
@@ -50,6 +60,12 @@ class PlayerModel {
       countryCode: m['countryCode'] as String,
       trend: initialTrend ?? 0,
       isUp: initialIsUp ?? true,
+      height: m['height'] as int,
+      weight: m['weight'] as int,
+      age: m['age'] as int,
+      games: m['games'] as int,
+      goals: m['goals'] as int,
+      assists: m['assists'] as int,
     );
   }
 
