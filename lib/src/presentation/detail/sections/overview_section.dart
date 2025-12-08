@@ -5,7 +5,7 @@ import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/helper.dart';
 import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/common/widgets/gold_shimmer_overlay.dart';
+import 'package:kick26/src/common/widgets/gold_hologram_foil.dart';
 import 'package:kick26/src/data/models/player_model.dart';
 
 class OverviewSection extends StatelessWidget {
@@ -21,7 +21,7 @@ class OverviewSection extends StatelessWidget {
         color: ConstColors.baseColorDark3,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: GoldShimmerOverlay(
+      child: GoldFoilOverlay(
         borderRadius: BorderRadius.circular(10),
         child: Stack(
           children: [
