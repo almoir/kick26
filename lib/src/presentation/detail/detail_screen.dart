@@ -642,7 +642,7 @@ class OverviewTab extends StatelessWidget {
                     ),
                     Gap(8),
                     Container(
-                      padding: EdgeInsets.all(12),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: ConstColors.baseColorDark3,
                         borderRadius: BorderRadius.circular(10),
@@ -660,10 +660,12 @@ class OverviewTab extends StatelessWidget {
                           ),
                           Gap(7),
                           Text(
-                            formatPrice(player.price.roundToDouble()),
+                            formatPriceWithoutDecimal(
+                              player.price.roundToDouble(),
+                            ),
                             style: TextStyle(
                               fontFamily: poppinsMedium,
-                              fontSize: 18,
+                              fontSize: 22,
                               color: ConstColors.light,
                             ),
                           ),
