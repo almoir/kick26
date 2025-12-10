@@ -1,7 +1,9 @@
 import 'package:kick26/src/common/image_paths.dart';
+import 'package:uuid/uuid.dart';
 
 final List<Map<String, dynamic>> dummyPlayers = [
   {
+    'id': Uuid().v4(),
     'name': 'Trent Alexander-Arnold',
     'price': '€99,999.99',
     'club': 'Liverpool',
@@ -18,6 +20,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 81,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Kylian Mbappé',
     'price': '€95,000.00',
     'club': 'Real Madrid',
@@ -34,6 +37,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 110,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Viktor Gyökeres',
     'price': '€88,000.00',
     'club': 'Sporting CP',
@@ -50,6 +54,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 40,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Julián Álvarez',
     'price': '€87,000.00',
     'club': 'Manchester City',
@@ -66,6 +71,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 35,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Erling Haaland',
     'price': '€180,000.00',
     'club': 'Manchester City',
@@ -82,6 +88,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 45,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Vinícius Jr',
     'price': '€150,000.00',
     'club': 'Real Madrid',
@@ -98,6 +105,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 70,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Bukayo Saka',
     'price': '€130,000.00',
     'club': 'Arsenal',
@@ -114,6 +122,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 51,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Pedri González',
     'price': '€120,000.00',
     'club': 'FC Barcelona',
@@ -130,6 +139,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 20,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Florian Wirtz',
     'price': '€110,000.00',
     'club': 'Bayer Leverkusen',
@@ -146,6 +156,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 40,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Jude Bellingham',
     'price': '€180,000.00',
     'club': 'Real Madrid',
@@ -162,6 +173,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 30,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Phil Foden',
     'price': '€115,000.00',
     'club': 'Manchester City',
@@ -178,6 +190,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 45,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Lautaro Martínez',
     'price': '€95,000.00',
     'club': 'Inter Milan',
@@ -194,6 +207,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 50,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Khvicha Kvaratskhelia',
     'price': '€90,000.00',
     'club': 'Napoli',
@@ -210,6 +224,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 50,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Rafael Leão',
     'price': '€100,000.00',
     'club': 'AC Milan',
@@ -226,6 +241,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 55,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Jamal Musiala',
     'price': '€120,000.00',
     'club': 'Bayern Munich',
@@ -242,6 +258,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 30,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Rodrygo Goes',
     'price': '€90,000.00',
     'club': 'Real Madrid',
@@ -258,6 +275,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 35,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Martin Ødegaard',
     'price': '€100,000.00',
     'club': 'Arsenal',
@@ -274,6 +292,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 80,
   },
   {
+    'id': Uuid().v4(),
     'name': 'João Félix',
     'price': '€85,000.00',
     'club': 'FC Barcelona',
@@ -290,6 +309,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 40,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Gavi',
     'price': '€95,000.00',
     'club': 'FC Barcelona',
@@ -306,6 +326,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 12,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Marcus Rashford',
     'price': '€120,000.00',
     'club': 'Manchester United',
@@ -322,6 +343,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 70,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Leroy Sané',
     'price': '€85,000.00',
     'club': 'Bayern Munich',
@@ -338,6 +360,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 80,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Ferran Torres',
     'price': '€65,000.00',
     'club': 'FC Barcelona',
@@ -354,6 +377,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 25,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Federico Valverde',
     'price': '€110,000.00',
     'club': 'Real Madrid',
@@ -370,6 +394,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 40,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Declan Rice',
     'price': '€100,000.00',
     'club': 'Arsenal',
@@ -386,6 +411,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 20,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Enzo Fernández',
     'price': '€80,000.00',
     'club': 'Chelsea',
@@ -402,6 +428,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 18,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Christopher Nkunku',
     'price': '€95,000.00',
     'club': 'Chelsea',
@@ -418,6 +445,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 60,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Alejandro Garnacho',
     'price': '€75,000.00',
     'club': 'Manchester United',
@@ -434,6 +462,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 12,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Nico Williams',
     'price': '€70,000.00',
     'club': 'Athletic Bilbao',
@@ -450,6 +479,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 30,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Xavi Simons',
     'price': '€85,000.00',
     'club': 'RB Leipzig',
@@ -466,6 +496,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 35,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Rasmus Højlund',
     'price': '€80,000.00',
     'club': 'Manchester United',
@@ -482,6 +513,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 10,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Frenkie de Jong',
     'price': '€90,000.00',
     'club': 'FC Barcelona',
@@ -498,6 +530,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 30,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Joshua Kimmich',
     'price': '€105,000.00',
     'club': 'Bayern Munich',
@@ -514,6 +547,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 90,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Casemiro',
     'price': '€70,000.00',
     'club': 'Manchester United',
@@ -530,6 +564,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 40,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Sandro Tonali',
     'price': '€85,000.00',
     'club': 'Newcastle United',
@@ -546,6 +581,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 22,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Bernardo Silva',
     'price': '€90,000.00',
     'club': 'Manchester City',
@@ -562,6 +598,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 95,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Jack Grealish',
     'price': '€80,000.00',
     'club': 'Manchester City',
@@ -578,6 +615,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 50,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Bruno Fernandes',
     'price': '€95,000.00',
     'club': 'Manchester United',
@@ -594,6 +632,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 120,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Mohamed Salah',
     'price': '€100,000.00',
     'club': 'Liverpool',
@@ -610,6 +649,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 140,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Darwin Núñez',
     'price': '€85,000.00',
     'club': 'Liverpool',
@@ -626,6 +666,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 20,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Son Heung-min',
     'price': '€90,000.00',
     'club': 'Tottenham Hotspur',
@@ -642,6 +683,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 85,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Harry Kane',
     'price': '€120,000.00',
     'club': 'Bayern Munich',
@@ -658,6 +700,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 90,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Mason Mount',
     'price': '€70,000.00',
     'club': 'Manchester United',
@@ -674,6 +717,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 35,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Kai Havertz',
     'price': '€75,000.00',
     'club': 'Arsenal',
@@ -690,6 +734,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 55,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Raheem Sterling',
     'price': '€65,000.00',
     'club': 'Chelsea',
@@ -706,6 +751,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 95,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Antony',
     'price': '€60,000.00',
     'club': 'Manchester United',
@@ -722,6 +768,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 25,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Dominik Szoboszlai',
     'price': '€85,000.00',
     'club': 'Liverpool',
@@ -738,6 +785,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 35,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Diogo Jota',
     'price': '€80,000.00',
     'club': 'Liverpool',
@@ -754,6 +802,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 45,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Ousmane Dembélé',
     'price': '€90,000.00',
     'club': 'PSG',
@@ -770,6 +819,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 70,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Achraf Hakimi',
     'price': '€85,000.00',
     'club': 'PSG',
@@ -786,6 +836,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 55,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Theo Hernández',
     'price': '€90,000.00',
     'club': 'AC Milan',
@@ -802,6 +853,7 @@ final List<Map<String, dynamic>> dummyPlayers = [
     'assists': 32,
   },
   {
+    'id': Uuid().v4(),
     'name': 'Eduardo Camavinga',
     'price': '€95,000.00',
     'club': 'Real Madrid',

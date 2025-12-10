@@ -19,3 +19,7 @@ String formatPriceWithoutDecimal(double value) {
   final formatter = NumberFormat("#,##0", "de_DE");
   return formatter.format(value);
 }
+
+String formatDate(DateTime date) {
+  return "${date.day}/${date.month}/${date.year}";
+}

@@ -10,7 +10,6 @@ class ListPlayersWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-
       itemCount: players.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         childAspectRatio: 0.82,
@@ -21,7 +20,11 @@ class ListPlayersWidget extends StatelessWidget {
         final player = players[index];
         return SizedBox(
           height: 180,
-          child: FlipPlayerCardWidget(player: player, players: players),
+          child: FlipPlayerCardWidget(
+            player: player,
+            players: players,
+            tag: "list_player_widget",
+          ),
         );
       },
     );

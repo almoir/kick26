@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/icon_paths.dart';
@@ -6,7 +7,18 @@ import 'package:kick26/src/common/icon_paths.dart';
 import '../../../common/widgets/gold_gradient.dart';
 
 class SearchFieldWidget extends StatelessWidget {
-  const SearchFieldWidget({super.key});
+  const SearchFieldWidget({
+    super.key,
+    this.readOnly = false,
+    this.onTap,
+    this.focusNode,
+    this.onChanged,
+  });
+
+  final bool readOnly;
+  final Function()? onTap;
+  final FocusNode? focusNode;
+  final Function(String value)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +32,10 @@ class SearchFieldWidget extends StatelessWidget {
           color: ConstColors.light,
           fontSize: 10,
         ),
+        focusNode: focusNode,
+        readOnly: readOnly,
+        onTap: onTap,
+        onChanged: onChanged,
         decoration: InputDecoration(
           filled: true,
           fillColor: ConstColors.baseColorDark3,

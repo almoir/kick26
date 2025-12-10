@@ -12,6 +12,7 @@ const Map<String, dynamic> dummyStats = {
 };
 
 class PlayerModel {
+  final String id;
   final String name;
   double price; // bukan final -> bisa diupdate
   final String club;
@@ -28,6 +29,7 @@ class PlayerModel {
   final int assists;
 
   PlayerModel({
+    required this.id,
     required this.name,
     required this.price,
     required this.club,
@@ -52,6 +54,7 @@ class PlayerModel {
   }) {
     double parsedPrice = _parsePriceString(m['price'] ?? m['price'].toString());
     return PlayerModel(
+      id: m['id'] as String,
       name: m['name'] as String,
       price: parsedPrice,
       club: m['club'] as String,

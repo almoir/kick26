@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -18,107 +17,44 @@ class FlipPlayerCardWidget extends StatefulWidget {
     super.key,
     required this.player,
     required this.players,
+    required this.tag,
   });
 
   final PlayerModel player;
   final List<PlayerModel> players;
+  final String tag;
 
   @override
   State<FlipPlayerCardWidget> createState() => _FlipPlayerCardWidgetState();
 }
 
 class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
-    with TickerProviderStateMixin {
-  late AnimationController _flipController;
-  late Animation<double> _angleAnimation;
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
 
-  Timer? _tapTimer;
-
-  /// sudut posisi kartu saat ini (dalam radian)
-  /// 0        = front menghadap user
-  /// pi       = back menghadap user
-  /// berputar ±pi setiap flip
-  double _angle = 0.0;
-
-  /// true: posisi istirahat di front, false: di back
-  bool _isFront = true;
+  bool get isFront => _controller.value < 0.5;
 
   @override
   void initState() {
     super.initState();
-
-    _flipController = AnimationController(
-      duration: const Duration(milliseconds: 650),
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
+  }
 
-    // default, angle diem di 0 (front)
-    _angleAnimation = AlwaysStoppedAnimation(_angle);
+  void flipCard() {
+    if (_controller.isCompleted) {
+      _controller.reverse();
+    } else {
+      _controller.forward();
+    }
   }
 
   @override
   void dispose() {
-    _flipController.dispose();
-    _tapTimer?.cancel();
+    _controller.dispose();
     super.dispose();
-  }
-
-  // ===============================
-  // DOUBLE TAP → FLIP
-  // ===============================
-  void _flipCard() {
-    if (_flipController.isAnimating) return;
-
-    final double start = _angle;
-    // FRONT → BACK : +pi (flip ke kanan)
-    // BACK  → FRONT: -pi (flip ke kiri)
-    final double end = _isFront ? start + pi : start - pi;
-
-    _angleAnimation = Tween<double>(begin: start, end: end).animate(
-      CurvedAnimation(parent: _flipController, curve: Curves.easeInOutCubic),
-    );
-
-    _flipController
-      ..reset()
-      ..forward().then((_) {
-        setState(() {
-          _angle = end;
-          _isFront = !_isFront;
-        });
-      });
-  }
-
-  // ===============================
-  // SINGLE TAP → ENLARGE + NAVIGATE
-  // ===============================
-  void _goToDetail() {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 550),
-        reverseTransitionDuration: const Duration(milliseconds: 450),
-        pageBuilder: (_, anim1, __) {
-          return FadeTransition(
-            opacity: anim1,
-            child: DetailScreen(player: widget.player, players: widget.players),
-          );
-        },
-      ),
-    );
-  }
-
-  // ===============================
-  // HANDLE TAP LOGIC (single vs double)
-  // ===============================
-  void _handleTap() {
-    if (_tapTimer != null && _tapTimer!.isActive) {
-      _tapTimer!.cancel();
-      _flipCard(); // DOUBLE TAP
-    } else {
-      _tapTimer = Timer(const Duration(milliseconds: 230), () {
-        _goToDetail(); // SINGLE TAP
-      });
-    }
   }
 
   @override
@@ -126,96 +62,56 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
     final player = widget.player;
 
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: _handleTap,
-      child: Container(
-        margin: const EdgeInsets.only(right: 10),
-        child: Hero(
-          tag: "player_${player.name}", // pastikan unique per player
-          flightShuttleBuilder: _flightBuilder,
-          child: AnimatedBuilder(
-            animation: _flipController,
-            builder: (_, __) {
-              // sudut aktual: kalau lagi animasi pakai animasi, kalau tidak pakai _angle terakhir
-              double rawAngle =
-                  _flipController.isAnimating ? _angleAnimation.value : _angle;
-
-              // normalisasi ke 0..2π
-              double normalized = rawAngle % (2 * pi);
-              if (normalized < 0) normalized += 2 * pi;
-
-              // tentukan sisi mana yang kelihatan:
-              //  0°   → front
-              //  90°  → pinggir
-              // 180°  → back
-              // 270°  → pinggir
-              // 360°  → front
-              final bool showFront =
-                  normalized <= pi / 2 || normalized >= 3 * pi / 2;
-
-              // progress dalam setengah putaran (0..pi)
-              final double halfTurn =
-                  normalized <= pi ? normalized : (2 * pi - normalized);
-              // depth shadow puncak di tengah
-              final double depth = sin(halfTurn); // 0..1
-
-              // bayangan 3D
-              final double shadowOffsetX =
-                  (_isFront ? 1.0 : -1.0) *
-                  4.0 *
-                  depth; // arah tergantung sisi rest
-              final double shadowBlur = 10.0 + 10.0 * depth;
-
-              Widget cardChild;
-              if (showFront) {
-                cardChild = _buildFront(player);
-              } else {
-                // back di-rotate balik biar tidak mirror
-                cardChild = Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.identity()..rotateY(pi),
-                  child: _buildBack(player),
-                );
-              }
-
-              return Transform(
-                alignment: Alignment.center,
-                transform:
-                    Matrix4.identity()
-                      ..setEntry(3, 2, 0.0015)
-                      ..rotateY(normalized),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.45 * depth),
-                        offset: Offset(shadowOffsetX, 8 * depth),
-                        blurRadius: shadowBlur,
-                        spreadRadius: 1.5 * depth,
-                      ),
-                    ],
+      onDoubleTap: flipCard,
+      onTap:
+          () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) => DetailScreen(
+                    player: player,
+                    players: widget.players,
+                    tag: widget.tag,
                   ),
-                  child: cardChild,
-                ),
-              );
-            },
+            ),
           ),
-        ),
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (_, __) {
+          final angle = _controller.value * pi;
+          final isFrontSide = angle <= (pi / 2);
+
+          return Transform(
+            alignment: Alignment.center,
+            transform:
+                Matrix4.identity()
+                  ..setEntry(3, 2, 0.001)
+                  ..rotateY(angle),
+            child:
+                isFrontSide
+                    ? _buildFront(player)
+                    : Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()..rotateY(pi),
+                      child: _buildBack(player),
+                    ),
+          );
+        },
       ),
     );
   }
 
-  // =========================================================
-  // FRONT PART (Card tampilan utama)
-  // =========================================================
+  // ==============================
+  // FRONT SIDE (Card Asli Kamu)
+  // ==============================
   Widget _buildFront(PlayerModel player) {
     return Container(
       width: 140,
       height: 180,
+      margin: EdgeInsets.only(right: 10),
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [ConstColors.baseColorDark3, ConstColors.baseColorDark4],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -228,28 +124,28 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
       ),
       child: Stack(
         children: [
-          // Player image di belakang, bottom-center
           Positioned.fill(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.asset(player.image, fit: BoxFit.contain),
+                child: Hero(
+                  tag: "${widget.tag}_${player.id}",
+                  child: Image.asset(player.image, fit: BoxFit.contain),
+                ),
               ),
             ),
           ),
 
-          // Content atas + bawah
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Column(
               children: [
-                // Badge & club & negara
+                // SS TOP
                 Padding(
                   padding: const EdgeInsets.all(5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         children: [
@@ -262,11 +158,11 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                       Column(
                         children: [
                           GoldGradient(
-                            child: const Text(
+                            child: Text(
                               "41",
                               style: TextStyle(
-                                fontFamily: poppinsRegular,
                                 fontSize: 10,
+                                fontFamily: poppinsRegular,
                               ),
                             ),
                           ),
@@ -275,12 +171,12 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                             height: 1,
                             color: ConstColors.darkGray2,
                           ),
-                          const Text(
+                          Text(
                             "60",
                             style: TextStyle(
                               color: ConstColors.darkGray,
-                              fontFamily: poppinsRegular,
                               fontSize: 10,
+                              fontFamily: poppinsRegular,
                             ),
                           ),
                         ],
@@ -289,11 +185,11 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                   ),
                 ),
 
-                // Info bawah (nama, harga, trend)
+                // PLAYER DETAILS
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.all(5),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
                           Colors.transparent,
@@ -310,11 +206,11 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                         GoldGradient(
                           child: Text(
                             player.name,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: poppinsRegular,
                               fontSize: 10,
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         const Gap(4),
@@ -326,9 +222,10 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                               style: const TextStyle(
                                 color: ConstColors.light,
                                 fontFamily: poppinsMedium,
-                                fontSize: 10,
+                                fontSize: 12,
                               ),
                             ),
+
                             Row(
                               children: [
                                 Icon(
@@ -344,8 +241,8 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                                 Text(
                                   "${player.trend.toStringAsFixed(2)}%",
                                   style: TextStyle(
-                                    fontSize: 8,
                                     fontFamily: poppinsSemiBold,
+                                    fontSize: 8,
                                     color:
                                         player.isUp
                                             ? ConstColors.green
@@ -368,16 +265,17 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
     );
   }
 
-  // =========================================================
-  // BACK PART (Stats)
-  // =========================================================
+  // ==============================
+  // BACK SIDE (Stats Dinamis)
+  // ==============================
   Widget _buildBack(PlayerModel player) {
     return Container(
       width: 140,
       height: 180,
-      padding: const EdgeInsets.all(10),
+      margin: EdgeInsets.only(right: 10),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [ConstColors.baseColorDark3, ConstColors.baseColorDark4],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -388,23 +286,28 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
           fit: BoxFit.cover,
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          GoldGradient(
-            child: const Text(
-              "STATS",
-              style: TextStyle(fontSize: 12, fontFamily: poppinsSemiBold),
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GoldGradient(
+              child: Text(
+                "STATS",
+                style: TextStyle(fontSize: 12, fontFamily: poppinsSemiBold),
+              ),
             ),
-          ),
-          const Gap(10),
-          _statTile("Height", "${player.height}m"),
-          _statTile("Weight", "${player.weight}kg"),
-          _statTile("Age", "${player.age}yo"),
-          _statTile("Games", "${player.games}"),
-          _statTile("Goals", "${player.goals}"),
-          _statTile("Assits", "${player.assists}"),
-        ],
+            const Gap(10),
+
+            // === Contoh stats dinamis dari API player model ===
+            _statTile("Height", "${player.height}m"),
+            _statTile("Weight", "${player.weight}kg"),
+            _statTile("Age", "${player.age}yo"),
+            _statTile("Games", "${player.games}"),
+            _statTile("Goals", "${player.goals}"),
+            _statTile("Assits", "${player.assists}"),
+          ],
+        ),
       ),
     );
   }
@@ -435,22 +338,6 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
           ),
         ],
       ),
-    );
-  }
-
-  // =========================================================
-  // HERO – Prevent glitch during flip
-  // =========================================================
-  Widget _flightBuilder(
-    BuildContext context,
-    Animation<double> animation,
-    HeroFlightDirection direction,
-    BuildContext fromHero,
-    BuildContext toHero,
-  ) {
-    return FadeTransition(
-      opacity: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
-      child: toHero.widget,
     );
   }
 }

@@ -19,45 +19,81 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            ProfileHeaderSection(),
-            Gap(20),
-
-            AccountVerifiedSection(),
-            Gap(20),
-
-            SettingSection(),
-            Gap(20),
-
-            InviteSomeoneSection(),
-            Gap(20),
-
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                "Rate this app",
-                style: TextStyle(
-                  fontFamily: poppinsRegular,
-                  fontSize: 12,
-                  color: ConstColors.gray10,
-                  decoration: TextDecoration.underline,
-                  decorationColor: ConstColors.gray10,
-                ),
+    return Scaffold(
+      backgroundColor: ConstColors.baseColorDark,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leadingWidth: 72,
+        leading: InkWell(
+          onTap: () => Navigator.of(context).pop(),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: ConstColors.baseColorDark5),
+            ),
+            child: Center(
+              child: GoldGradient(
+                child: const Icon(Icons.chevron_left, size: 28),
               ),
             ),
-            Gap(20),
+          ),
+        ),
+        title: Text(
+          "Profile",
+          style: TextStyle(
+            color: ConstColors.light,
+            fontFamily: poppinsSemiBold,
+            fontSize: 15,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              ProfileHeaderSection(),
+              Gap(20),
 
-            GoldGradientButton(
-              text: "Sign Out",
-              suffixIcon: Icon(Icons.logout, color: ConstColors.baseColorDark),
-              onTap: () {},
-            ),
-            Gap(50),
-          ],
+              AccountVerifiedSection(),
+              Gap(20),
+
+              SettingSection(),
+              Gap(20),
+
+              InviteSomeoneSection(),
+              Gap(20),
+
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Rate this app",
+                  style: TextStyle(
+                    fontFamily: poppinsRegular,
+                    fontSize: 12,
+                    color: ConstColors.gray10,
+                    decoration: TextDecoration.underline,
+                    decorationColor: ConstColors.gray10,
+                  ),
+                ),
+              ),
+              Gap(20),
+
+              GoldGradientButton(
+                text: "Sign Out",
+                suffixIcon: Icon(
+                  Icons.logout,
+                  color: ConstColors.baseColorDark,
+                ),
+                onTap: () {},
+              ),
+              Gap(50),
+            ],
+          ),
         ),
       ),
     );

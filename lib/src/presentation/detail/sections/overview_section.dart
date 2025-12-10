@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/helper.dart';
@@ -9,9 +10,10 @@ import 'package:kick26/src/common/widgets/gold_hologram_foil.dart';
 import 'package:kick26/src/data/models/player_model.dart';
 
 class OverviewSection extends StatelessWidget {
-  const OverviewSection({super.key, required this.player});
+  const OverviewSection({super.key, required this.player, required this.tag});
 
   final PlayerModel player;
+  final String tag;
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +23,20 @@ class OverviewSection extends StatelessWidget {
         color: ConstColors.baseColorDark3,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: GoldFoilOverlay(
+      child: GoldShineOverlay(
         borderRadius: BorderRadius.circular(10),
         child: Stack(
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  player.image,
-                  width: MediaQuery.sizeOf(context).width * 0.475,
-                  height: 200,
+                Hero(
+                  tag: "${tag}_${player.id}",
+                  child: Image.asset(
+                    player.image,
+                    width: MediaQuery.sizeOf(context).width * 0.475,
+                    height: 200,
+                  ),
                 ),
                 Flexible(
                   child: Padding(

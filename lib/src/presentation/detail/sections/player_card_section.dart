@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/flip_player_card_widget.dart';
 import 'package:kick26/src/data/models/player_model.dart';
 
 class PlayerCardsSection extends StatelessWidget {
-  const PlayerCardsSection({super.key, required this.players});
+  const PlayerCardsSection({
+    super.key,
+    required this.players,
+    required this.tabIndex,
+  });
 
   final List<PlayerModel> players;
+  final int tabIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +46,15 @@ class PlayerCardsSection extends StatelessWidget {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                final player = players[index];
-                return FlipPlayerCardWidget(player: player, players: players);
+                final copy = List<PlayerModel>.from(players);
+                copy.shuffle();
+                final shuffle10Players = copy.take(10).toList();
+                final player = shuffle10Players[index];
+                return FlipPlayerCardWidget(
+                  player: player,
+                  players: players,
+                  tag: "player_card_section$tabIndex$index",
+                );
               },
             ),
           ),

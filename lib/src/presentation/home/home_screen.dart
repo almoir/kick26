@@ -266,6 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return FlipPlayerCardWidget(
                       player: player,
                       players: players,
+                      tag: "home_screen",
                     );
                   },
                 ),

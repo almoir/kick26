@@ -20,6 +20,8 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   int _selectedIndex = 0;
   int _marketTabIndex = 0;
 
@@ -27,12 +29,17 @@ class _BottomNavigationState extends State<BottomNavigation> {
     HomeScreen(onTapTrending: _onTapTrending),
     MarketScreen(initialTab: marketTabIndex),
     const PortfolioScreen(),
-    // const Center(child: Text('Portfolio', style: optionStyle)),
     const NewsScreen(),
-    const ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
+    // Jika index == 4 → buka endDrawer, bukan ganti halaman
+    if (index == 4) {
+      _scaffoldKey.currentState?.openEndDrawer();
+      return;
+    }
+
+    // Untuk tab lain → perubahan normal
     setState(() {
       _marketTabIndex = 0;
       _selectedIndex = index;
@@ -50,19 +57,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
     switch (selectedIndex) {
       case 1:
         return "Market";
-
       case 2:
         return "Portfolio";
-
       case 3:
         return "News & Update";
-
-      case 4:
-        return "Profile";
-
-      case 5:
-        return "News";
-
       default:
         return "";
     }
@@ -71,6 +69,22 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawerEnableOpenDragGesture: false,
+      endDrawerEnableOpenDragGesture: false,
+      endDrawer: Drawer(
+        backgroundColor: Colors.black,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            8,
+            (index) => ListTile(
+              title: GoldGradient(child: Text("Choice ${index + 1}")),
+            ),
+          ),
+        ),
+      ),
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -87,11 +101,36 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   ),
                 ),
         actions: [
-          Image.asset(IconPaths.home.notifications, height: 40, width: 40),
+          GestureDetector(
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                ),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(color: ConstColors.gold),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: GoldGradient(
+                  child: Image.asset(
+                    IconPaths.general.profileBottomNav,
+                    height: 18,
+                    width: 18,
+                  ),
+                ),
+              ),
+            ),
+          ),
           const Gap(16),
         ],
       ),
+
       body: _widgetOptions(marketTabIndex: _marketTabIndex)[_selectedIndex],
+
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xFF0C0C0C),
         items: <BottomNavigationBarItem>[
@@ -111,7 +150,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         IconPaths.general.homeBottomNav,
                         width: 20,
                         height: 20,
-                        color: null,
                       ),
             ),
             label: 'Home',
@@ -132,7 +170,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         IconPaths.general.cardsBottomNav,
                         width: 20,
                         height: 20,
-                        color: null,
                       ),
             ),
             label: 'Cards',
@@ -153,7 +190,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         IconPaths.general.portfolioBottomNav,
                         width: 20,
                         height: 20,
-                        color: null,
                       ),
             ),
             label: 'Portfolio',
@@ -174,31 +210,22 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         IconPaths.general.newsBottomNav,
                         width: 20,
                         height: 20,
-                        color: null,
                       ),
             ),
             label: 'News',
           ),
+
+          /// INDEX 4 → OPEN DRAWER
           BottomNavigationBarItem(
             icon: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child:
-                  _selectedIndex == 4
-                      ? GoldGradient(
-                        child: Image.asset(
-                          IconPaths.general.profileBottomNav,
-                          width: 20,
-                          height: 20,
-                        ),
-                      )
-                      : Image.asset(
-                        IconPaths.general.profileBottomNav,
-                        width: 20,
-                        height: 20,
-                        color: null,
-                      ),
+              padding: const EdgeInsets.only(top: 8),
+              child: Image.asset(
+                ImagePaths.general.kick26Logo,
+                width: 50,
+                height: 50,
+              ),
             ),
-            label: 'Profile',
+            label: '',
           ),
         ],
         selectedItemColor: ConstColors.gold,

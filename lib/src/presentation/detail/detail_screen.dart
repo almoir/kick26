@@ -11,14 +11,21 @@ import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/data/models/player_model.dart';
 import 'package:kick26/src/presentation/detail/sections/overview_section.dart';
 import 'package:kick26/src/presentation/detail/sections/player_card_section.dart';
+import 'package:kick26/src/presentation/detail/tabs/authenticity_tab.dart';
 import 'package:kick26/src/presentation/detail/widgets/detail_player_card_widget.dart';
 import 'package:kick26/src/presentation/detail/widgets/detail_player_tab_bar.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({super.key, required this.player, required this.players});
+  const DetailScreen({
+    super.key,
+    required this.player,
+    required this.players,
+    required this.tag,
+  });
 
   final PlayerModel player;
   final List<PlayerModel> players;
+  final String tag;
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -40,6 +47,30 @@ class _DetailScreenState extends State<DetailScreen>
       length: 4,
       child: Scaffold(
         backgroundColor: ConstColors.baseColorDark,
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: GoldGradientButton(
+                  height: 40,
+
+                  text: "Buy",
+                  onTap: () {},
+                ),
+              ),
+              Gap(10),
+              Flexible(
+                child: GoldGradientButton(
+                  height: 40,
+                  text: "Bid",
+                  onTap: () {},
+                ),
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -61,7 +92,7 @@ class _DetailScreenState extends State<DetailScreen>
             ),
           ),
           title: Text(
-            "Player Detail",
+            "Player Details",
             style: TextStyle(
               color: ConstColors.light,
               fontFamily: poppinsSemiBold,
@@ -69,10 +100,6 @@ class _DetailScreenState extends State<DetailScreen>
             ),
           ),
           centerTitle: true,
-          actions: [
-            Image.asset(IconPaths.home.notifications, height: 40, width: 40),
-            const Gap(16),
-          ],
         ),
 
         // BODY
@@ -85,7 +112,11 @@ class _DetailScreenState extends State<DetailScreen>
               Expanded(
                 child: TabBarView(
                   children: [
-                    OverviewTab(player: player, players: widget.players),
+                    OverviewTab(
+                      player: player,
+                      players: widget.players,
+                      tag: widget.tag,
+                    ),
                     MarketTab(players: widget.players),
                     SingleChildScrollView(
                       child: Padding(
@@ -94,21 +125,15 @@ class _DetailScreenState extends State<DetailScreen>
                           children: [
                             Image.asset(ImagePaths.home.mbapeHistory),
                             Gap(16),
-                            PlayerCardsSection(players: widget.players),
+                            PlayerCardsSection(
+                              players: widget.players,
+                              tabIndex: 2,
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    Center(
-                      child: Text(
-                        "Authenticity",
-                        style: TextStyle(
-                          fontFamily: poppinsBold,
-                          color: Colors.white,
-                          fontSize: 24,
-                        ),
-                      ),
-                    ),
+                    AuthenticityTab(player: player),
                   ],
                 ),
               ),
@@ -470,7 +495,7 @@ class MarketTab extends StatelessWidget {
               ],
             ),
             Gap(16),
-            PlayerCardsSection(players: players),
+            PlayerCardsSection(players: players, tabIndex: 1),
           ],
         ),
       ),
@@ -479,17 +504,23 @@ class MarketTab extends StatelessWidget {
 }
 
 class OverviewTab extends StatelessWidget {
-  const OverviewTab({super.key, required this.player, required this.players});
+  const OverviewTab({
+    super.key,
+    required this.player,
+    required this.players,
+    required this.tag,
+  });
 
   final PlayerModel player;
   final List<PlayerModel> players;
+  final String tag;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          OverviewSection(player: player),
+          OverviewSection(player: player, tag: tag),
           Gap(16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -537,7 +568,7 @@ class OverviewTab extends StatelessWidget {
                               Image.asset(
                                 player.clubImage,
                                 height: 79,
-                                fit: BoxFit.cover,
+                                width: 59,
                               ),
                               Gap(10),
                               Column(
@@ -695,7 +726,7 @@ class OverviewTab extends StatelessWidget {
             ),
           ),
           Gap(16),
-          PlayerCardsSection(players: players),
+          PlayerCardsSection(players: players, tabIndex: 0),
         ],
       ),
     );

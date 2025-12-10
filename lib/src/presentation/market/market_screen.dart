@@ -10,6 +10,7 @@ import 'package:kick26/src/common/widgets/flip_player_card_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/common/widgets/tab_bar_widget.dart';
 import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/presentation/market/market_search_screen.dart';
 import 'package:kick26/src/presentation/market/widgets/list_player_widget.dart';
 import 'package:kick26/src/presentation/market/widgets/search_field_widget.dart';
 
@@ -78,7 +79,17 @@ class _MarketScreenState extends State<MarketScreen>
           // SEARCH FIELD
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: SearchFieldWidget(),
+            child: SearchFieldWidget(
+              readOnly: true,
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => MarketSearchScreen(players: players),
+                    ),
+                  ),
+            ),
           ),
           Gap(6),
 
@@ -134,6 +145,7 @@ class _MarketScreenState extends State<MarketScreen>
                       return FlipPlayerCardWidget(
                         player: player,
                         players: players,
+                        tag: "market_screen_1",
                       );
                     },
                   ),
@@ -155,7 +167,7 @@ class _MarketScreenState extends State<MarketScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Top Mover",
+                        "Trendings",
                         style: TextStyle(
                           fontFamily: poppinsRegular,
                           color: ConstColors.light,
@@ -195,6 +207,7 @@ class _MarketScreenState extends State<MarketScreen>
                       return FlipPlayerCardWidget(
                         player: player,
                         players: players,
+                        tag: "market_screen_2",
                       );
                     },
                   ),
@@ -212,9 +225,9 @@ class _MarketScreenState extends State<MarketScreen>
               tabController: _tabController,
               tabs: const [
                 Tab(text: "All"),
+                Tab(text: "Top Selling"),
                 Tab(text: "Trending"),
-                Tab(text: "Popular"),
-                Tab(text: "Initial Offering"),
+                Tab(text: "New"),
               ],
             ),
           ),

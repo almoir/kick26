@@ -121,7 +121,7 @@ class GoldGradientButton extends StatelessWidget {
       duration: Duration(milliseconds: 250),
       opacity: disabled ? 0.4 : 1.0,
       child: Container(
-        padding: EdgeInsets.all(18),
+        padding: EdgeInsets.all(10),
         height: height,
         width: width,
         decoration: BoxDecoration(
