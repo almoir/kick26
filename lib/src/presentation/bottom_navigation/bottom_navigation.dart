@@ -5,6 +5,7 @@ import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
+import 'package:kick26/src/presentation/menu/menu_screen.dart';
 import 'package:kick26/src/presentation/profile/profile_screen.dart';
 
 import '../home/home_screen.dart';
@@ -30,16 +31,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
     MarketScreen(initialTab: marketTabIndex),
     const PortfolioScreen(),
     const NewsScreen(),
+    MenuScreen(),
   ];
 
   void _onItemTapped(int index) {
-    // Jika index == 4 → buka endDrawer, bukan ganti halaman
-    if (index == 4) {
-      _scaffoldKey.currentState?.openEndDrawer();
-      return;
-    }
-
-    // Untuk tab lain → perubahan normal
     setState(() {
       _marketTabIndex = 0;
       _selectedIndex = index;
@@ -61,6 +56,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
         return "Portfolio";
       case 3:
         return "News & Update";
+      case 4:
+        return "Menu";
       default:
         return "";
     }
@@ -72,19 +69,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
       key: _scaffoldKey,
       drawerEnableOpenDragGesture: false,
       endDrawerEnableOpenDragGesture: false,
-      endDrawer: Drawer(
-        backgroundColor: Colors.black,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(
-            8,
-            (index) => ListTile(
-              title: GoldGradient(child: Text("Choice ${index + 1}")),
-            ),
-          ),
-        ),
-      ),
-
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -112,12 +96,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
               height: 40,
               decoration: BoxDecoration(
                 border: Border.all(color: ConstColors.gold),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
                 child: GoldGradient(
                   child: Image.asset(
-                    IconPaths.general.profileBottomNav,
+                    IconPaths.general.profile,
                     height: 18,
                     width: 18,
                   ),
@@ -218,14 +202,23 @@ class _BottomNavigationState extends State<BottomNavigation> {
           /// INDEX 4 → OPEN DRAWER
           BottomNavigationBarItem(
             icon: Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Image.asset(
-                ImagePaths.general.kick26Logo,
-                width: 50,
-                height: 50,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child:
+                  _selectedIndex == 4
+                      ? GoldGradient(
+                        child: Image.asset(
+                          IconPaths.general.menuBottomNav,
+                          width: 20,
+                          height: 20,
+                        ),
+                      )
+                      : Image.asset(
+                        IconPaths.general.menuBottomNav,
+                        width: 20,
+                        height: 20,
+                      ),
             ),
-            label: '',
+            label: 'Menu',
           ),
         ],
         selectedItemColor: ConstColors.gold,

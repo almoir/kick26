@@ -16,7 +16,8 @@ class General {
   String get cardsBottomNav => '$_basePath/cards_bottom_nav.png';
   String get newsBottomNav => '$_basePath/news_bottom_nav.png';
   String get portfolioBottomNav => '$_basePath/portfolio_bottom_nav.png';
-  String get profileBottomNav => '$_basePath/profile_bottom_nav.png';
+  String get menuBottomNav => '$_basePath/menu_bottom_nav.png';
+  String get profile => '$_basePath/profile.png';
 }
 
 class Home {

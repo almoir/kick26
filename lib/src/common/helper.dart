@@ -23,3 +23,11 @@ String formatPriceWithoutDecimal(double value) {
 String formatDate(DateTime date) {
   return "${date.day}/${date.month}/${date.year}";
 }
+
+String formatTime(DateTime date) {
+  return "${date.hour}:${date.minute}";
+}
+
+String formatDateTime(DateTime date) {
+  return "${date.day}/${date.month}/${date.year}, ${date.hour}:${date.minute}";
+}

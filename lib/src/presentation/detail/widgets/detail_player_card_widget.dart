@@ -20,7 +20,7 @@ class DetailPlayerCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: ConstColors.baseColorDark3,
         borderRadius: BorderRadius.circular(10),
@@ -31,8 +31,8 @@ class DetailPlayerCardWidget extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 24,
-                height: 24,
+                width: 20,
+                height: 20,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Color(0xff252525),
@@ -55,7 +55,7 @@ class DetailPlayerCardWidget extends StatelessWidget {
             title,
             style: TextStyle(
               fontFamily: poppinsMedium,
-              fontSize: 12,
+              fontSize: 10,
               color: ConstColors.light,
             ),
           ),
@@ -63,7 +63,7 @@ class DetailPlayerCardWidget extends StatelessWidget {
             subtitle,
             style: TextStyle(
               fontFamily: poppinsMedium,
-              fontSize: 12,
+              fontSize: 10,
               color: ConstColors.light,
             ),
           ),

@@ -88,9 +88,9 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16),
+              margin: const EdgeInsets.symmetric(horizontal: 8),
               width: double.infinity,
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   begin: Alignment.topRight,
@@ -166,7 +166,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: ConstColors.gold.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(10),
@@ -208,7 +208,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
 
             /// 🔹 Player Cards with animated price
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15),
+              margin: const EdgeInsets.symmetric(horizontal: 8),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: ConstColors.baseColorDark2,
@@ -270,9 +270,6 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                         child:
                             isFrontSide
                                 ? GridView.builder(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                  ),
                                   itemCount: 10,
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
@@ -286,13 +283,10 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                     final reversePlayer =
                                         players.reversed.toList();
                                     final player = reversePlayer[index];
-                                    return SizedBox(
-                                      height: 180,
-                                      child: FlipPlayerCardWidget(
-                                        player: player,
-                                        players: players,
-                                        tag: "portfolio_screen_card_view",
-                                      ),
+                                    return FlipPlayerCardWidget(
+                                      player: player,
+                                      players: players,
+                                      tag: "portfolio_screen_card_view",
                                     );
                                   },
                                 )

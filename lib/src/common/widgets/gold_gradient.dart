@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:kick26/src/common/colors.dart';
 
 class GoldGradient extends StatelessWidget {
   final Widget child;
@@ -36,6 +37,7 @@ class GoldGradientBorder extends StatelessWidget {
   final double borderWidth;
   final double borderRadius;
   final EdgeInsetsGeometry padding;
+  final Color? backgroundColor;
 
   const GoldGradientBorder({
     super.key,
@@ -43,6 +45,7 @@ class GoldGradientBorder extends StatelessWidget {
     this.borderWidth = 2,
     this.borderRadius = 24,
     this.padding = const EdgeInsets.all(16),
+    this.backgroundColor,
   });
 
   @override
@@ -67,7 +70,9 @@ class GoldGradientBorder extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(borderWidth), // untuk "mengurangi" isi border
         decoration: BoxDecoration(
-          color: Colors.black, // background hitam di tengah
+          color:
+              backgroundColor ??
+              ConstColors.baseColorDark, // background hitam di tengah
           borderRadius: BorderRadius.circular(borderRadius - borderWidth),
         ),
         padding: padding,

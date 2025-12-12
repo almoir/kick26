@@ -47,30 +47,8 @@ class _DetailScreenState extends State<DetailScreen>
       length: 4,
       child: Scaffold(
         backgroundColor: ConstColors.baseColorDark,
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: GoldGradientButton(
-                  height: 40,
 
-                  text: "Buy",
-                  onTap: () {},
-                ),
-              ),
-              Gap(10),
-              Flexible(
-                child: GoldGradientButton(
-                  height: 40,
-                  text: "Bid",
-                  onTap: () {},
-                ),
-              ),
-            ],
-          ),
-        ),
+        // APP BAR
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -138,6 +116,33 @@ class _DetailScreenState extends State<DetailScreen>
                 ),
               ),
             ],
+          ),
+        ),
+        // BOTTOM NAV
+        bottomNavigationBar: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: GoldGradientButton(
+                    height: 40,
+
+                    text: "Buy",
+                    onTap: () {},
+                  ),
+                ),
+                Gap(10),
+                Flexible(
+                  child: GoldGradientButton(
+                    height: 40,
+                    text: "Bid",
+                    onTap: () {},
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -555,7 +560,7 @@ class OverviewTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: ConstColors.baseColorDark3,
                         borderRadius: BorderRadius.circular(10),
@@ -567,8 +572,8 @@ class OverviewTab extends StatelessWidget {
                             children: [
                               Image.asset(
                                 player.clubImage,
-                                height: 79,
-                                width: 59,
+                                height: 69,
+                                width: 49,
                               ),
                               Gap(10),
                               Column(
@@ -685,22 +690,22 @@ class OverviewTab extends StatelessWidget {
                             "Price (EUR)",
                             style: TextStyle(
                               fontFamily: poppinsMedium,
-                              fontSize: 12,
+                              fontSize: 10,
                               color: ConstColors.light,
                             ),
                           ),
-                          Gap(7),
+                          Gap(4),
                           Text(
                             formatPriceWithoutDecimal(
                               player.price.roundToDouble(),
                             ),
                             style: TextStyle(
                               fontFamily: poppinsMedium,
-                              fontSize: 22,
+                              fontSize: 16,
                               color: ConstColors.light,
                             ),
                           ),
-                          Gap(7),
+                          Gap(18),
                           Text(
                             "Last Updated:",
                             style: TextStyle(

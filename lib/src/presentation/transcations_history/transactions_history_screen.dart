@@ -6,6 +6,8 @@ import 'package:kick26/src/common/helper.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/data/models/player_model.dart';
 import 'package:kick26/src/data/models/transaction_model.dart';
+import 'package:kick26/src/presentation/transcations_history/detail_bottom_sheet/transaction_detail_bottom_sheet.dart';
+import 'package:uuid/uuid.dart';
 
 class TransactionsHistoryScreen extends StatefulWidget {
   const TransactionsHistoryScreen({super.key, required this.players});
@@ -28,73 +30,73 @@ class _TransactionsHistoryScreenState extends State<TransactionsHistoryScreen> {
 
     transactions = [
       TransactionModel(
-        id: "t1",
+        id: Uuid().v1(),
         player: players[0],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(days: 1, hours: 3)),
       ),
       TransactionModel(
-        id: "t2",
+        id: Uuid().v1(),
         player: players[4],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 2, hours: 6)),
       ),
       TransactionModel(
-        id: "t3",
+        id: Uuid().v1(),
         player: players[7],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(hours: 5)),
       ),
       TransactionModel(
-        id: "t4",
+        id: Uuid().v1(),
         player: players[2],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 3, hours: 2)),
       ),
       TransactionModel(
-        id: "t5",
+        id: Uuid().v1(),
         player: players[9],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(days: 5, hours: 1)),
       ),
       TransactionModel(
-        id: "t6",
+        id: Uuid().v1(),
         player: players[3],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 7)),
       ),
       TransactionModel(
-        id: "t7",
+        id: Uuid().v1(),
         player: players[10],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(days: 8, hours: 4)),
       ),
       TransactionModel(
-        id: "t8",
+        id: Uuid().v1(),
         player: players[1],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 9, hours: 2)),
       ),
       TransactionModel(
-        id: "t9",
+        id: Uuid().v1(),
         player: players[5],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(days: 10)),
       ),
       TransactionModel(
-        id: "t10",
+        id: Uuid().v1(),
         player: players[6],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 12, hours: 6)),
       ),
       TransactionModel(
-        id: "t11",
+        id: Uuid().v1(),
         player: players[8],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(days: 13)),
       ),
       TransactionModel(
-        id: "t12",
+        id: Uuid().v1(),
         player: players[11],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 14, hours: 3)),
@@ -146,125 +148,116 @@ class _TransactionsHistoryScreenState extends State<TransactionsHistoryScreen> {
             final tx = transactions[index];
             final player = tx.player;
 
-            return Container(
-              margin: const EdgeInsets.only(bottom: 14),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: ConstColors.baseColorDark3,
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Row(
-                children: [
-                  // Player Image
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      player.image,
-                      width: 55,
-                      height: 70,
-                      fit: BoxFit.cover,
+            return InkWell(
+              borderRadius: BorderRadius.circular(14),
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (_) => TransactionDetailBottomSheet(transaction: tx),
+                );
+              },
+
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 14),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: ConstColors.baseColorDark3,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Row(
+                  children: [
+                    // Player Image
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        player.image,
+                        width: 55,
+                        height: 70,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
 
-                  const SizedBox(width: 12),
+                    const SizedBox(width: 12),
 
-                  // Player Info & Transaction Detail
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Player Name
-                        Text(
-                          player.name,
-                          style: const TextStyle(
-                            fontFamily: poppinsSemiBold,
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        const SizedBox(height: 4),
-
-                        // Buy/Sell Label
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color:
-                                    tx.isBuy
-                                        ? Colors.green.withValues(alpha: 0.2)
-                                        : Colors.red.withValues(alpha: 0.2),
-                              ),
-                              child: Text(
-                                tx.isBuy ? "BUY" : "SELL",
-                                style: TextStyle(
-                                  color: tx.isBuy ? Colors.green : Colors.red,
-                                  fontFamily: poppinsMedium,
-                                  fontSize: 11,
-                                ),
-                              ),
+                    // Player Info & Transaction Detail
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Player Name
+                          Text(
+                            player.name,
+                            style: TextStyle(
+                              color: ConstColors.light,
+                              fontSize: 14,
+                              fontFamily: poppinsSemiBold,
+                              overflow: TextOverflow.ellipsis,
                             ),
+                          ),
 
-                            const SizedBox(width: 6),
+                          const SizedBox(height: 4),
 
-                            Row(
-                              children: [
-                                Icon(
-                                  player.isUp
-                                      ? Icons.trending_up
-                                      : Icons.trending_down,
-                                  color:
-                                      player.isUp ? Colors.green : Colors.red,
-                                  size: 14,
+                          // Buy/Sell Label
+                          Row(
+                            children: [
+                              GoldGradientBorder(
+                                borderRadius: 6,
+                                borderWidth: 1,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
                                 ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  "${player.trend}%",
-                                  style: TextStyle(
-                                    color:
-                                        player.isUp ? Colors.green : Colors.red,
-                                    fontFamily: poppinsRegular,
-                                    fontSize: 11,
+                                backgroundColor: ConstColors.baseColorDark3,
+                                child: GoldGradient(
+                                  child: Text(
+                                    tx.isBuy ? "BUY" : "SELL",
+                                    style: TextStyle(
+                                      fontFamily: poppinsMedium,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+
+                              const SizedBox(width: 6),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Price + Date
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          tx.isBuy
+                              ? "- €${formatPrice(player.price)}"
+                              : "+ €${formatPrice(player.price)}",
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontFamily: poppinsSemiBold,
+                            color:
+                                tx.isBuy
+                                    ? ConstColors.orange.withValues(alpha: 0.8)
+                                    : ConstColors.green.withValues(alpha: 0.8),
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          formatDateTime(tx.date),
+                          style: TextStyle(
+                            color: ConstColors.gray,
+                            fontSize: 10,
+                            fontFamily: poppinsSemiBold,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-
-                  // Price + Date
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      GoldGradient(
-                        child: Text(
-                          formatPrice(player.price),
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontFamily: poppinsSemiBold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        formatDate(tx.date),
-                        style: const TextStyle(
-                          color: Colors.white54,
-                          fontSize: 11,
-                          fontFamily: poppinsRegular,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },
