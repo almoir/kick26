@@ -1,20 +1,14 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:kick26/src/common/dummy.dart';
-
-const Map<String, dynamic> dummyStats = {
-  "rating": 91,
-  "speed": 85,
-  "shooting": 92,
-  "dribble": 94,
-  "defense": 34,
-  "passing": 90,
-};
 
 class PlayerModel {
   final String id;
   final String name;
   double price; // bukan final -> bisa diupdate
+  final String cardClass;
+  final int owned;
   final String club;
   final String image;
   final String clubImage;
@@ -32,6 +26,8 @@ class PlayerModel {
     required this.id,
     required this.name,
     required this.price,
+    required this.cardClass,
+    required this.owned,
     required this.club,
     required this.image,
     required this.clubImage,
@@ -45,9 +41,9 @@ class PlayerModel {
     required this.goals,
     required this.assists,
   });
-
+  bool get isOwned => owned > 0;
   // helper: buat dari map dummy (yang price-nya string seperti "€99,999.99")
-  factory PlayerModel.fromMap(
+  factory PlayerModel.fromDummyMap(
     Map<String, dynamic> m, {
     double? initialTrend,
     bool? initialIsUp,
@@ -57,6 +53,8 @@ class PlayerModel {
       id: m['id'] as String,
       name: m['name'] as String,
       price: parsedPrice,
+      cardClass: m['cardClass'],
+      owned: m['owned'] as int,
       club: m['club'] as String,
       image: m['image'] as String,
       clubImage: m['clubImage'] as String,
@@ -96,6 +94,145 @@ class PlayerModel {
       return 0.0;
     }
   }
+
+  PlayerModel copyWith({
+    String? id,
+    String? name,
+    double? price,
+    String? cardClass,
+    int? owned,
+    String? club,
+    String? image,
+    String? clubImage,
+    String? countryCode,
+    double? trend,
+    bool? isUp,
+    int? height,
+    int? weight,
+    int? age,
+    int? games,
+    int? goals,
+    int? assists,
+  }) {
+    return PlayerModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      cardClass: cardClass ?? this.cardClass,
+      owned: owned ?? this.owned,
+      club: club ?? this.club,
+      image: image ?? this.image,
+      clubImage: clubImage ?? this.clubImage,
+      countryCode: countryCode ?? this.countryCode,
+      trend: trend ?? this.trend,
+      isUp: isUp ?? this.isUp,
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
+      age: age ?? this.age,
+      games: games ?? this.games,
+      goals: goals ?? this.goals,
+      assists: assists ?? this.assists,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'price': price,
+      'cardClass': cardClass,
+      'owned': owned,
+      'club': club,
+      'image': image,
+      'clubImage': clubImage,
+      'countryCode': countryCode,
+      'trend': trend,
+      'isUp': isUp,
+      'height': height,
+      'weight': weight,
+      'age': age,
+      'games': games,
+      'goals': goals,
+      'assists': assists,
+    };
+  }
+
+  factory PlayerModel.fromMap(Map<String, dynamic> map) {
+    return PlayerModel(
+      id: map['id'] ?? '',
+      name: map['name'] ?? '',
+      price: map['price']?.toDouble() ?? 0.0,
+      cardClass: map['cardClass'] ?? '',
+      owned: map['owned'] ?? 0,
+      club: map['club'] ?? '',
+      image: map['image'] ?? '',
+      clubImage: map['clubImage'] ?? '',
+      countryCode: map['countryCode'] ?? '',
+      trend: map['trend']?.toDouble() ?? 0.0,
+      isUp: map['isUp'] ?? false,
+      height: map['height']?.toInt() ?? 0,
+      weight: map['weight']?.toInt() ?? 0,
+      age: map['age']?.toInt() ?? 0,
+      games: map['games']?.toInt() ?? 0,
+      goals: map['goals']?.toInt() ?? 0,
+      assists: map['assists']?.toInt() ?? 0,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory PlayerModel.fromJson(String source) =>
+      PlayerModel.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'PlayerModel(id: $id, name: $name, price: $price, cardClass: $cardClass, isOwned: $owned, club: $club, image: $image, clubImage: $clubImage, countryCode: $countryCode, trend: $trend, isUp: $isUp, height: $height, weight: $weight, age: $age, games: $games, goals: $goals, assists: $assists)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is PlayerModel &&
+        other.id == id &&
+        other.name == name &&
+        other.price == price &&
+        other.cardClass == cardClass &&
+        other.owned == owned &&
+        other.club == club &&
+        other.image == image &&
+        other.clubImage == clubImage &&
+        other.countryCode == countryCode &&
+        other.trend == trend &&
+        other.isUp == isUp &&
+        other.height == height &&
+        other.weight == weight &&
+        other.age == age &&
+        other.games == games &&
+        other.goals == goals &&
+        other.assists == assists;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        name.hashCode ^
+        price.hashCode ^
+        cardClass.hashCode ^
+        owned.hashCode ^
+        club.hashCode ^
+        image.hashCode ^
+        clubImage.hashCode ^
+        countryCode.hashCode ^
+        trend.hashCode ^
+        isUp.hashCode ^
+        height.hashCode ^
+        weight.hashCode ^
+        age.hashCode ^
+        games.hashCode ^
+        goals.hashCode ^
+        assists.hashCode;
+  }
 }
 
 // generator yang menggunakan dummyPlayers (asumsi dummy.dart berisi List<Map> dummyPlayers)
@@ -104,7 +241,7 @@ List<PlayerModel> generateDummyPlayers({int seed = 0}) {
   return dummyPlayers.map((m) {
     // initial trend dan direction acak tapi proporsional bisa diatur di sini
     final change = (rnd.nextDouble() * 6) - 3; // -3 .. +3 initial
-    return PlayerModel.fromMap(
+    return PlayerModel.fromDummyMap(
       m,
       initialTrend: double.parse(change.toStringAsFixed(2)),
       initialIsUp: change >= 0,
@@ -131,6 +268,9 @@ void updatePlayerTrends(
     // update price: p.price * (1 + changePercent/100)
     final newPrice = p.price * (1 + (changePercent / 100));
     // optional: bataskan price agar tetap realistis
-    p.price = newPrice.clamp(1000.0, 1e7);
+    final minPrice = p.price * 0.5;
+    final maxPrice = p.price * 2;
+
+    p.price = newPrice.clamp(minPrice, maxPrice);
   }
 }

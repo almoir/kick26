@@ -9,8 +9,10 @@ import 'package:kick26/src/common/helper.dart';
 import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
+import 'package:kick26/src/common/widgets/gold_shine_overlay.dart';
 import 'package:kick26/src/data/models/player_model.dart';
 import 'package:kick26/src/presentation/detail/detail_screen.dart';
+import 'package:rive/rive.dart' as riv;
 
 class FlipPlayerCardWidget extends StatefulWidget {
   const FlipPlayerCardWidget({
@@ -105,163 +107,182 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
   // FRONT SIDE (Card Asli Kamu)
   // ==============================
   Widget _buildFront(PlayerModel player) {
-    return Container(
-      width: 140,
-      height: 180,
-      margin: EdgeInsets.only(right: 10),
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [ConstColors.baseColorDark3, ConstColors.baseColorDark4],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          image: AssetImage(ImagePaths.home.borderCard),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Hero(
-                  tag: "${widget.tag}_${player.id}",
-                  child: Image.asset(player.image, fit: BoxFit.contain),
-                ),
-              ),
+    return Stack(
+      children: [
+        Container(
+          width: 140,
+          height: 180,
+          margin: EdgeInsets.only(right: 10),
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [ConstColors.baseColorDark3, ConstColors.baseColorDark4],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-          ),
-
-          ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Column(
+            image:
+                player.cardClass != "S"
+                    ? DecorationImage(
+                      image: AssetImage(ImagePaths.home.borderCard),
+                      fit: BoxFit.cover,
+                    )
+                    : null,
+          ),
+          child: GoldShineOverlay(
+            child: Stack(
               children: [
-                // SS TOP
-                Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Image.asset(IconPaths.home.ss, height: 24),
-                          const Gap(4),
-                          Image.asset(player.clubImage, height: 16),
-                          Text(player.countryCode.toFlag),
-                        ],
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Hero(
+                        tag: "${widget.tag}_${player.id}",
+                        child: Image.asset(player.image, fit: BoxFit.contain),
                       ),
-                      Column(
-                        children: [
-                          GoldGradient(
-                            child: Text(
-                              "41",
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontFamily: poppinsRegular,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 12,
-                            height: 1,
-                            color: ConstColors.darkGray2,
-                          ),
-                          Text(
-                            "60",
-                            style: TextStyle(
-                              color: ConstColors.darkGray,
-                              fontSize: 10,
-                              fontFamily: poppinsRegular,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
                 ),
 
-                // PLAYER DETAILS
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.transparent,
-                          ConstColors.baseColorDark4,
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GoldGradient(
-                          child: Text(
-                            player.name,
-                            style: TextStyle(
-                              fontFamily: poppinsRegular,
-                              fontSize: 10,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const Gap(4),
-                        Row(
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Column(
+                    children: [
+                      // SS TOP
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "€${formatPrice(player.price)}",
-                              style: const TextStyle(
-                                color: ConstColors.light,
-                                fontFamily: poppinsMedium,
-                                fontSize: 12,
-                              ),
-                            ),
-
-                            Row(
+                            Column(
                               children: [
-                                Icon(
-                                  player.isUp
-                                      ? Icons.arrow_drop_up_sharp
-                                      : Icons.arrow_drop_down_sharp,
-                                  color:
-                                      player.isUp
-                                          ? ConstColors.green
-                                          : ConstColors.orange,
-                                  size: 12,
+                                Image.asset(IconPaths.home.ss, height: 24),
+                                const Gap(4),
+                                Image.asset(player.clubImage, height: 16),
+                                Text(player.countryCode.toFlag),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                GoldGradient(
+                                  child: Text(
+                                    "41",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontFamily: poppinsRegular,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 12,
+                                  height: 1,
+                                  color: ConstColors.darkGray2,
                                 ),
                                 Text(
-                                  "${player.trend.toStringAsFixed(2)}%",
+                                  "60",
                                   style: TextStyle(
-                                    fontFamily: poppinsSemiBold,
-                                    fontSize: 8,
-                                    color:
-                                        player.isUp
-                                            ? ConstColors.green
-                                            : ConstColors.orange,
+                                    color: ConstColors.darkGray,
+                                    fontSize: 10,
+                                    fontFamily: poppinsRegular,
                                   ),
                                 ),
                               ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+
+                      // PLAYER DETAILS
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.transparent,
+                                ConstColors.baseColorDark4,
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GoldGradient(
+                                child: Text(
+                                  player.name,
+                                  style: TextStyle(
+                                    fontFamily: poppinsRegular,
+                                    fontSize: 10,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const Gap(4),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "€${formatPrice(player.price)}",
+                                    style: const TextStyle(
+                                      color: ConstColors.light,
+                                      fontFamily: poppinsMedium,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        player.isUp
+                                            ? Icons.arrow_drop_up_sharp
+                                            : Icons.arrow_drop_down_sharp,
+                                        color:
+                                            player.isUp
+                                                ? ConstColors.green
+                                                : ConstColors.orange,
+                                        size: 12,
+                                      ),
+                                      Text(
+                                        "${player.trend.toStringAsFixed(2)}%",
+                                        style: TextStyle(
+                                          fontFamily: poppinsSemiBold,
+                                          fontSize: 8,
+                                          color:
+                                              player.isUp
+                                                  ? ConstColors.green
+                                                  : ConstColors.orange,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-        ],
-      ),
+        ),
+
+        player.cardClass == "S"
+            ? SizedBox(
+              width: 140,
+              height: 180,
+              child: riv.RiveAnimation.asset('assets/animations/cardgold.riv'),
+            )
+            : SizedBox(),
+      ],
     );
   }
 
@@ -269,46 +290,60 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
   // BACK SIDE (Stats Dinamis)
   // ==============================
   Widget _buildBack(PlayerModel player) {
-    return Container(
-      width: 140,
-      height: 180,
-      margin: EdgeInsets.only(right: 10),
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [ConstColors.baseColorDark3, ConstColors.baseColorDark4],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          image: AssetImage(ImagePaths.home.borderCard),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GoldGradient(
-              child: Text(
-                "STATS",
-                style: TextStyle(fontSize: 12, fontFamily: poppinsSemiBold),
-              ),
+    return Stack(
+      children: [
+        Container(
+          width: 140,
+          height: 180,
+          margin: EdgeInsets.only(right: 10),
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [ConstColors.baseColorDark3, ConstColors.baseColorDark4],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-            const Gap(10),
+            borderRadius: BorderRadius.circular(20),
+            image:
+                player.cardClass != "S"
+                    ? DecorationImage(
+                      image: AssetImage(ImagePaths.home.borderCard),
+                      fit: BoxFit.cover,
+                    )
+                    : null,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GoldGradient(
+                  child: Text(
+                    "STATS",
+                    style: TextStyle(fontSize: 12, fontFamily: poppinsSemiBold),
+                  ),
+                ),
+                const Gap(10),
 
-            // === Contoh stats dinamis dari API player model ===
-            _statTile("Height", "${player.height}m"),
-            _statTile("Weight", "${player.weight}kg"),
-            _statTile("Age", "${player.age}yo"),
-            _statTile("Games", "${player.games}"),
-            _statTile("Goals", "${player.goals}"),
-            _statTile("Assits", "${player.assists}"),
-          ],
+                // === Contoh stats dinamis dari API player model ===
+                _statTile("Height", "${player.height}m"),
+                _statTile("Weight", "${player.weight}kg"),
+                _statTile("Age", "${player.age}yo"),
+                _statTile("Games", "${player.games}"),
+                _statTile("Goals", "${player.goals}"),
+                _statTile("Assits", "${player.assists}"),
+              ],
+            ),
+          ),
         ),
-      ),
+        player.cardClass == "S"
+            ? SizedBox(
+              width: 140,
+              height: 180,
+              child: riv.RiveAnimation.asset('assets/animations/cardgold.riv'),
+            )
+            : SizedBox(),
+      ],
     );
   }
 

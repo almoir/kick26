@@ -6,7 +6,7 @@ import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/helper.dart';
 import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/common/widgets/gold_hologram_foil.dart';
+import 'package:kick26/src/common/widgets/gold_shine_overlay.dart';
 import 'package:kick26/src/data/models/player_model.dart';
 
 class OverviewSection extends StatelessWidget {

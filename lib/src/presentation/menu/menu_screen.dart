@@ -72,8 +72,8 @@ class MenuScreen extends StatelessWidget {
                 onTap: () {},
               ),
               MenuCardItem(
-                title: "Help Center",
-                icon: Icons.help_outline,
+                title: "Assistant",
+                icon: Icons.assistant_outlined,
                 onTap: () {},
               ),
               MenuCardItem(

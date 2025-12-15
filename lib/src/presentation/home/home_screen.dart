@@ -25,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String choosenMenu = 'Very Rare';
 
   late List<PlayerModel> players;
+  late List<PlayerModel> ownedPlayers;
+  late List<PlayerModel> notOwnedPlayers;
 
   Timer? _timer;
   final _rnd = Random();
@@ -33,6 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     players = generateDummyPlayers();
+    ownedPlayers = players.where((player) => player.isOwned).toList();
+    notOwnedPlayers = players.where((player) => !player.isOwned).toList();
     // update pertama kali agar tidak kosong (opsional)
     updatePlayerTrends(players, random: _rnd, maxChangePercent: 3);
 
@@ -259,10 +263,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 180,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 10,
+                  itemCount: 5,
                   padding: const EdgeInsets.only(left: 16),
                   itemBuilder: (context, index) {
-                    final player = players[index];
+                    final player = ownedPlayers[index];
                     return FlipPlayerCardWidget(
                       player: player,
                       players: players,

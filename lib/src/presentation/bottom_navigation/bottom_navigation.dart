@@ -24,11 +24,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int _selectedIndex = 0;
-  int _marketTabIndex = 0;
 
-  List<Widget> _widgetOptions({int marketTabIndex = 0}) => <Widget>[
-    HomeScreen(onTapTrending: _onTapTrending),
-    MarketScreen(initialTab: marketTabIndex),
+  List<Widget> _widgetOptions() => <Widget>[
+    HomeScreen(onTapTrending: _onTapMyPlayerCard),
+    MarketScreen(),
     const PortfolioScreen(),
     const NewsScreen(),
     MenuScreen(),
@@ -36,15 +35,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _marketTabIndex = 0;
       _selectedIndex = index;
     });
   }
 
-  void _onTapTrending() {
+  void _onTapMyPlayerCard() {
     setState(() {
-      _marketTabIndex = 1;
-      _selectedIndex = 1;
+      _selectedIndex = 2;
     });
   }
 
@@ -113,7 +110,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ],
       ),
 
-      body: _widgetOptions(marketTabIndex: _marketTabIndex)[_selectedIndex],
+      body: _widgetOptions()[_selectedIndex],
 
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xFF0C0C0C),
@@ -156,7 +153,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         height: 20,
                       ),
             ),
-            label: 'Cards',
+            label: 'Market',
           ),
           BottomNavigationBarItem(
             icon: Padding(

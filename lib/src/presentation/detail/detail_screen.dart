@@ -34,11 +34,13 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen>
     with SingleTickerProviderStateMixin {
   late PlayerModel player;
+  late List<PlayerModel> notOwnedPlayers;
 
   @override
   void initState() {
     super.initState();
     player = widget.player;
+    notOwnedPlayers = widget.players.where((p) => !p.isOwned).toList();
   }
 
   @override
@@ -70,7 +72,7 @@ class _DetailScreenState extends State<DetailScreen>
             ),
           ),
           title: Text(
-            "Player Details",
+            "Player Card Details",
             style: TextStyle(
               color: ConstColors.light,
               fontFamily: poppinsSemiBold,
@@ -92,10 +94,10 @@ class _DetailScreenState extends State<DetailScreen>
                   children: [
                     OverviewTab(
                       player: player,
-                      players: widget.players,
+                      players: notOwnedPlayers,
                       tag: widget.tag,
                     ),
-                    MarketTab(players: widget.players),
+                    MarketTab(players: notOwnedPlayers),
                     SingleChildScrollView(
                       child: Padding(
                         padding: const EdgeInsets.all(16),
@@ -104,7 +106,7 @@ class _DetailScreenState extends State<DetailScreen>
                             Image.asset(ImagePaths.home.mbapeHistory),
                             Gap(16),
                             PlayerCardsSection(
-                              players: widget.players,
+                              players: notOwnedPlayers,
                               tabIndex: 2,
                             ),
                           ],
@@ -133,14 +135,16 @@ class _DetailScreenState extends State<DetailScreen>
                     onTap: () {},
                   ),
                 ),
-                Gap(10),
-                Flexible(
-                  child: GoldGradientButton(
-                    height: 40,
-                    text: "Bid",
-                    onTap: () {},
-                  ),
-                ),
+                player.isOwned ? Gap(10) : SizedBox(),
+                player.isOwned
+                    ? Flexible(
+                      child: GoldGradientButton(
+                        height: 40,
+                        text: "Sell",
+                        onTap: () {},
+                      ),
+                    )
+                    : SizedBox(),
               ],
             ),
           ),
@@ -532,62 +536,76 @@ class OverviewTab extends StatelessWidget {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    DetailPlayerCardWidget(
-                      name: "Age",
-                      icon: IconPaths.detailPlayer.calendar,
-                      title: "${player.age} Year",
-                      subtitle: "Dec 20, 1998",
+                    Expanded(
+                      child: DetailPlayerCardWidget(
+                        name: "Age",
+                        icon: IconPaths.detailPlayer.calendar,
+                        title: "${player.age} Year",
+                        subtitle: "Dec 20, 1998",
+                      ),
                     ),
-                    DetailPlayerCardWidget(
-                      name: "Awards",
-                      icon: IconPaths.detailPlayer.awards,
-                      title: "Golden Boy 20..",
-                      subtitle: "POTM WC 2018",
+                    Gap(8),
+                    Expanded(
+                      child: DetailPlayerCardWidget(
+                        name: "Awards",
+                        icon: IconPaths.detailPlayer.awards,
+                        title: "Golden Boy 20..",
+                        subtitle: "POTM WC 2018",
+                      ),
                     ),
-                    DetailPlayerCardWidget(
-                      name: "Height",
-                      icon: IconPaths.detailPlayer.height,
-                      title: "${player.height}m",
-                      subtitle: "(5 ft 10 inches)",
+                    Gap(8),
+                    Expanded(
+                      child: DetailPlayerCardWidget(
+                        name: "Height",
+                        icon: IconPaths.detailPlayer.height,
+                        title: "${player.height}m",
+                        subtitle: "(5 ft 10 inches)",
+                      ),
                     ),
                   ],
                 ),
                 Gap(10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: ConstColors.baseColorDark3,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Image.asset(
-                                player.clubImage,
-                                height: 69,
-                                width: 49,
-                              ),
-                              Gap(10),
-                              Column(
+                    /// LEFT CARD
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: ConstColors.baseColorDark3,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              player.clubImage,
+                              height: 69,
+                              width: 49,
+                              fit: BoxFit.contain,
+                            ),
+                            const SizedBox(width: 8),
+
+                            /// ⬇️ PENTING: Expanded
+                            Expanded(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     player.club,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontFamily: poppinsMedium,
                                       fontSize: 12,
                                       color: ConstColors.light,
                                     ),
                                   ),
-                                  Gap(4),
+
+                                  const SizedBox(height: 4),
+
                                   Row(
                                     children: [
                                       Image.asset(
@@ -595,134 +613,98 @@ class OverviewTab extends StatelessWidget {
                                         width: 12,
                                         height: 11,
                                       ),
-                                      Gap(4),
-                                      Text(
-                                        "La Liga",
-                                        style: TextStyle(
-                                          fontFamily: poppinsMedium,
-                                          fontSize: 10,
-                                          color: ConstColors.light,
+                                      const SizedBox(width: 4),
+                                      Expanded(
+                                        child: Text(
+                                          "La Liga",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontFamily: poppinsMedium,
+                                            fontSize: 10,
+                                            color: ConstColors.light,
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                  Gap(8),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "League Level: ",
-                                        style: TextStyle(
-                                          fontFamily: poppinsLight,
-                                          fontSize: 10,
-                                          color: ConstColors.gray,
-                                        ),
-                                      ),
-                                      Text(
+
+                                  const SizedBox(height: 8),
+
+                                  InfoRow(
+                                    label: "League Level:",
+                                    value:
                                         "${player.countryCode.toFlag} First Tier",
-                                        style: TextStyle(
-                                          fontFamily: poppinsMedium,
-                                          fontSize: 10,
-                                          color: ConstColors.light,
-                                        ),
-                                      ),
-                                    ],
                                   ),
-                                  Gap(2),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Joined: ",
-                                        style: TextStyle(
-                                          fontFamily: poppinsLight,
-                                          fontSize: 10,
-                                          color: ConstColors.gray,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Jul 1, 2024",
-                                        style: TextStyle(
-                                          fontFamily: poppinsMedium,
-                                          fontSize: 10,
-                                          color: ConstColors.light,
-                                        ),
-                                      ),
-                                    ],
+                                  InfoRow(
+                                    label: "Joined:",
+                                    value: "Jul 1, 2024",
                                   ),
-                                  Gap(2),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Contract Exp: ",
-                                        style: TextStyle(
-                                          fontFamily: poppinsLight,
-                                          fontSize: 10,
-                                          color: ConstColors.gray,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Jun 30, 2029",
-                                        style: TextStyle(
-                                          fontFamily: poppinsMedium,
-                                          fontSize: 10,
-                                          color: ConstColors.light,
-                                        ),
-                                      ),
-                                    ],
+                                  InfoRow(
+                                    label: "Contract Exp:",
+                                    value: "Jun 30, 2029",
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    Gap(8),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: ConstColors.baseColorDark3,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Price (EUR)",
-                            style: TextStyle(
-                              fontFamily: poppinsMedium,
-                              fontSize: 10,
-                              color: ConstColors.light,
+
+                    const SizedBox(width: 8),
+
+                    /// RIGHT CARD
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: ConstColors.baseColorDark3,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Price (EUR)",
+                              style: TextStyle(
+                                fontFamily: poppinsMedium,
+                                fontSize: 10,
+                                color: ConstColors.light,
+                              ),
                             ),
-                          ),
-                          Gap(4),
-                          Text(
-                            formatPriceWithoutDecimal(
-                              player.price.roundToDouble(),
+                            const SizedBox(height: 8),
+                            Text(
+                              formatPrice(player.price),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontFamily: poppinsMedium,
+                                fontSize: 18,
+                                color: ConstColors.light,
+                              ),
                             ),
-                            style: TextStyle(
-                              fontFamily: poppinsMedium,
-                              fontSize: 16,
-                              color: ConstColors.light,
+                            const SizedBox(height: 22),
+                            Text(
+                              "Last Updated:",
+                              style: TextStyle(
+                                fontFamily: poppinsRegular,
+                                fontSize: 8,
+                                color: ConstColors.gray,
+                              ),
                             ),
-                          ),
-                          Gap(18),
-                          Text(
-                            "Last Updated:",
-                            style: TextStyle(
-                              fontFamily: poppinsLight,
-                              fontSize: 10,
-                              color: ConstColors.gray,
+                            Text(
+                              DateFormat("MMM dd, yyyy").format(DateTime.now()),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontFamily: poppinsBold,
+                                fontSize: 8,
+                                color: ConstColors.gray,
+                              ),
                             ),
-                          ),
-                          Text(
-                            DateFormat("MMM dd, yyyy").format(DateTime.now()),
-                            style: TextStyle(
-                              fontFamily: poppinsMedium,
-                              fontSize: 10,
-                              color: ConstColors.gray,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -732,6 +714,44 @@ class OverviewTab extends StatelessWidget {
           ),
           Gap(16),
           PlayerCardsSection(players: players, tabIndex: 0),
+        ],
+      ),
+    );
+  }
+}
+
+class InfoRow extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const InfoRow({super.key, required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 2),
+      child: Wrap(
+        spacing: 4,
+        runSpacing: 2,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: poppinsLight,
+              fontSize: 10,
+              color: ConstColors.gray,
+            ),
+          ),
+          Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontFamily: poppinsMedium,
+              fontSize: 10,
+              color: ConstColors.light,
+            ),
+          ),
         ],
       ),
     );

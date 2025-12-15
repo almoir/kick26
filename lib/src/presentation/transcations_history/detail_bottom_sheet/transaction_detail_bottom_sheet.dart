@@ -150,8 +150,8 @@ class TransactionDetailBottomSheet extends StatelessWidget {
                                 : "+ €${formatPrice(player.price)}",
                             valueColor:
                                 transaction.isBuy
-                                    ? ConstColors.orange.withOpacity(0.8)
-                                    : ConstColors.green.withOpacity(0.8),
+                                    ? ConstColors.orange.withValues(alpha: .8)
+                                    : ConstColors.green.withValues(alpha: .8),
                           ),
                           _divider(),
                           _detailRow("Date", formatDate(transaction.date)),

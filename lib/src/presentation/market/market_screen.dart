@@ -30,8 +30,7 @@ void updatePlayerPrices(
 }
 
 class MarketScreen extends StatefulWidget {
-  final int initialTab;
-  const MarketScreen({super.key, this.initialTab = 0});
+  const MarketScreen({super.key});
 
   @override
   State<MarketScreen> createState() => _MarketScreenState();
@@ -41,19 +40,19 @@ class _MarketScreenState extends State<MarketScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late List<PlayerModel> players;
+  late List<PlayerModel> ownedPlayers;
+  late List<PlayerModel> notOwnedPlayers;
   Timer? _timer;
   final _rnd = Random();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      length: 4,
-      vsync: this,
-      initialIndex: widget.initialTab,
-    );
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
 
     players = generateDummyPlayers();
+    ownedPlayers = players.where((player) => player.isOwned).toList();
+    notOwnedPlayers = players.where((player) => !player.isOwned).toList();
 
     // 🔹 Update harga tiap 5 detik
     _timer = Timer.periodic(const Duration(seconds: 5), (_) {
@@ -141,7 +140,7 @@ class _MarketScreenState extends State<MarketScreen>
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     itemBuilder: (context, index) {
-                      final player = players.sublist(10, 20)[index];
+                      final player = notOwnedPlayers.sublist(10, 20)[index];
                       return FlipPlayerCardWidget(
                         player: player,
                         players: players,
@@ -155,7 +154,7 @@ class _MarketScreenState extends State<MarketScreen>
           ),
           Gap(24),
 
-          // TOP MOVER
+          // TRENDINGS
           SizedBox(
             height: 222,
             child: Column(
@@ -203,7 +202,7 @@ class _MarketScreenState extends State<MarketScreen>
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     itemBuilder: (context, index) {
-                      final player = players.sublist(30, 40)[index];
+                      final player = notOwnedPlayers.sublist(30, 40)[index];
                       return FlipPlayerCardWidget(
                         player: player,
                         players: players,
@@ -237,10 +236,10 @@ class _MarketScreenState extends State<MarketScreen>
             child: TabBarView(
               controller: _tabController,
               children: [
-                ListPlayersWidget(players: players),
-                ListPlayersWidget(players: players.sublist(6, 12)),
-                ListPlayersWidget(players: players.sublist(12, 18)),
-                ListPlayersWidget(players: players.sublist(18, 24)),
+                ListPlayersWidget(players: notOwnedPlayers),
+                ListPlayersWidget(players: notOwnedPlayers.sublist(6, 12)),
+                ListPlayersWidget(players: notOwnedPlayers.sublist(12, 18)),
+                ListPlayersWidget(players: notOwnedPlayers.sublist(18, 24)),
               ],
             ),
           ),

@@ -21,9 +21,12 @@ class PortfolioScreen extends StatefulWidget {
 
 class _PortfolioScreenState extends State<PortfolioScreen>
     with SingleTickerProviderStateMixin {
-  final List<Map<String, dynamic>> _players = dummyPlayers.reversed.toList();
+  final List<Map<String, dynamic>> _players =
+      dummyPlayers.where((p) => p['owned'] > 0).toList();
 
   late List<PlayerModel> players;
+  late List<PlayerModel> ownedPlayers;
+  late List<PlayerModel> notOwnedPlayers;
   late AnimationController _controller;
   bool isCardView = true;
 
@@ -32,6 +35,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     super.initState();
     _simulatePriceChange();
     players = generateDummyPlayers();
+    ownedPlayers = players.where((player) => player.isOwned).toList();
+    notOwnedPlayers = players.where((player) => !player.isOwned).toList();
     _controller = AnimationController(
       duration: const Duration(milliseconds: 600),
       vsync: this,
@@ -280,9 +285,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                         crossAxisCount: 2,
                                       ),
                                   itemBuilder: (context, index) {
-                                    final reversePlayer =
-                                        players.reversed.toList();
-                                    final player = reversePlayer[index];
+                                    final player = ownedPlayers[index];
                                     return FlipPlayerCardWidget(
                                       player: player,
                                       players: players,
