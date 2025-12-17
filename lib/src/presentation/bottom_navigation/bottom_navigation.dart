@@ -14,7 +14,9 @@ import '../news/news_screen.dart';
 import '../portfolio/portfolio_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({super.key});
+  const BottomNavigation({super.key, this.initialIndex = 0});
+
+  final int initialIndex;
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
@@ -23,7 +25,7 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  int _selectedIndex = 0;
+  late int _selectedIndex;
 
   List<Widget> _widgetOptions() => <Widget>[
     HomeScreen(onTapTrending: _onTapMyPlayerCard),
@@ -61,6 +63,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -75,19 +84,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 ? Image.asset(ImagePaths.general.kick26Logo, height: 24)
                 : Text(
                   appBarTitle(_selectedIndex),
-                  style: const TextStyle(
-                    fontFamily: poppinsMedium,
-                    fontSize: 16,
-                    color: ConstColors.light,
-                  ),
+                  style: const TextStyle(fontFamily: poppinsMedium, fontSize: 16, color: ConstColors.light),
                 ),
         actions: [
           GestureDetector(
-            onTap:
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                ),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen())),
             child: Container(
               width: 40,
               height: 40,
@@ -95,15 +96,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 border: Border.all(color: ConstColors.gold),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Center(
-                child: GoldGradient(
-                  child: Image.asset(
-                    IconPaths.general.profile,
-                    height: 18,
-                    width: 18,
-                  ),
-                ),
-              ),
+              child: Center(child: GoldGradient(child: Image.asset(IconPaths.general.profile, height: 18, width: 18))),
             ),
           ),
           const Gap(16),
@@ -120,18 +113,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child:
                   _selectedIndex == 0
-                      ? GoldGradient(
-                        child: Image.asset(
-                          IconPaths.general.homeBottomNav,
-                          width: 20,
-                          height: 20,
-                        ),
-                      )
-                      : Image.asset(
-                        IconPaths.general.homeBottomNav,
-                        width: 20,
-                        height: 20,
-                      ),
+                      ? GoldGradient(child: Image.asset(IconPaths.general.homeBottomNav, width: 20, height: 20))
+                      : Image.asset(IconPaths.general.homeBottomNav, width: 20, height: 20),
             ),
             label: 'Home',
           ),
@@ -140,18 +123,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child:
                   _selectedIndex == 1
-                      ? GoldGradient(
-                        child: Image.asset(
-                          IconPaths.general.cardsBottomNav,
-                          width: 20,
-                          height: 20,
-                        ),
-                      )
-                      : Image.asset(
-                        IconPaths.general.cardsBottomNav,
-                        width: 20,
-                        height: 20,
-                      ),
+                      ? GoldGradient(child: Image.asset(IconPaths.general.cardsBottomNav, width: 20, height: 20))
+                      : Image.asset(IconPaths.general.cardsBottomNav, width: 20, height: 20),
             ),
             label: 'Market',
           ),
@@ -160,18 +133,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child:
                   _selectedIndex == 2
-                      ? GoldGradient(
-                        child: Image.asset(
-                          IconPaths.general.portfolioBottomNav,
-                          width: 20,
-                          height: 20,
-                        ),
-                      )
-                      : Image.asset(
-                        IconPaths.general.portfolioBottomNav,
-                        width: 20,
-                        height: 20,
-                      ),
+                      ? GoldGradient(child: Image.asset(IconPaths.general.portfolioBottomNav, width: 20, height: 20))
+                      : Image.asset(IconPaths.general.portfolioBottomNav, width: 20, height: 20),
             ),
             label: 'Portfolio',
           ),
@@ -180,18 +143,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child:
                   _selectedIndex == 3
-                      ? GoldGradient(
-                        child: Image.asset(
-                          IconPaths.general.newsBottomNav,
-                          width: 20,
-                          height: 20,
-                        ),
-                      )
-                      : Image.asset(
-                        IconPaths.general.newsBottomNav,
-                        width: 20,
-                        height: 20,
-                      ),
+                      ? GoldGradient(child: Image.asset(IconPaths.general.newsBottomNav, width: 20, height: 20))
+                      : Image.asset(IconPaths.general.newsBottomNav, width: 20, height: 20),
             ),
             label: 'News',
           ),
@@ -202,32 +155,16 @@ class _BottomNavigationState extends State<BottomNavigation> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child:
                   _selectedIndex == 4
-                      ? GoldGradient(
-                        child: Image.asset(
-                          IconPaths.general.menuBottomNav,
-                          width: 20,
-                          height: 20,
-                        ),
-                      )
-                      : Image.asset(
-                        IconPaths.general.menuBottomNav,
-                        width: 20,
-                        height: 20,
-                      ),
+                      ? GoldGradient(child: Image.asset(IconPaths.general.menuBottomNav, width: 20, height: 20))
+                      : Image.asset(IconPaths.general.menuBottomNav, width: 20, height: 20),
             ),
             label: 'Menu',
           ),
         ],
         selectedItemColor: ConstColors.gold,
-        selectedLabelStyle: const TextStyle(
-          fontFamily: poppinsRegular,
-          fontSize: 12,
-        ),
+        selectedLabelStyle: const TextStyle(fontFamily: poppinsRegular, fontSize: 12),
         unselectedItemColor: ConstColors.gray,
-        unselectedLabelStyle: const TextStyle(
-          fontFamily: poppinsRegular,
-          fontSize: 12,
-        ),
+        unselectedLabelStyle: const TextStyle(fontFamily: poppinsRegular, fontSize: 12),
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
         onTap: _onItemTapped,

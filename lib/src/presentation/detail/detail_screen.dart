@@ -9,19 +9,16 @@ import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/presentation/buy_player_card/buy_player_card_screen.dart';
 import 'package:kick26/src/presentation/detail/sections/overview_section.dart';
 import 'package:kick26/src/presentation/detail/sections/player_card_section.dart';
 import 'package:kick26/src/presentation/detail/tabs/authenticity_tab.dart';
 import 'package:kick26/src/presentation/detail/widgets/detail_player_card_widget.dart';
 import 'package:kick26/src/presentation/detail/widgets/detail_player_tab_bar.dart';
+import 'package:kick26/src/presentation/sell_player_card/sell_player_card_screen.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({
-    super.key,
-    required this.player,
-    required this.players,
-    required this.tag,
-  });
+  const DetailScreen({super.key, required this.player, required this.players, required this.tag});
 
   final PlayerModel player;
   final List<PlayerModel> players;
@@ -31,8 +28,7 @@ class DetailScreen extends StatefulWidget {
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen>
-    with SingleTickerProviderStateMixin {
+class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderStateMixin {
   late PlayerModel player;
   late List<PlayerModel> notOwnedPlayers;
 
@@ -60,24 +56,13 @@ class _DetailScreenState extends State<DetailScreen>
             child: Container(
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: ConstColors.baseColorDark5),
-              ),
-              child: Center(
-                child: GoldGradient(
-                  child: const Icon(Icons.chevron_left, size: 28),
-                ),
-              ),
+              decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: ConstColors.baseColorDark5)),
+              child: Center(child: GoldGradient(child: const Icon(Icons.chevron_left, size: 28))),
             ),
           ),
           title: Text(
             "Player Card Details",
-            style: TextStyle(
-              color: ConstColors.light,
-              fontFamily: poppinsSemiBold,
-              fontSize: 15,
-            ),
+            style: TextStyle(color: ConstColors.light, fontFamily: poppinsSemiBold, fontSize: 15),
           ),
           centerTitle: true,
         ),
@@ -92,11 +77,7 @@ class _DetailScreenState extends State<DetailScreen>
               Expanded(
                 child: TabBarView(
                   children: [
-                    OverviewTab(
-                      player: player,
-                      players: notOwnedPlayers,
-                      tag: widget.tag,
-                    ),
+                    OverviewTab(player: player, players: notOwnedPlayers, tag: widget.tag),
                     MarketTab(players: notOwnedPlayers),
                     SingleChildScrollView(
                       child: Padding(
@@ -105,10 +86,7 @@ class _DetailScreenState extends State<DetailScreen>
                           children: [
                             Image.asset(ImagePaths.home.mbapeHistory),
                             Gap(16),
-                            PlayerCardsSection(
-                              players: notOwnedPlayers,
-                              tabIndex: 2,
-                            ),
+                            PlayerCardsSection(players: notOwnedPlayers, tabIndex: 2),
                           ],
                         ),
                       ),
@@ -130,9 +108,13 @@ class _DetailScreenState extends State<DetailScreen>
                 Flexible(
                   child: GoldGradientButton(
                     height: 40,
-
                     text: "Buy",
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BuyPlayerCardScreen(player: player)),
+                      );
+                    },
                   ),
                 ),
                 player.isOwned ? Gap(10) : SizedBox(),
@@ -141,7 +123,12 @@ class _DetailScreenState extends State<DetailScreen>
                       child: GoldGradientButton(
                         height: 40,
                         text: "Sell",
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SellPlayerCardScreen(player: player)),
+                          );
+                        },
                       ),
                     )
                     : SizedBox(),
@@ -171,85 +158,34 @@ class MarketTab extends StatelessWidget {
             Gap(16),
             Container(
               padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: ConstColors.baseColorDark3,
-                borderRadius: BorderRadius.circular(10),
-              ),
+              decoration: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(10)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Recent Trades",
-                    style: TextStyle(
-                      fontFamily: poppinsMedium,
-                      color: ConstColors.light,
-                    ),
-                  ),
+                  Text("Recent Trades", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                   Gap(8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "+EUR 2,330",
-                        style: TextStyle(
-                          fontFamily: poppinsMedium,
-                          color: ConstColors.green2,
-                        ),
-                      ),
-                      Text(
-                        "125 Cards",
-                        style: TextStyle(
-                          fontFamily: poppinsMedium,
-                          color: ConstColors.light,
-                        ),
-                      ),
-                      Text(
-                        "EUR 18.64",
-                        style: TextStyle(
-                          fontFamily: poppinsMedium,
-                          color: ConstColors.light,
-                        ),
-                      ),
+                      Text("+EUR 2,330", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.green2)),
+                      Text("125 Cards", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
+                      Text("EUR 18.64", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                     ],
                   ),
                   Gap(4),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "-EUR 1,850",
-                        style: TextStyle(
-                          fontFamily: poppinsMedium,
-                          color: ConstColors.orange,
-                        ),
-                      ),
-                      Text(
-                        "100 Cards",
-                        style: TextStyle(
-                          fontFamily: poppinsMedium,
-                          color: ConstColors.light,
-                        ),
-                      ),
-                      Text(
-                        "EUR 18.50",
-                        style: TextStyle(
-                          fontFamily: poppinsMedium,
-                          color: ConstColors.light,
-                        ),
-                      ),
+                      Text("-EUR 1,850", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.orange)),
+                      Text("100 Cards", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
+                      Text("EUR 18.50", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                     ],
                   ),
                 ],
               ),
             ),
             Gap(16),
-            Text(
-              "Revenue Stream Breakdown",
-              style: TextStyle(
-                fontFamily: poppinsMedium,
-                color: ConstColors.light,
-              ),
-            ),
+            Text("Revenue Stream Breakdown", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
             Gap(10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -267,21 +203,9 @@ class MarketTab extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Ticketing",
-                              style: TextStyle(
-                                fontFamily: poppinsMedium,
-                                color: ConstColors.light,
-                              ),
-                            ),
+                            Text("Ticketing", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                             GoldGradient(
-                              child: Text(
-                                "35%",
-                                style: TextStyle(
-                                  fontFamily: poppinsMedium,
-                                  color: ConstColors.light,
-                                ),
-                              ),
+                              child: Text("35%", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                             ),
                           ],
                         ),
@@ -289,21 +213,9 @@ class MarketTab extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Merch",
-                              style: TextStyle(
-                                fontFamily: poppinsMedium,
-                                color: ConstColors.light,
-                              ),
-                            ),
+                            Text("Merch", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                             GoldGradient(
-                              child: Text(
-                                "20%",
-                                style: TextStyle(
-                                  fontFamily: poppinsMedium,
-                                  color: ConstColors.light,
-                                ),
-                              ),
+                              child: Text("20%", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                             ),
                           ],
                         ),
@@ -325,21 +237,9 @@ class MarketTab extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Broadcasting",
-                              style: TextStyle(
-                                fontFamily: poppinsMedium,
-                                color: ConstColors.light,
-                              ),
-                            ),
+                            Text("Broadcasting", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                             GoldGradient(
-                              child: Text(
-                                "30%",
-                                style: TextStyle(
-                                  fontFamily: poppinsMedium,
-                                  color: ConstColors.light,
-                                ),
-                              ),
+                              child: Text("30%", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                             ),
                           ],
                         ),
@@ -347,21 +247,9 @@ class MarketTab extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Other",
-                              style: TextStyle(
-                                fontFamily: poppinsMedium,
-                                color: ConstColors.light,
-                              ),
-                            ),
+                            Text("Other", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                             GoldGradient(
-                              child: Text(
-                                "15%",
-                                style: TextStyle(
-                                  fontFamily: poppinsMedium,
-                                  color: ConstColors.light,
-                                ),
-                              ),
+                              child: Text("15%", style: TextStyle(fontFamily: poppinsMedium, color: ConstColors.light)),
                             ),
                           ],
                         ),
@@ -372,12 +260,7 @@ class MarketTab extends StatelessWidget {
               ],
             ),
             Gap(16),
-            GoldGradient(
-              child: const Text(
-                'Live Feed',
-                style: TextStyle(fontFamily: poppinsRegular),
-              ),
-            ),
+            GoldGradient(child: const Text('Live Feed', style: TextStyle(fontFamily: poppinsRegular))),
             Gap(12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -397,19 +280,9 @@ class MarketTab extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(12, 12, 12, 0),
                           child: Row(
                             children: [
-                              Image.asset(
-                                IconPaths.home.file,
-                                width: 12,
-                                height: 12,
-                              ),
+                              Image.asset(IconPaths.home.file, width: 12, height: 12),
                               Gap(4),
-                              Text(
-                                "Recent Issuances",
-                                style: TextStyle(
-                                  color: ConstColors.light,
-                                  fontSize: 12,
-                                ),
-                              ),
+                              Text("Recent Issuances", style: TextStyle(color: ConstColors.light, fontSize: 12)),
                             ],
                           ),
                         ),
@@ -418,10 +291,7 @@ class MarketTab extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 12),
                           child: Text(
                             "3 new cards have been issued",
-                            style: TextStyle(
-                              color: ConstColors.darkGray,
-                              fontSize: 12,
-                            ),
+                            style: TextStyle(color: ConstColors.darkGray, fontSize: 12),
                           ),
                         ),
                         Gap(8),
@@ -431,19 +301,9 @@ class MarketTab extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 12),
                           child: Row(
                             children: [
-                              Image.asset(
-                                IconPaths.home.graph,
-                                width: 12,
-                                height: 12,
-                              ),
+                              Image.asset(IconPaths.home.graph, width: 12, height: 12),
                               Gap(4),
-                              Text(
-                                "Large Trades",
-                                style: TextStyle(
-                                  color: ConstColors.light,
-                                  fontSize: 12,
-                                ),
-                              ),
+                              Text("Large Trades", style: TextStyle(color: ConstColors.light, fontSize: 12)),
                             ],
                           ),
                         ),
@@ -452,10 +312,7 @@ class MarketTab extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(12, 0, 12, 12),
                           child: Text(
                             "€250K trade executed",
-                            style: TextStyle(
-                              color: ConstColors.darkGray,
-                              fontSize: 12,
-                            ),
+                            style: TextStyle(color: ConstColors.darkGray, fontSize: 12),
                           ),
                         ),
                       ],
@@ -478,21 +335,9 @@ class MarketTab extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "MARKET CAP",
-                              style: TextStyle(
-                                color: ConstColors.light,
-                                fontSize: 12,
-                              ),
-                            ),
+                            Text("MARKET CAP", style: TextStyle(color: ConstColors.light, fontSize: 12)),
                             Gap(4),
-                            Text(
-                              "24H",
-                              style: TextStyle(
-                                color: ConstColors.darkGray,
-                                fontSize: 12,
-                              ),
-                            ),
+                            Text("24H", style: TextStyle(color: ConstColors.darkGray, fontSize: 12)),
                           ],
                         ),
                         Gap(4),
@@ -513,12 +358,7 @@ class MarketTab extends StatelessWidget {
 }
 
 class OverviewTab extends StatelessWidget {
-  const OverviewTab({
-    super.key,
-    required this.player,
-    required this.players,
-    required this.tag,
-  });
+  const OverviewTab({super.key, required this.player, required this.players, required this.tag});
 
   final PlayerModel player;
   final List<PlayerModel> players;
@@ -580,12 +420,7 @@ class OverviewTab extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Image.asset(
-                              player.clubImage,
-                              height: 69,
-                              width: 49,
-                              fit: BoxFit.contain,
-                            ),
+                            Image.asset(player.clubImage, height: 69, width: 49, fit: BoxFit.contain),
                             const SizedBox(width: 8),
 
                             /// ⬇️ PENTING: Expanded
@@ -597,22 +432,14 @@ class OverviewTab extends StatelessWidget {
                                     player.club,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontFamily: poppinsMedium,
-                                      fontSize: 12,
-                                      color: ConstColors.light,
-                                    ),
+                                    style: TextStyle(fontFamily: poppinsMedium, fontSize: 12, color: ConstColors.light),
                                   ),
 
                                   const SizedBox(height: 4),
 
                                   Row(
                                     children: [
-                                      Image.asset(
-                                        ImagePaths.general.laliga,
-                                        width: 12,
-                                        height: 11,
-                                      ),
+                                      Image.asset(ImagePaths.general.laliga, width: 12, height: 11),
                                       const SizedBox(width: 4),
                                       Expanded(
                                         child: Text(
@@ -631,19 +458,9 @@ class OverviewTab extends StatelessWidget {
 
                                   const SizedBox(height: 8),
 
-                                  InfoRow(
-                                    label: "League Level:",
-                                    value:
-                                        "${player.countryCode.toFlag} First Tier",
-                                  ),
-                                  InfoRow(
-                                    label: "Joined:",
-                                    value: "Jul 1, 2024",
-                                  ),
-                                  InfoRow(
-                                    label: "Contract Exp:",
-                                    value: "Jun 30, 2029",
-                                  ),
+                                  InfoRow(label: "League Level:", value: "${player.countryCode.toFlag} First Tier"),
+                                  InfoRow(label: "Joined:", value: "Jul 1, 2024"),
+                                  InfoRow(label: "Contract Exp:", value: "Jun 30, 2029"),
                                 ],
                               ),
                             ),
@@ -667,41 +484,25 @@ class OverviewTab extends StatelessWidget {
                           children: [
                             Text(
                               "Price (EUR)",
-                              style: TextStyle(
-                                fontFamily: poppinsMedium,
-                                fontSize: 10,
-                                color: ConstColors.light,
-                              ),
+                              style: TextStyle(fontFamily: poppinsMedium, fontSize: 10, color: ConstColors.light),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               formatPrice(player.price),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontFamily: poppinsMedium,
-                                fontSize: 18,
-                                color: ConstColors.light,
-                              ),
+                              style: TextStyle(fontFamily: poppinsMedium, fontSize: 18, color: ConstColors.light),
                             ),
                             const SizedBox(height: 22),
                             Text(
                               "Last Updated:",
-                              style: TextStyle(
-                                fontFamily: poppinsRegular,
-                                fontSize: 8,
-                                color: ConstColors.gray,
-                              ),
+                              style: TextStyle(fontFamily: poppinsRegular, fontSize: 8, color: ConstColors.gray),
                             ),
                             Text(
                               DateFormat("MMM dd, yyyy").format(DateTime.now()),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontFamily: poppinsBold,
-                                fontSize: 8,
-                                color: ConstColors.gray,
-                              ),
+                              style: TextStyle(fontFamily: poppinsBold, fontSize: 8, color: ConstColors.gray),
                             ),
                           ],
                         ),
@@ -734,23 +535,12 @@ class InfoRow extends StatelessWidget {
         spacing: 4,
         runSpacing: 2,
         children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontFamily: poppinsLight,
-              fontSize: 10,
-              color: ConstColors.gray,
-            ),
-          ),
+          Text(label, style: TextStyle(fontFamily: poppinsLight, fontSize: 10, color: ConstColors.gray)),
           Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontFamily: poppinsMedium,
-              fontSize: 10,
-              color: ConstColors.light,
-            ),
+            style: TextStyle(fontFamily: poppinsMedium, fontSize: 10, color: ConstColors.light),
           ),
         ],
       ),

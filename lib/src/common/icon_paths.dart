@@ -18,6 +18,9 @@ class General {
   String get portfolioBottomNav => '$_basePath/portfolio_bottom_nav.png';
   String get menuBottomNav => '$_basePath/menu_bottom_nav.png';
   String get profile => '$_basePath/profile.png';
+  String get wallet => '$_basePath/wallet.png';
+  String get bank => '$_basePath/bank.png';
+  String get successPayment => '$_basePath/success_payment.png';
 }
 
 class Home {

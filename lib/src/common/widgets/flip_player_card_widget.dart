@@ -2,17 +2,17 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:kick26/src/common/widgets/card_class_widget.dart';
+import 'package:rive/rive.dart' as riv;
 
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/helper.dart';
-import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/common/widgets/gold_shine_overlay.dart';
 import 'package:kick26/src/data/models/player_model.dart';
 import 'package:kick26/src/presentation/detail/detail_screen.dart';
-import 'package:rive/rive.dart' as riv;
 
 class FlipPlayerCardWidget extends StatefulWidget {
   const FlipPlayerCardWidget({
@@ -129,150 +129,10 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                     )
                     : null,
           ),
-          child: GoldShineOverlay(
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Hero(
-                        tag: "${widget.tag}_${player.id}",
-                        child: Image.asset(player.image, fit: BoxFit.contain),
-                      ),
-                    ),
-                  ),
-                ),
-
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Column(
-                    children: [
-                      // SS TOP
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              children: [
-                                Image.asset(IconPaths.home.ss, height: 24),
-                                const Gap(4),
-                                Image.asset(player.clubImage, height: 16),
-                                Text(player.countryCode.toFlag),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                GoldGradient(
-                                  child: Text(
-                                    "41",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontFamily: poppinsRegular,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 12,
-                                  height: 1,
-                                  color: ConstColors.darkGray2,
-                                ),
-                                Text(
-                                  "60",
-                                  style: TextStyle(
-                                    color: ConstColors.darkGray,
-                                    fontSize: 10,
-                                    fontFamily: poppinsRegular,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // PLAYER DETAILS
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.transparent,
-                                ConstColors.baseColorDark4,
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              GoldGradient(
-                                child: Text(
-                                  player.name,
-                                  style: TextStyle(
-                                    fontFamily: poppinsRegular,
-                                    fontSize: 10,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              const Gap(4),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "€${formatPrice(player.price)}",
-                                    style: const TextStyle(
-                                      color: ConstColors.light,
-                                      fontFamily: poppinsMedium,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        player.isUp
-                                            ? Icons.arrow_drop_up_sharp
-                                            : Icons.arrow_drop_down_sharp,
-                                        color:
-                                            player.isUp
-                                                ? ConstColors.green
-                                                : ConstColors.orange,
-                                        size: 12,
-                                      ),
-                                      Text(
-                                        "${player.trend.toStringAsFixed(2)}%",
-                                        style: TextStyle(
-                                          fontFamily: poppinsSemiBold,
-                                          fontSize: 8,
-                                          color:
-                                              player.isUp
-                                                  ? ConstColors.green
-                                                  : ConstColors.orange,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          child:
+              player.cardClass == "S"
+                  ? _buildSCardFront(player)
+                  : _buildCardFront(player),
         ),
 
         player.cardClass == "S"
@@ -282,6 +142,151 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
               child: riv.RiveAnimation.asset('assets/animations/cardgold.riv'),
             )
             : SizedBox(),
+      ],
+    );
+  }
+
+  Widget _buildSCardFront(PlayerModel player) {
+    return GoldShineOverlay(child: _buildCardFront(player));
+  }
+
+  Widget _buildCardFront(PlayerModel player) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Hero(
+                tag: "${widget.tag}_${player.id}",
+                child: Image.asset(player.image, fit: BoxFit.contain),
+              ),
+            ),
+          ),
+        ),
+
+        ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Column(
+            children: [
+              // SS TOP
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        CardClassWidget(cardClass: player.cardClass),
+                        const Gap(4),
+                        Image.asset(player.clubImage, height: 16),
+                        Text(player.countryCode.toFlag),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        GoldGradient(
+                          child: Text(
+                            "41",
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontFamily: poppinsRegular,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 12,
+                          height: 1,
+                          color: ConstColors.darkGray2,
+                        ),
+                        Text(
+                          "60",
+                          style: TextStyle(
+                            color: ConstColors.darkGray,
+                            fontSize: 10,
+                            fontFamily: poppinsRegular,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              // PLAYER DETAILS
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.transparent, ConstColors.baseColorDark4],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GoldGradient(
+                        child: Text(
+                          player.name,
+                          style: TextStyle(
+                            fontFamily: poppinsRegular,
+                            fontSize: 10,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const Gap(4),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "€${formatPrice(player.price)}",
+                            style: const TextStyle(
+                              color: ConstColors.light,
+                              fontFamily: poppinsMedium,
+                              fontSize: 12,
+                            ),
+                          ),
+
+                          Row(
+                            children: [
+                              Icon(
+                                player.isUp
+                                    ? Icons.arrow_drop_up_sharp
+                                    : Icons.arrow_drop_down_sharp,
+                                color:
+                                    player.isUp
+                                        ? ConstColors.green
+                                        : ConstColors.orange,
+                                size: 12,
+                              ),
+                              Text(
+                                "${player.trend.toStringAsFixed(2)}%",
+                                style: TextStyle(
+                                  fontFamily: poppinsSemiBold,
+                                  fontSize: 8,
+                                  color:
+                                      player.isUp
+                                          ? ConstColors.green
+                                          : ConstColors.orange,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -296,7 +301,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
           width: 140,
           height: 180,
           margin: EdgeInsets.only(right: 10),
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [ConstColors.baseColorDark3, ConstColors.baseColorDark4],
@@ -312,29 +317,10 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                     )
                     : null,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GoldGradient(
-                  child: Text(
-                    "STATS",
-                    style: TextStyle(fontSize: 12, fontFamily: poppinsSemiBold),
-                  ),
-                ),
-                const Gap(10),
-
-                // === Contoh stats dinamis dari API player model ===
-                _statTile("Height", "${player.height}m"),
-                _statTile("Weight", "${player.weight}kg"),
-                _statTile("Age", "${player.age}yo"),
-                _statTile("Games", "${player.games}"),
-                _statTile("Goals", "${player.goals}"),
-                _statTile("Assits", "${player.assists}"),
-              ],
-            ),
-          ),
+          child:
+              player.cardClass == "S"
+                  ? _buildSCardBack(player)
+                  : _buildCardBack(player),
         ),
         player.cardClass == "S"
             ? SizedBox(
@@ -343,6 +329,33 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
               child: riv.RiveAnimation.asset('assets/animations/cardgold.riv'),
             )
             : SizedBox(),
+      ],
+    );
+  }
+
+  Widget _buildSCardBack(PlayerModel player) {
+    return GoldShineOverlay(child: _buildCardBack(player));
+  }
+
+  Widget _buildCardBack(PlayerModel player) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GoldGradient(
+          child: Text(
+            "STATS",
+            style: TextStyle(fontSize: 12, fontFamily: poppinsSemiBold),
+          ),
+        ),
+        const Gap(10),
+
+        // === Contoh stats dinamis dari API player model ===
+        _statTile("Height", "${player.height}m"),
+        _statTile("Weight", "${player.weight}kg"),
+        _statTile("Age", "${player.age}yo"),
+        _statTile("Games", "${player.games}"),
+        _statTile("Goals", "${player.goals}"),
+        _statTile("Assits", "${player.assists}"),
       ],
     );
   }

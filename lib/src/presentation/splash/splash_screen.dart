@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/presentation/bottom_navigation/bottom_navigation.dart';
+import 'package:rive/rive.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -29,11 +29,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Image.asset(
-        ImagePaths.general.splash,
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        fit: BoxFit.cover,
+      body: Center(
+        child: RiveAnimation.asset(
+          'assets/animations/splashscreen_kick26.riv',
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
