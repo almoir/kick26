@@ -15,12 +15,7 @@ import 'package:kick26/src/data/models/player_model.dart';
 import 'package:kick26/src/presentation/detail/detail_screen.dart';
 
 class FlipPlayerCardWidget extends StatefulWidget {
-  const FlipPlayerCardWidget({
-    super.key,
-    required this.player,
-    required this.players,
-    required this.tag,
-  });
+  const FlipPlayerCardWidget({super.key, required this.player, required this.players, required this.tag});
 
   final PlayerModel player;
   final List<PlayerModel> players;
@@ -30,8 +25,7 @@ class FlipPlayerCardWidget extends StatefulWidget {
   State<FlipPlayerCardWidget> createState() => _FlipPlayerCardWidgetState();
 }
 
-class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
-    with SingleTickerProviderStateMixin {
+class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   bool get isFront => _controller.value < 0.5;
@@ -39,10 +33,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 600),
-      vsync: this,
-    );
+    _controller = AnimationController(duration: const Duration(milliseconds: 600), vsync: this);
   }
 
   void flipCard() {
@@ -69,12 +60,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
           () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder:
-                  (context) => DetailScreen(
-                    player: player,
-                    players: widget.players,
-                    tag: widget.tag,
-                  ),
+              builder: (context) => DetailScreen(player: player, players: widget.players, tag: widget.tag),
             ),
           ),
       child: AnimatedBuilder(
@@ -123,24 +109,14 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
             borderRadius: BorderRadius.circular(20),
             image:
                 player.cardClass != "S"
-                    ? DecorationImage(
-                      image: AssetImage(ImagePaths.home.borderCard),
-                      fit: BoxFit.cover,
-                    )
+                    ? DecorationImage(image: AssetImage(ImagePaths.home.borderCard), fit: BoxFit.cover)
                     : null,
           ),
-          child:
-              player.cardClass == "S"
-                  ? _buildSCardFront(player)
-                  : _buildCardFront(player),
+          child: player.cardClass == "S" ? _buildSCardFront(player) : _buildCardFront(player),
         ),
 
         player.cardClass == "S"
-            ? SizedBox(
-              width: 140,
-              height: 180,
-              child: riv.RiveAnimation.asset('assets/animations/cardgold.riv'),
-            )
+            ? SizedBox(width: 140, height: 180, child: riv.RiveAnimation.asset('assets/animations/cardgold.riv'))
             : SizedBox(),
       ],
     );
@@ -158,10 +134,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
             alignment: Alignment.bottomCenter,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Hero(
-                tag: "${widget.tag}_${player.id}",
-                child: Image.asset(player.image, fit: BoxFit.contain),
-              ),
+              child: Hero(tag: "${widget.tag}_${player.id}", child: Image.asset(player.image, fit: BoxFit.contain)),
             ),
           ),
         ),
@@ -187,27 +160,11 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                     ),
                     Column(
                       children: [
-                        GoldGradient(
-                          child: Text(
-                            "41",
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontFamily: poppinsRegular,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 12,
-                          height: 1,
-                          color: ConstColors.darkGray2,
-                        ),
+                        GoldGradient(child: Text("41", style: TextStyle(fontSize: 10, fontFamily: poppinsRegular))),
+                        Container(width: 12, height: 1, color: ConstColors.darkGray2),
                         Text(
                           "60",
-                          style: TextStyle(
-                            color: ConstColors.darkGray,
-                            fontSize: 10,
-                            fontFamily: poppinsRegular,
-                          ),
+                          style: TextStyle(color: ConstColors.darkGray, fontSize: 10, fontFamily: poppinsRegular),
                         ),
                       ],
                     ),
@@ -233,10 +190,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                       GoldGradient(
                         child: Text(
                           player.name,
-                          style: TextStyle(
-                            fontFamily: poppinsRegular,
-                            fontSize: 10,
-                          ),
+                          style: TextStyle(fontFamily: poppinsRegular, fontSize: 10),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -246,23 +200,14 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                         children: [
                           Text(
                             "€${formatPrice(player.price)}",
-                            style: const TextStyle(
-                              color: ConstColors.light,
-                              fontFamily: poppinsMedium,
-                              fontSize: 12,
-                            ),
+                            style: const TextStyle(color: ConstColors.light, fontFamily: poppinsMedium, fontSize: 12),
                           ),
 
                           Row(
                             children: [
                               Icon(
-                                player.isUp
-                                    ? Icons.arrow_drop_up_sharp
-                                    : Icons.arrow_drop_down_sharp,
-                                color:
-                                    player.isUp
-                                        ? ConstColors.green
-                                        : ConstColors.orange,
+                                player.isUp ? Icons.arrow_drop_up_sharp : Icons.arrow_drop_down_sharp,
+                                color: player.isUp ? ConstColors.green : ConstColors.orange,
                                 size: 12,
                               ),
                               Text(
@@ -270,10 +215,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
                                 style: TextStyle(
                                   fontFamily: poppinsSemiBold,
                                   fontSize: 8,
-                                  color:
-                                      player.isUp
-                                          ? ConstColors.green
-                                          : ConstColors.orange,
+                                  color: player.isUp ? ConstColors.green : ConstColors.orange,
                                 ),
                               ),
                             ],
@@ -311,23 +253,13 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
             borderRadius: BorderRadius.circular(20),
             image:
                 player.cardClass != "S"
-                    ? DecorationImage(
-                      image: AssetImage(ImagePaths.home.borderCard),
-                      fit: BoxFit.cover,
-                    )
+                    ? DecorationImage(image: AssetImage(ImagePaths.home.borderCard), fit: BoxFit.cover)
                     : null,
           ),
-          child:
-              player.cardClass == "S"
-                  ? _buildSCardBack(player)
-                  : _buildCardBack(player),
+          child: player.cardClass == "S" ? _buildSCardBack(player) : _buildCardBack(player),
         ),
         player.cardClass == "S"
-            ? SizedBox(
-              width: 140,
-              height: 180,
-              child: riv.RiveAnimation.asset('assets/animations/cardgold.riv'),
-            )
+            ? SizedBox(width: 140, height: 180, child: riv.RiveAnimation.asset('assets/animations/cardgold.riv'))
             : SizedBox(),
       ],
     );
@@ -341,12 +273,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GoldGradient(
-          child: Text(
-            "STATS",
-            style: TextStyle(fontSize: 12, fontFamily: poppinsSemiBold),
-          ),
-        ),
+        GoldGradient(child: Text("STATS", style: TextStyle(fontSize: 12, fontFamily: poppinsSemiBold))),
         const Gap(10),
 
         // === Contoh stats dinamis dari API player model ===
@@ -368,22 +295,8 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: ConstColors.light,
-              fontFamily: poppinsRegular,
-              fontSize: 10,
-            ),
-          ),
-          Text(
-            "$value",
-            style: const TextStyle(
-              color: Colors.white,
-              fontFamily: poppinsSemiBold,
-              fontSize: 11,
-            ),
-          ),
+          Text(title, style: const TextStyle(color: ConstColors.light, fontFamily: poppinsRegular, fontSize: 10)),
+          Text("$value", style: const TextStyle(color: Colors.white, fontFamily: poppinsSemiBold, fontSize: 11)),
         ],
       ),
     );

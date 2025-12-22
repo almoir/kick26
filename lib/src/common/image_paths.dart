@@ -74,7 +74,6 @@ class Home {
 
   String get realMadrid => '$_basePath/real_madrid.png';
   String get realBetis => '$_basePath/real_betis.png';
-  String get manCity => '$_basePath/man_city.png';
   String get liverpool => '$_basePath/liverpool.png';
   String get sporting => '$_basePath/sporting.png';
   String get manunited => '$_basePath/manunited.png';
@@ -130,4 +129,5 @@ class Profile {
   const Profile();
 
   String get profileImage => '$_basePath/profile_image.png';
+  String get inviteFriend => '$_basePath/invite_friend.png';
 }

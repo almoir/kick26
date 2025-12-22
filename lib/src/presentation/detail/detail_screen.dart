@@ -105,6 +105,29 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                player.isOwned
+                    ? Flexible(
+                      child: GestureDetector(
+                        onTap:
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SellPlayerCardScreen(player: player)),
+                            ),
+                        child: SizedBox(
+                          height: 40,
+                          width: double.infinity,
+                          child: GoldGradientBorder(
+                            borderRadius: 10,
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Center(
+                              child: GoldGradient(child: Text("Sell", style: TextStyle(fontFamily: poppinsMedium))),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    : SizedBox(),
+                player.isOwned ? Gap(10) : SizedBox(),
                 Flexible(
                   child: GoldGradientButton(
                     height: 40,
@@ -117,21 +140,6 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
                     },
                   ),
                 ),
-                player.isOwned ? Gap(10) : SizedBox(),
-                player.isOwned
-                    ? Flexible(
-                      child: GoldGradientButton(
-                        height: 40,
-                        text: "Sell",
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => SellPlayerCardScreen(player: player)),
-                          );
-                        },
-                      ),
-                    )
-                    : SizedBox(),
               ],
             ),
           ),

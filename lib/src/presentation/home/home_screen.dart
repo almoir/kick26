@@ -27,6 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<PlayerModel> players;
   late List<PlayerModel> ownedPlayers;
   late List<PlayerModel> notOwnedPlayers;
+  late List<PlayerModel> sClassPlayers;
+  late List<PlayerModel> aClassPlayers;
+  late List<PlayerModel> bClassPlayers;
+  late List<PlayerModel> cClassPlayers;
 
   Timer? _timer;
   final _rnd = Random();
@@ -37,6 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
     players = generateDummyPlayers();
     ownedPlayers = players.where((player) => player.isOwned).toList();
     notOwnedPlayers = players.where((player) => !player.isOwned).toList();
+    sClassPlayers = players.where((player) => player.cardClass == 'S').toList();
+    aClassPlayers = players.where((player) => player.cardClass == 'A').toList();
+    bClassPlayers = players.where((player) => player.cardClass == 'B').toList();
+    cClassPlayers = players.where((player) => player.cardClass == 'C').toList();
     // update pertama kali agar tidak kosong (opsional)
     updatePlayerTrends(players, random: _rnd, maxChangePercent: 3);
 
@@ -57,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 4,
       child: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -92,35 +100,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               'Portfolio Value',
-                              style: TextStyle(
-                                color: ConstColors.gray10,
-                                fontFamily: poppinsRegular,
-                                fontSize: 12,
-                              ),
+                              style: TextStyle(color: ConstColors.gray10, fontFamily: poppinsRegular, fontSize: 12),
                             ),
                             Gap(10),
                             Text(
                               '€48.341,77',
-                              style: TextStyle(
-                                color: ConstColors.white,
-                                fontFamily: poppinsSemiBold,
-                                fontSize: 24,
-                              ),
+                              style: TextStyle(color: ConstColors.white, fontFamily: poppinsSemiBold, fontSize: 24),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                GoldGradient(
-                                  child: Icon(Icons.arrow_drop_up_sharp),
-                                ),
+                                GoldGradient(child: Icon(Icons.arrow_drop_up_sharp)),
                                 GoldGradient(
                                   child: Text(
                                     '0.73 (-0.73%) Today',
-                                    style: TextStyle(
-                                      fontFamily: poppinsSemiBold,
-                                      fontSize: 10,
-                                    ),
+                                    style: TextStyle(fontFamily: poppinsSemiBold, fontSize: 10),
                                   ),
                                 ),
                               ],
@@ -128,9 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         const Gap(40),
-                        Expanded(
-                          child: Image.asset(ImagePaths.home.chartOutlined),
-                        ),
+                        Expanded(child: Image.asset(ImagePaths.home.chartOutlined)),
                       ],
                     ),
                     const Gap(24),
@@ -141,30 +134,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {},
                           child: const Column(
                             children: [
-                              GoldGradient(
-                                child: Icon(
-                                  Icons.add_circle_outline_outlined,
-                                  color: ConstColors.light,
-                                ),
-                              ),
+                              GoldGradient(child: Icon(Icons.add_circle_outline_outlined, color: ConstColors.light)),
                               GoldGradient(
                                 child: Text(
                                   'Deposit',
-                                  style: TextStyle(
-                                    color: ConstColors.light,
-                                    fontFamily: poppinsLight,
-                                    fontSize: 12,
-                                  ),
+                                  style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Container(
-                          height: 40,
-                          width: 1,
-                          color: const Color(0xff333333),
-                        ),
+                        Container(height: 40, width: 1, color: const Color(0xff333333)),
                         GestureDetector(
                           onTap: () {},
                           child: Column(
@@ -172,30 +152,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               GoldGradient(
                                 child: Transform.rotate(
                                   angle: -0.5,
-                                  child: const Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    color: ConstColors.light,
-                                  ),
+                                  child: const Icon(Icons.arrow_circle_right_outlined, color: ConstColors.light),
                                 ),
                               ),
                               GoldGradient(
                                 child: const Text(
                                   'Trade',
-                                  style: TextStyle(
-                                    color: ConstColors.light,
-                                    fontFamily: poppinsLight,
-                                    fontSize: 12,
-                                  ),
+                                  style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Container(
-                          height: 40,
-                          width: 1,
-                          color: const Color(0xff333333),
-                        ),
+                        Container(height: 40, width: 1, color: const Color(0xff333333)),
                         GestureDetector(
                           onTap: () {},
                           child: Column(
@@ -204,11 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               GoldGradient(
                                 child: const Text(
                                   'Explore',
-                                  style: TextStyle(
-                                    color: ConstColors.light,
-                                    fontFamily: poppinsLight,
-                                    fontSize: 12,
-                                  ),
+                                  style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
                                 ),
                               ),
                             ],
@@ -229,10 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const Text(
                       'My Player Cards',
-                      style: TextStyle(
-                        color: ConstColors.light,
-                        fontFamily: poppinsRegular,
-                      ),
+                      style: TextStyle(color: ConstColors.light, fontFamily: poppinsRegular),
                     ),
                     InkWell(
                       onTap: widget.onTapTrending,
@@ -244,13 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: ConstColors.gold.withValues(alpha: 0.2),
                         ),
                         child: Center(
-                          child: GoldGradient(
-                            child: Image.asset(
-                              IconPaths.home.arrowRight2,
-                              width: 14,
-                              height: 14,
-                            ),
-                          ),
+                          child: GoldGradient(child: Image.asset(IconPaths.home.arrowRight2, width: 14, height: 14)),
                         ),
                       ),
                     ),
@@ -267,11 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(left: 16),
                   itemBuilder: (context, index) {
                     final player = ownedPlayers[index];
-                    return FlipPlayerCardWidget(
-                      player: player,
-                      players: players,
-                      tag: "home_screen",
-                    );
+                    return FlipPlayerCardWidget(player: player, players: players, tag: "home_screen");
                   },
                 ),
               ),
@@ -282,12 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GoldGradient(
-                      child: const Text(
-                        'Live Feed',
-                        style: TextStyle(fontFamily: poppinsRegular),
-                      ),
-                    ),
+                    GoldGradient(child: const Text('Live Feed', style: TextStyle(fontFamily: poppinsRegular))),
                     Gap(12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -307,18 +254,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: EdgeInsets.fromLTRB(12, 12, 12, 0),
                                   child: Row(
                                     children: [
-                                      Image.asset(
-                                        IconPaths.home.file,
-                                        width: 12,
-                                        height: 12,
-                                      ),
+                                      Image.asset(IconPaths.home.file, width: 12, height: 12),
                                       Gap(4),
                                       Text(
                                         "Recent Issuances",
-                                        style: TextStyle(
-                                          color: ConstColors.light,
-                                          fontSize: 12,
-                                        ),
+                                        style: TextStyle(color: ConstColors.light, fontSize: 12),
                                       ),
                                     ],
                                   ),
@@ -328,10 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: EdgeInsets.symmetric(horizontal: 12),
                                   child: Text(
                                     "3 new cards have been issued",
-                                    style: TextStyle(
-                                      color: ConstColors.darkGray,
-                                      fontSize: 12,
-                                    ),
+                                    style: TextStyle(color: ConstColors.darkGray, fontSize: 12),
                                   ),
                                 ),
                                 Gap(8),
@@ -341,19 +278,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: EdgeInsets.symmetric(horizontal: 12),
                                   child: Row(
                                     children: [
-                                      Image.asset(
-                                        IconPaths.home.graph,
-                                        width: 12,
-                                        height: 12,
-                                      ),
+                                      Image.asset(IconPaths.home.graph, width: 12, height: 12),
                                       Gap(4),
-                                      Text(
-                                        "Large Trades",
-                                        style: TextStyle(
-                                          color: ConstColors.light,
-                                          fontSize: 12,
-                                        ),
-                                      ),
+                                      Text("Large Trades", style: TextStyle(color: ConstColors.light, fontSize: 12)),
                                     ],
                                   ),
                                 ),
@@ -362,10 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: EdgeInsets.fromLTRB(12, 0, 12, 12),
                                   child: Text(
                                     "€250K trade executed",
-                                    style: TextStyle(
-                                      color: ConstColors.darkGray,
-                                      fontSize: 12,
-                                    ),
+                                    style: TextStyle(color: ConstColors.darkGray, fontSize: 12),
                                   ),
                                 ),
                               ],
@@ -386,24 +310,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "MARKET CAP",
-                                      style: TextStyle(
-                                        color: ConstColors.light,
-                                        fontSize: 12,
-                                      ),
-                                    ),
+                                    Text("MARKET CAP", style: TextStyle(color: ConstColors.light, fontSize: 12)),
                                     Gap(4),
-                                    Text(
-                                      "24H",
-                                      style: TextStyle(
-                                        color: ConstColors.darkGray,
-                                        fontSize: 12,
-                                      ),
-                                    ),
+                                    Text("24H", style: TextStyle(color: ConstColors.darkGray, fontSize: 12)),
                                   ],
                                 ),
                                 Gap(4),
@@ -429,33 +340,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(color: ConstColors.gold),
                   ),
-                  indicatorPadding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 2,
-                  ),
+                  indicatorPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
                   indicatorColor: Colors.transparent,
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicatorAnimation: TabIndicatorAnimation.linear,
                   indicatorWeight: 1,
                   tabAlignment: TabAlignment.start,
                   padding: EdgeInsets.zero,
-                  labelStyle: const TextStyle(
-                    fontFamily: poppinsRegular,
-                    color: ConstColors.gold,
-                    fontSize: 12,
-                  ),
+                  labelStyle: const TextStyle(fontFamily: poppinsRegular, color: ConstColors.gold, fontSize: 12),
                   unselectedLabelStyle: const TextStyle(
                     fontFamily: poppinsRegular,
                     color: ConstColors.gray10,
                     fontSize: 12,
                   ),
-                  tabs: const [
-                    Tab(text: "Very Rare"),
-                    Tab(text: "Rare"),
-                    Tab(text: "SS+ Class"),
-                    Tab(text: "S Class"),
-                    Tab(text: "A Class"),
-                  ],
+                  tabs: const [Tab(text: "S Class"), Tab(text: "A Class"), Tab(text: "B Class"), Tab(text: "C Class")],
                 ),
               ),
               const Gap(12),
@@ -463,11 +361,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 400,
                 child: TabBarView(
                   children: [
-                    ListTilePlayersWidget(players: players.sublist(0, 4)),
-                    ListTilePlayersWidget(players: players.sublist(5, 9)),
-                    ListTilePlayersWidget(players: players.sublist(10, 14)),
-                    ListTilePlayersWidget(players: players.sublist(15, 19)),
-                    ListTilePlayersWidget(players: players.sublist(20, 24)),
+                    ListTilePlayersWidget(players: sClassPlayers),
+                    ListTilePlayersWidget(players: aClassPlayers),
+                    ListTilePlayersWidget(players: bClassPlayers),
+                    ListTilePlayersWidget(players: cClassPlayers),
                   ],
                 ),
               ),

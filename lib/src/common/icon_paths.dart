@@ -58,4 +58,12 @@ class Profile {
   String get tradingAccount => '$_basePath/trading_account.png';
   String get preferences => '$_basePath/preferences.png';
   String get inviteSomeone => '$_basePath/invite_someone.png';
+  String get whatsapp => '$_basePath/whatsapp_icon.png';
+  String get telegram => '$_basePath/telegram_icon.png';
+  String get share => '$_basePath/share_icon.png';
+  String get credentials => '$_basePath/credentials.png';
+  String get personalInfo => '$_basePath/personal_info.png';
+  String get delete => '$_basePath/delete.png';
+  String get notificationsPref => '$_basePath/notification_pref.png';
+  String get security => '$_basePath/security.png';
 }
