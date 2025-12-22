@@ -10,29 +10,18 @@ class DetailPlayerTabBar extends StatelessWidget {
     return TabBar(
       dividerColor: Colors.transparent,
       isScrollable: true,
-      indicator: BoxDecoration(
-        color: ConstColors.baseColorDark3,
-        borderRadius: BorderRadius.circular(6),
-      ),
+      indicator: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(6)),
       labelPadding: EdgeInsets.only(right: 8),
       indicatorColor: Colors.transparent,
       indicatorAnimation: TabIndicatorAnimation.linear,
       tabAlignment: TabAlignment.center,
-      labelStyle: const TextStyle(
-        fontFamily: poppinsRegular,
-        color: ConstColors.gold,
-        fontSize: 12,
-      ),
-      unselectedLabelStyle: const TextStyle(
-        fontFamily: poppinsRegular,
-        color: ConstColors.gray10,
-        fontSize: 12,
-      ),
+      labelStyle: const TextStyle(fontFamily: poppinsRegular, color: ConstColors.gold, fontSize: 12),
+      unselectedLabelStyle: const TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 12),
       tabs: [
         SizedBox(height: 26, width: 84, child: Tab(text: "Overview")),
         SizedBox(height: 26, width: 84, child: Tab(text: "Market")),
-        SizedBox(height: 26, width: 84, child: Tab(text: "Statistics")),
-        SizedBox(height: 26, width: 84, child: Tab(text: "Authenticity")),
+        SizedBox(height: 26, width: 84, child: Tab(text: "Player")),
+        SizedBox(height: 26, width: 84, child: Tab(text: "History")),
       ],
     );
   }

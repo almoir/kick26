@@ -126,61 +126,61 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(child: Image.asset(ImagePaths.home.chartOutlined)),
                       ],
                     ),
-                    const Gap(24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: const Column(
-                            children: [
-                              GoldGradient(child: Icon(Icons.add_circle_outline_outlined, color: ConstColors.light)),
-                              GoldGradient(
-                                child: Text(
-                                  'Deposit',
-                                  style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(height: 40, width: 1, color: const Color(0xff333333)),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              GoldGradient(
-                                child: Transform.rotate(
-                                  angle: -0.5,
-                                  child: const Icon(Icons.arrow_circle_right_outlined, color: ConstColors.light),
-                                ),
-                              ),
-                              GoldGradient(
-                                child: const Text(
-                                  'Trade',
-                                  style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(height: 40, width: 1, color: const Color(0xff333333)),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              Image.asset(IconPaths.home.explore, height: 24),
-                              GoldGradient(
-                                child: const Text(
-                                  'Explore',
-                                  style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    // const Gap(24),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //   children: [
+                    //     GestureDetector(
+                    //       onTap: () {},
+                    //       child: const Column(
+                    //         children: [
+                    //           GoldGradient(child: Icon(Icons.add_circle_outline_outlined, color: ConstColors.light)),
+                    //           GoldGradient(
+                    //             child: Text(
+                    //               'Deposit',
+                    //               style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     Container(height: 40, width: 1, color: const Color(0xff333333)),
+                    //     GestureDetector(
+                    //       onTap: () {},
+                    //       child: Column(
+                    //         children: [
+                    //           GoldGradient(
+                    //             child: Transform.rotate(
+                    //               angle: -0.5,
+                    //               child: const Icon(Icons.arrow_circle_right_outlined, color: ConstColors.light),
+                    //             ),
+                    //           ),
+                    //           GoldGradient(
+                    //             child: const Text(
+                    //               'Trade',
+                    //               style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     Container(height: 40, width: 1, color: const Color(0xff333333)),
+                    //     GestureDetector(
+                    //       onTap: () {},
+                    //       child: Column(
+                    //         children: [
+                    //           Image.asset(IconPaths.home.explore, height: 24),
+                    //           GoldGradient(
+                    //             child: const Text(
+                    //               'Explore',
+                    //               style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
