@@ -18,23 +18,13 @@ class OverviewSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: ConstColors.baseColorDark3,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child:
-          player.cardClass == "S"
-              ? _buildSCardClass(context)
-              : _buildCardClass(context),
+      decoration: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(10)),
+      child: player.cardClass == "S" ? _buildSCardClass(context) : _buildCardClass(context),
     );
   }
 
   Widget _buildSCardClass(BuildContext context) {
-    return GoldShineOverlay(
-      borderRadius: BorderRadius.circular(10),
-      child: _buildCardClass(context),
-    );
+    return GoldShineOverlay(borderRadius: BorderRadius.circular(10), child: _buildCardClass(context));
   }
 
   Stack _buildCardClass(BuildContext context) {
@@ -45,11 +35,7 @@ class OverviewSection extends StatelessWidget {
           children: [
             Hero(
               tag: "${tag}_${player.id}",
-              child: Image.asset(
-                player.image,
-                width: MediaQuery.sizeOf(context).width * 0.475,
-                height: 200,
-              ),
+              child: Image.asset(player.image, width: MediaQuery.sizeOf(context).width * 0.475, height: 200),
             ),
             Flexible(
               child: Padding(
@@ -78,13 +64,7 @@ class OverviewSection extends StatelessWidget {
                               ),
                               child: Center(
                                 child: GoldGradient(
-                                  child: Text(
-                                    "9",
-                                    style: TextStyle(
-                                      fontFamily: poppinsRegular,
-                                      fontSize: 12,
-                                    ),
-                                  ),
+                                  child: Text("9", style: TextStyle(fontFamily: poppinsRegular, fontSize: 12)),
                                 ),
                               ),
                             ),
@@ -95,66 +75,37 @@ class OverviewSection extends StatelessWidget {
                             child: Container(
                               width: 20,
                               height: 24,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.transparent,
-                              ),
+                              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.transparent),
                               child: Center(
-                                child: Text(
-                                  player.countryCode.toFlag,
-                                  style: const TextStyle(fontSize: 18),
-                                ),
+                                child: Text(player.countryCode.toFlag, style: const TextStyle(fontSize: 18)),
                               ),
                             ),
                           ),
 
                           // CLUB LOGO
-                          Positioned(
-                            left: 0,
-                            child: Image.asset(
-                              player.clubImage,
-                              width: 20,
-                              height: 24,
-                            ),
-                          ),
+                          Positioned(left: 0, child: Image.asset(player.clubImage, width: 20, height: 24)),
                         ],
                       ),
                     ),
                     Gap(10),
                     Text(
                       player.name.split(' ').first,
-                      style: TextStyle(
-                        fontFamily: poppinsRegular,
-                        color: ConstColors.gray10,
-                        fontSize: 12,
-                      ),
+                      style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 12),
                     ),
                     Text(
                       player.name.split(' ').last,
-                      style: TextStyle(
-                        fontFamily: poppinsSemiBold,
-                        color: ConstColors.white,
-                        fontSize: 18,
-                      ),
+                      style: TextStyle(fontFamily: poppinsSemiBold, color: ConstColors.white, fontSize: 18),
                     ),
                     Gap(10),
                     Row(
                       children: [
                         CardClassWidget(cardClass: player.cardClass),
                         Gap(12),
-                        Container(
-                          width: 1,
-                          height: 16,
-                          color: ConstColors.baseColorDark5,
-                        ),
+                        Container(width: 1, height: 16, color: ConstColors.baseColorDark5),
                         Gap(10),
                         Text(
                           "Only 60 Cards",
-                          style: TextStyle(
-                            fontFamily: poppinsRegular,
-                            color: ConstColors.gray10,
-                            fontSize: 10,
-                          ),
+                          style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),
                         ),
                       ],
                     ),
@@ -184,125 +135,58 @@ class OverviewSection extends StatelessWidget {
                 // HEIGHT
                 Column(
                   children: [
-                    Text(
-                      "${player.height}m",
-                      style: TextStyle(
-                        fontFamily: poppinsSemiBold,
-                        color: Colors.white,
-                      ),
-                    ),
+                    Text("${player.height}m", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
                     Text(
                       "Height",
-                      style: TextStyle(
-                        fontFamily: poppinsRegular,
-                        color: ConstColors.gray10,
-                        fontSize: 10,
-                      ),
+                      style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),
                     ),
                   ],
                 ),
                 // WEIGHT
                 Column(
                   children: [
-                    Text(
-                      "${player.weight}kg",
-                      style: TextStyle(
-                        fontFamily: poppinsSemiBold,
-                        color: Colors.white,
-                      ),
-                    ),
+                    Text("${player.weight}kg", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
                     Text(
                       "Weight",
-                      style: TextStyle(
-                        fontFamily: poppinsRegular,
-                        color: ConstColors.gray10,
-                        fontSize: 10,
-                      ),
+                      style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),
                     ),
                   ],
                 ),
                 // AGE
                 Column(
                   children: [
-                    Text(
-                      "${player.age}yo",
-                      style: TextStyle(
-                        fontFamily: poppinsSemiBold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      "Age",
-                      style: TextStyle(
-                        fontFamily: poppinsRegular,
-                        color: ConstColors.gray10,
-                        fontSize: 10,
-                      ),
-                    ),
+                    Text("${player.age}yo", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
+                    Text("Age", style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10)),
                   ],
                 ),
-                Container(
-                  width: 1,
-                  height: 25,
-                  color: ConstColors.baseColorDark5,
-                ),
+                Container(width: 1, height: 25, color: ConstColors.baseColorDark5),
                 // GAMES
                 Column(
                   children: [
-                    Text(
-                      "${player.games}",
-                      style: TextStyle(
-                        fontFamily: poppinsSemiBold,
-                        color: Colors.white,
-                      ),
-                    ),
+                    Text("${player.games}", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
                     Text(
                       "Games",
-                      style: TextStyle(
-                        fontFamily: poppinsRegular,
-                        color: ConstColors.gray10,
-                        fontSize: 10,
-                      ),
+                      style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),
                     ),
                   ],
                 ),
                 // GOALS
                 Column(
                   children: [
-                    Text(
-                      "${player.goals}",
-                      style: TextStyle(
-                        fontFamily: poppinsSemiBold,
-                        color: Colors.white,
-                      ),
-                    ),
+                    Text("${player.goals}", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
                     Text(
                       "Goals",
-                      style: TextStyle(
-                        fontFamily: poppinsRegular,
-                        color: ConstColors.gray10,
-                        fontSize: 10,
-                      ),
+                      style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),
                     ),
                   ],
                 ),
                 // ASSISTS
                 Column(
                   children: [
-                    Text(
-                      "${player.assists}",
-                      style: TextStyle(
-                        fontFamily: poppinsSemiBold,
-                        color: Colors.white,
-                      ),
-                    ),
+                    Text("${player.assists}", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
                     Text(
                       "Assists",
-                      style: TextStyle(
-                        fontFamily: poppinsRegular,
-                        color: ConstColors.gray10,
-                        fontSize: 10,
-                      ),
+                      style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),
                     ),
                   ],
                 ),

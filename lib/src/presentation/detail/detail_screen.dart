@@ -99,7 +99,7 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
                               MaterialPageRoute(builder: (context) => SellPlayerCardScreen(player: player)),
                             ),
                         child: SizedBox(
-                          height: 40,
+                          height: 48,
                           width: double.infinity,
                           child: GoldGradientBorder(
                             borderRadius: 10,
@@ -115,7 +115,7 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
                 player.isOwned ? Gap(10) : SizedBox(),
                 Flexible(
                   child: GoldGradientButton(
-                    height: 40,
+                    height: 48,
                     text: "Buy",
                     onTap: () {
                       Navigator.push(

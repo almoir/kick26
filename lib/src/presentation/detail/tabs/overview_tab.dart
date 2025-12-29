@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
+import 'package:kick26/src/common/widgets/card_class_widget.dart';
 import 'package:kick26/src/data/models/player_model.dart';
-import 'package:kick26/src/presentation/detail/sections/player_card_section.dart';
 
 class OverviewTab extends StatelessWidget {
   const OverviewTab({super.key, required this.player, required this.players, required this.tag});
@@ -33,6 +33,8 @@ class OverviewTab extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      CardClassWidget(cardClass: player.cardClass),
+                      const Gap(8),
                       Text(
                         player.name,
                         style: TextStyle(fontFamily: poppinsSemiBold, fontSize: 14, color: ConstColors.light),
@@ -43,16 +45,35 @@ class OverviewTab extends StatelessWidget {
                         style: TextStyle(fontFamily: poppinsRegular, fontSize: 12, color: ConstColors.gray),
                       ),
                       const Gap(6),
-                      Row(
-                        children: [
-                          _TagChip("Class ${player.cardClass}"),
-                          const Gap(6),
-                          _TagChip("${player.owned} Owned"),
-                        ],
-                      ),
+                      _TagChip("${player.owned} Owned"),
                     ],
                   ),
                 ),
+              ],
+            ),
+          ),
+
+          const Gap(16),
+
+          /// ============================
+          /// FINANCIALS
+          /// ============================
+          _SectionTitle("Financials"),
+          const Gap(8),
+
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(12)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _MarketInfo("Current Price", "€${player.price.toStringAsFixed(2)}"),
+                _MarketInfo(
+                  "24h Change",
+                  player.isUp ? "+${player.trend}%" : "${player.trend}%",
+                  color: player.isUp ? ConstColors.green2 : ConstColors.orange,
+                ),
+                _MarketInfo("Owned", "${player.owned} Cards"),
               ],
             ),
           ),
@@ -86,31 +107,6 @@ class OverviewTab extends StatelessWidget {
           const Gap(16),
 
           /// ============================
-          /// MARKET OVERVIEW
-          /// ============================
-          _SectionTitle("Market Overview"),
-          const Gap(8),
-
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(12)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _MarketInfo("Current Price", player.price.toStringAsFixed(2)),
-                _MarketInfo(
-                  "24h Change",
-                  player.isUp ? "+${player.trend}%" : "${player.trend}%",
-                  color: player.isUp ? ConstColors.green2 : ConstColors.orange,
-                ),
-                _MarketInfo("Owned", "${player.owned} Cards"),
-              ],
-            ),
-          ),
-
-          const Gap(16),
-
-          /// ============================
           /// PERFORMANCE HIGHLIGHT
           /// ============================
           _SectionTitle("Performance Highlight"),
@@ -125,13 +121,6 @@ class OverviewTab extends StatelessWidget {
               style: TextStyle(fontFamily: poppinsRegular, fontSize: 12, color: ConstColors.darkGray),
             ),
           ),
-
-          const Gap(20),
-
-          /// ============================
-          /// RELATED PLAYER CARDS
-          /// ============================
-          PlayerCardsSection(players: players, tabIndex: 0),
         ],
       ),
     );

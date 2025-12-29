@@ -7,7 +7,6 @@ import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/data/models/player_model.dart';
-import 'package:kick26/src/presentation/detail/sections/player_card_section.dart';
 
 class MarketTab extends StatelessWidget {
   const MarketTab({super.key, required this.players, required this.player});
@@ -154,8 +153,6 @@ class MarketTab extends StatelessWidget {
                 ),
               ],
             ),
-            Gap(16),
-            PlayerCardsSection(players: players, tabIndex: 1),
           ],
         ),
       ),

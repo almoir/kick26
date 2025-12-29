@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
 
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/helper.dart';
@@ -29,151 +28,87 @@ class PlayerTab extends StatelessWidget {
           children: [
             OverviewSection(player: player, tag: tag),
             Gap(16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  Row(
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: DetailPlayerCardWidget(
+                        name: "Age",
+                        icon: IconPaths.detailPlayer.calendar,
+                        title: "${player.age} Year",
+                        subtitle: "Dec 20, 1998",
+                      ),
+                    ),
+                    Gap(8),
+                    Expanded(
+                      child: DetailPlayerCardWidget(
+                        name: "Awards",
+                        icon: IconPaths.detailPlayer.awards,
+                        title: "Golden Boy 20..",
+                        subtitle: "POTM WC 2018",
+                      ),
+                    ),
+                    Gap(8),
+                    Expanded(
+                      child: DetailPlayerCardWidget(
+                        name: "Height",
+                        icon: IconPaths.detailPlayer.height,
+                        title: "${player.height}m",
+                        subtitle: "(5 ft 10 inches)",
+                      ),
+                    ),
+                  ],
+                ),
+                Gap(10),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(10)),
+                  child: Row(
                     children: [
-                      Expanded(
-                        child: DetailPlayerCardWidget(
-                          name: "Age",
-                          icon: IconPaths.detailPlayer.calendar,
-                          title: "${player.age} Year",
-                          subtitle: "Dec 20, 1998",
-                        ),
-                      ),
-                      Gap(8),
-                      Expanded(
-                        child: DetailPlayerCardWidget(
-                          name: "Awards",
-                          icon: IconPaths.detailPlayer.awards,
-                          title: "Golden Boy 20..",
-                          subtitle: "POTM WC 2018",
-                        ),
-                      ),
-                      Gap(8),
-                      Expanded(
-                        child: DetailPlayerCardWidget(
-                          name: "Height",
-                          icon: IconPaths.detailPlayer.height,
-                          title: "${player.height}m",
-                          subtitle: "(5 ft 10 inches)",
-                        ),
-                      ),
-                    ],
-                  ),
-                  Gap(10),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// LEFT CARD
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: ConstColors.baseColorDark3,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              Image.asset(player.clubImage, height: 69, width: 49, fit: BoxFit.contain),
-                              const SizedBox(width: 8),
-
-                              /// ⬇️ PENTING: Expanded
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      player.club,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontFamily: poppinsMedium,
-                                        fontSize: 12,
-                                        color: ConstColors.light,
-                                      ),
-                                    ),
-
-                                    const SizedBox(height: 4),
-
-                                    Row(
-                                      children: [
-                                        Image.asset(ImagePaths.general.laliga, width: 12, height: 11),
-                                        const SizedBox(width: 4),
-                                        Expanded(
-                                          child: Text(
-                                            "La Liga",
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontFamily: poppinsMedium,
-                                              fontSize: 10,
-                                              color: ConstColors.light,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-
-                                    const SizedBox(height: 8),
-
-                                    InfoRow(label: "League Level:", value: "${player.countryCode.toFlag} First Tier"),
-                                    InfoRow(label: "Joined:", value: "Jul 1, 2024"),
-                                    InfoRow(label: "Contract Exp:", value: "Jun 30, 2029"),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
+                      Image.asset(player.clubImage, height: 69, width: 49, fit: BoxFit.contain),
                       const SizedBox(width: 8),
 
-                      /// RIGHT CARD
                       Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: ConstColors.baseColorDark3,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Price (EUR)",
-                                style: TextStyle(fontFamily: poppinsMedium, fontSize: 10, color: ConstColors.light),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                formatPrice(player.price),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontFamily: poppinsMedium, fontSize: 18, color: ConstColors.light),
-                              ),
-                              const SizedBox(height: 22),
-                              Text(
-                                "Last Updated:",
-                                style: TextStyle(fontFamily: poppinsRegular, fontSize: 8, color: ConstColors.gray),
-                              ),
-                              Text(
-                                DateFormat("MMM dd, yyyy").format(DateTime.now()),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontFamily: poppinsBold, fontSize: 8, color: ConstColors.gray),
-                              ),
-                            ],
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              player.club,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontFamily: poppinsMedium, fontSize: 12, color: ConstColors.light),
+                            ),
+
+                            const SizedBox(height: 4),
+
+                            Row(
+                              children: [
+                                Image.asset(ImagePaths.general.laliga, width: 12, height: 11),
+                                const SizedBox(width: 4),
+                                Expanded(
+                                  child: Text(
+                                    "La Liga",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(fontFamily: poppinsMedium, fontSize: 10, color: ConstColors.light),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 8),
+
+                            InfoRow(label: "League Level:", value: "${player.countryCode.toFlag} First Tier"),
+                            InfoRow(label: "Joined:", value: "Jul 1, 2024"),
+                            InfoRow(label: "Contract Exp:", value: "Jun 30, 2029"),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Gap(16),
             Image.asset(ImagePaths.home.mbapeHistory),
