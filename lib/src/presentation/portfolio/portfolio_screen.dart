@@ -19,10 +19,8 @@ class PortfolioScreen extends StatefulWidget {
   State<PortfolioScreen> createState() => _PortfolioScreenState();
 }
 
-class _PortfolioScreenState extends State<PortfolioScreen>
-    with SingleTickerProviderStateMixin {
-  final List<Map<String, dynamic>> _players =
-      dummyPlayers.where((p) => p['owned'] > 0).toList();
+class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProviderStateMixin {
+  final List<Map<String, dynamic>> _players = dummyPlayers.where((p) => p['owned'] > 0).toList();
 
   late List<PlayerModel> players;
   late List<PlayerModel> ownedPlayers;
@@ -37,10 +35,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     players = generateDummyPlayers();
     ownedPlayers = players.where((player) => player.isOwned).toList();
     notOwnedPlayers = players.where((player) => !player.isOwned).toList();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 600),
-      vsync: this,
-    );
+    _controller = AnimationController(duration: const Duration(milliseconds: 600), vsync: this);
   }
 
   void flipView() {
@@ -66,19 +61,13 @@ class _PortfolioScreenState extends State<PortfolioScreen>
         for (var player in _players) {
           final isUp = Random().nextBool();
           final newPrice =
-              (double.tryParse(
-                    player['price'].replaceAll('€', '').replaceAll(',', ''),
-                  ) ??
-                  1000) +
+              (double.tryParse(player['price'].replaceAll('€', '').replaceAll(',', '')) ?? 1000) +
               (isUp ? Random().nextDouble() * 10 : -Random().nextDouble() * 10);
           player['price'] = '€${newPrice.toStringAsFixed(2)}';
           player['isUp'] = isUp;
-          player['trend'] =
-              '${isUp ? '+' : '-'}${(Random().nextDouble() * 2).toStringAsFixed(2)}%';
+          player['trend'] = '${isUp ? '+' : '-'}${(Random().nextDouble() * 2).toStringAsFixed(2)}%';
           player['flashColor'] =
-              isUp
-                  ? ConstColors.goldGradient2.withValues(alpha: 0.3)
-                  : ConstColors.orange.withValues(alpha: 0.3);
+              isUp ? ConstColors.goldGradient2.withValues(alpha: 0.3) : ConstColors.orange.withValues(alpha: 0.3);
         }
       });
       _simulatePriceChange();
@@ -119,11 +108,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                       GoldGradient(
                         child: const Text(
                           'Total Value',
-                          style: TextStyle(
-                            color: ConstColors.white,
-                            fontFamily: poppinsRegular,
-                            fontSize: 12,
-                          ),
+                          style: TextStyle(color: ConstColors.white, fontFamily: poppinsRegular, fontSize: 12),
                         ),
                       ),
                       GoldGradient(
@@ -132,10 +117,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder:
-                                    (context) => TransactionsHistoryScreen(
-                                      players: players.reversed.toList(),
-                                    ),
+                                builder: (context) => TransactionsHistoryScreen(players: players.reversed.toList()),
                               ),
                             );
                           },
@@ -144,17 +126,9 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                             children: [
                               Text(
                                 'Transaction History',
-                                style: TextStyle(
-                                  color: ConstColors.white,
-                                  fontFamily: poppinsRegular,
-                                  fontSize: 12,
-                                ),
+                                style: TextStyle(color: ConstColors.white, fontFamily: poppinsRegular, fontSize: 12),
                               ),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: ConstColors.white,
-                                size: 14,
-                              ),
+                              Icon(Icons.arrow_forward_ios_rounded, color: ConstColors.white, size: 14),
                             ],
                           ),
                         ),
@@ -164,11 +138,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                   const Gap(16),
                   const Text(
                     '€48.341,77',
-                    style: TextStyle(
-                      color: ConstColors.white,
-                      fontFamily: poppinsSemiBold,
-                      fontSize: 24,
-                    ),
+                    style: TextStyle(color: ConstColors.white, fontFamily: poppinsSemiBold, fontSize: 24),
                   ),
                   Container(
                     padding: const EdgeInsets.all(4),
@@ -179,17 +149,10 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          Icons.arrow_drop_up_sharp,
-                          color: ConstColors.goldGradient2,
-                        ),
+                        Icon(Icons.arrow_drop_up_sharp, color: ConstColors.goldGradient2),
                         Text(
                           '0.73 (-0.73%) Today',
-                          style: TextStyle(
-                            color: ConstColors.goldGradient2,
-                            fontFamily: poppinsSemiBold,
-                            fontSize: 10,
-                          ),
+                          style: TextStyle(color: ConstColors.goldGradient2, fontFamily: poppinsSemiBold, fontSize: 10),
                         ),
                       ],
                     ),
@@ -199,10 +162,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     height: isCardView ? 0 : 220,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 9),
-                      child: Image.asset(
-                        ImagePaths.portfolio.chart,
-                        color: ConstColors.goldGradient4,
-                      ),
+                      child: Image.asset(ImagePaths.portfolio.chart, color: ConstColors.goldGradient4),
                     ),
                   ),
                 ],
@@ -215,10 +175,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 8),
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: ConstColors.baseColorDark2,
-                borderRadius: BorderRadius.circular(10),
-              ),
+              decoration: BoxDecoration(color: ConstColors.baseColorDark2, borderRadius: BorderRadius.circular(10)),
               child: Column(
                 children: [
                   Row(
@@ -226,11 +183,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     children: [
                       const Text(
                         'My Player Cards',
-                        style: TextStyle(
-                          color: ConstColors.light,
-                          fontFamily: poppinsRegular,
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(color: ConstColors.light, fontFamily: poppinsRegular, fontSize: 12),
                       ),
                       Container(
                         padding: const EdgeInsets.all(5),
@@ -245,14 +198,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                           },
                           child: GoldGradient(
                             child: Text(
-                              isCardView
-                                  ? "Show Financial View"
-                                  : "Show Card View",
-                              style: TextStyle(
-                                color: ConstColors.black,
-                                fontFamily: poppinsRegular,
-                                fontSize: 12,
-                              ),
+                              isCardView ? "Show Financial View" : "Show Card View",
+                              style: TextStyle(color: ConstColors.black, fontFamily: poppinsRegular, fontSize: 12),
                             ),
                           ),
                         ),
@@ -278,12 +225,11 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                   itemCount: 10,
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                        childAspectRatio: 0.82,
-                                        mainAxisSpacing: 10,
-                                        crossAxisCount: 2,
-                                      ),
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 0.82,
+                                    mainAxisSpacing: 10,
+                                    crossAxisCount: 2,
+                                  ),
                                   itemBuilder: (context, index) {
                                     final player = ownedPlayers[index];
                                     return FlipPlayerCardWidget(
@@ -329,11 +275,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
               context,
               MaterialPageRoute(
                 builder:
-                    (context) => DetailScreen(
-                      player: playerModel,
-                      players: players,
-                      tag: "portfolio_screen_financial_view",
-                    ),
+                    (context) =>
+                        DetailScreen(player: playerModel, players: players, tag: "portfolio_screen_financial_view"),
               ),
             );
           },
@@ -342,19 +285,13 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             curve: Curves.easeOut,
             margin: const EdgeInsets.only(bottom: 10),
             padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: flashColor.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(10),
-            ),
+            decoration: BoxDecoration(color: flashColor.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
             child: Row(
               children: [
                 Container(
                   width: 50,
                   height: 50,
-                  decoration: BoxDecoration(
-                    color: ConstColors.white,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
+                  decoration: BoxDecoration(color: ConstColors.white, borderRadius: BorderRadius.circular(50)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: Image.asset(player['image'] ?? '', height: 50),
@@ -367,19 +304,11 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     children: [
                       Text(
                         player['name'] ?? '',
-                        style: const TextStyle(
-                          color: ConstColors.light,
-                          fontFamily: poppinsRegular,
-                          fontSize: 12,
-                        ),
+                        style: const TextStyle(color: ConstColors.light, fontFamily: poppinsRegular, fontSize: 12),
                       ),
                       Text(
                         player['club'] ?? '',
-                        style: const TextStyle(
-                          color: ConstColors.gray10,
-                          fontFamily: poppinsLight,
-                          fontSize: 10,
-                        ),
+                        style: const TextStyle(color: ConstColors.gray10, fontFamily: poppinsLight, fontSize: 10),
                       ),
                     ],
                   ),
@@ -393,30 +322,21 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                         Text(
                           player['price'] ?? '',
                           style: TextStyle(
-                            color:
-                                isUp
-                                    ? ConstColors.goldGradient2
-                                    : ConstColors.orange,
+                            color: isUp ? ConstColors.goldGradient2 : ConstColors.orange,
                             fontFamily: poppinsSemiBold,
                             fontSize: 12,
                           ),
                         ),
                         Icon(
                           isUp ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                          color:
-                              isUp
-                                  ? ConstColors.goldGradient2
-                                  : ConstColors.orange,
+                          color: isUp ? ConstColors.goldGradient2 : ConstColors.orange,
                         ),
                       ],
                     ),
                     Text(
                       player['trend'].toString(),
                       style: TextStyle(
-                        color:
-                            isUp
-                                ? ConstColors.goldGradient2
-                                : ConstColors.orange,
+                        color: isUp ? ConstColors.goldGradient2 : ConstColors.orange,
                         fontFamily: poppinsSemiBold,
                         fontSize: 10,
                       ),

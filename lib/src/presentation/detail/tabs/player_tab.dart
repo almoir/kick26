@@ -7,17 +7,23 @@ import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/data/models/player_model.dart';
 import 'package:kick26/src/presentation/detail/sections/overview_section.dart';
-import 'package:kick26/src/presentation/detail/sections/player_card_section.dart';
 import 'package:kick26/src/presentation/detail/widgets/detail_player_card_widget.dart';
 
 import '../../../common/fonts_family.dart';
 
 class PlayerTab extends StatelessWidget {
-  const PlayerTab({super.key, required this.player, required this.notOwnedPlayers, required this.tag});
+  const PlayerTab({
+    super.key,
+    required this.player,
+    required this.notOwnedPlayers,
+    required this.tag,
+    required this.card,
+  });
 
   final PlayerModel player;
   final List<PlayerModel> notOwnedPlayers;
   final String tag;
+  final Map<String, dynamic> card;
 
   @override
   Widget build(BuildContext context) {
@@ -112,8 +118,6 @@ class PlayerTab extends StatelessWidget {
             ),
             Gap(16),
             Image.asset(ImagePaths.home.mbapeHistory),
-            Gap(16),
-            PlayerCardsSection(players: notOwnedPlayers, tabIndex: 2),
           ],
         ),
       ),

@@ -129,5 +129,6 @@ class Profile {
   const Profile();
 
   String get profileImage => '$_basePath/profile_image.png';
+  String get profileImage2 => '$_basePath/profile_image2.png';
   String get inviteFriend => '$_basePath/invite_friend.png';
 }

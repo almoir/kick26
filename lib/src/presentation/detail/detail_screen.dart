@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:kick26/src/common/colors.dart';
+import 'package:kick26/src/common/dummy.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/data/models/player_model.dart';
@@ -73,10 +74,27 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
               Expanded(
                 child: TabBarView(
                   children: [
-                    OverviewTab(player: player, players: notOwnedPlayers, tag: widget.tag),
-                    MarketTab(players: notOwnedPlayers, player: player),
-                    PlayerTab(player: player, notOwnedPlayers: notOwnedPlayers, tag: widget.tag),
-                    HistoryTab(player: player),
+                    OverviewTab(
+                      player: player,
+                      players: notOwnedPlayers,
+                      tag: widget.tag,
+                      card: dummyCard, // NEW
+                    ),
+                    MarketTab(
+                      players: notOwnedPlayers,
+                      player: player,
+                      card: dummyCard, // NEW
+                    ),
+                    PlayerTab(
+                      player: player,
+                      notOwnedPlayers: notOwnedPlayers,
+                      tag: widget.tag,
+                      card: dummyCard, // OPTIONAL
+                    ),
+                    HistoryTab(
+                      player: player,
+                      card: dummyCard, // NEW
+                    ),
                   ],
                 ),
               ),

@@ -4,7 +4,7 @@ import 'package:uuid/uuid.dart';
 final Map<String, dynamic> dummyCard = {
   "card": {
     "id": "A9F3X7KQ2L8M5R1Z",
-    "edition": "2026",
+    "edition": "2024",
     "totalIssued": 10000,
     "sequenceNumber": 3456,
     "type": "gold",
@@ -41,7 +41,7 @@ final Map<String, dynamic> dummyCard = {
     "isUp": true,
     "lastTradedAt": "2025-02-14T09:30:00Z",
   },
-  "Transactions": [
+  "transactions": [
     {
       "seller": {"ID": "USER_89342", "Name": "Alex Morgan", "icon": "cdn"},
       "buyer": {"ID": "USER_89342", "Name": "Alex Morgan", "icon": "cdn"},
