@@ -9,18 +9,13 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       child: Column(
         children: [
           // =======================================================
           // BIG CARD — TRENDS
           // =======================================================
-          BigMenuCard(
-            title: "Trends",
-            subtitle: "Track real time market trends",
-            icon: Icons.show_chart,
-            onTap: () {},
-          ),
+          BigMenuCard(title: "Trends", subtitle: "Track real time market trends", icon: Icons.show_chart, onTap: () {}),
           const Gap(14),
 
           // =======================================================
@@ -46,41 +41,13 @@ class MenuScreen extends StatelessWidget {
             childAspectRatio: 1.15,
             children: [
               MenuCardItem(title: "History", icon: Icons.history, onTap: () {}),
-              MenuCardItem(
-                title: "Collections",
-                icon: Icons.collections_bookmark_outlined,
-                onTap: () {},
-              ),
-              MenuCardItem(
-                title: "Favorites",
-                icon: Icons.favorite_border,
-                onTap: () {},
-              ),
-              MenuCardItem(
-                title: "Notifications",
-                icon: Icons.notifications_none,
-                onTap: () {},
-              ),
-              MenuCardItem(
-                title: "Legal",
-                icon: Icons.shield_outlined,
-                onTap: () {},
-              ),
-              MenuCardItem(
-                title: "Reports",
-                icon: Icons.insert_chart_outlined,
-                onTap: () {},
-              ),
-              MenuCardItem(
-                title: "Assistant",
-                icon: Icons.assistant_outlined,
-                onTap: () {},
-              ),
-              MenuCardItem(
-                title: "About App",
-                icon: Icons.info_outline,
-                onTap: () {},
-              ),
+              MenuCardItem(title: "Collections", icon: Icons.collections_bookmark_outlined, onTap: () {}),
+              MenuCardItem(title: "Favorites", icon: Icons.favorite_border, onTap: () {}),
+              MenuCardItem(title: "Notifications", icon: Icons.notifications_none, onTap: () {}),
+              MenuCardItem(title: "Legal", icon: Icons.shield_outlined, onTap: () {}),
+              MenuCardItem(title: "Reports", icon: Icons.insert_chart_outlined, onTap: () {}),
+              MenuCardItem(title: "Assistant", icon: Icons.assistant_outlined, onTap: () {}),
+              MenuCardItem(title: "About App", icon: Icons.info_outline, onTap: () {}),
             ],
           ),
 

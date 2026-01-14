@@ -55,7 +55,7 @@ class _BuyConfirmationScreenState extends State<BuyConfirmationScreen> {
       // BODY
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             children: [
               Container(
@@ -87,7 +87,7 @@ class _BuyConfirmationScreenState extends State<BuyConfirmationScreen> {
       // BOTTOM NAV
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

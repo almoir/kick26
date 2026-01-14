@@ -30,30 +30,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Container(
             width: 40,
             height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: ConstColors.baseColorDark5),
-            ),
-            child: Center(
-              child: GoldGradient(
-                child: const Icon(Icons.chevron_left, size: 28),
-              ),
-            ),
+            decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: ConstColors.baseColorDark5)),
+            child: Center(child: GoldGradient(child: const Icon(Icons.chevron_left, size: 28))),
           ),
         ),
-        title: Text(
-          "Profile",
-          style: TextStyle(
-            color: ConstColors.light,
-            fontFamily: poppinsSemiBold,
-            fontSize: 15,
-          ),
-        ),
+        title: Text("Profile", style: TextStyle(color: ConstColors.light, fontFamily: poppinsSemiBold, fontSize: 15)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             children: [
               ProfileHeaderSection(),
@@ -85,10 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               GoldGradientButton(
                 text: "Sign Out",
-                suffixIcon: Icon(
-                  Icons.logout,
-                  color: ConstColors.baseColorDark,
-                ),
+                suffixIcon: Icon(Icons.logout, color: ConstColors.baseColorDark),
                 onTap: () {},
               ),
               Gap(50),

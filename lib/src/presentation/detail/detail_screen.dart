@@ -104,7 +104,7 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
         // BOTTOM NAV
         bottomNavigationBar: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

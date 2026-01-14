@@ -40,12 +40,12 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(12),
                 color: ConstColors.baseColorDark2,
                 child: Text(
                   "The My Preferences page lets you customize your experience by managing notification settings and enhancing your account security. Choose how you want to receive alerts and updates, and adjust security preferences to keep your account safe and tailored to your needs.",

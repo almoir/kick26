@@ -36,7 +36,7 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             children: [
               Image.asset(ImagePaths.profile.inviteFriend, height: MediaQuery.of(context).size.height * 0.3),
@@ -105,7 +105,7 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        margin: EdgeInsets.all(16),
+        margin: EdgeInsets.all(12),
         behavior: SnackBarBehavior.floating,
         shape: BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
         backgroundColor: ConstColors.baseColorDark3,

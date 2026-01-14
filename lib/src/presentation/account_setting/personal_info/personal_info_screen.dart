@@ -35,7 +35,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Padding(padding: const EdgeInsets.all(16), child: Image.asset('assets/images/personal_info.png')),
+        child: Padding(padding: const EdgeInsets.all(12), child: Image.asset('assets/images/personal_info.png')),
       ),
     );
   }

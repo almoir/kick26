@@ -43,7 +43,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -70,7 +70,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                   ),
                   Gap(8),
                   Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(12),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -115,7 +115,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
       // BOTTOM NAV
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: ConstColors.orange,

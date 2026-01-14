@@ -134,7 +134,7 @@ class _SellPaymentSuccesfulScreenState extends State<SellPaymentSuccesfulScreen>
       // BOTTOM NAV
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

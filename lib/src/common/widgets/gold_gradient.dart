@@ -12,21 +12,13 @@ class GoldGradient extends StatelessWidget {
     const gradient = LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [
-        Color(0xFFAE8625),
-        Color(0xFFF7EF8A),
-        Color(0xFFD2AC47),
-        Color(0xFFEDC967),
-      ],
+      colors: [Color(0xFFAE8625), Color(0xFFF7EF8A), Color(0xFFD2AC47), Color(0xFFEDC967)],
       stops: [0.0, 0.27, 0.75, 1.0],
     );
 
     return ShaderMask(
       blendMode: BlendMode.srcIn,
-      shaderCallback:
-          (bounds) => gradient.createShader(
-            Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-          ),
+      shaderCallback: (bounds) => gradient.createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
       child: child,
     );
   }
@@ -44,7 +36,7 @@ class GoldGradientBorder extends StatelessWidget {
     this.child,
     this.borderWidth = 2,
     this.borderRadius = 24,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = const EdgeInsets.all(12),
     this.backgroundColor,
   });
 
@@ -70,9 +62,7 @@ class GoldGradientBorder extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(borderWidth), // untuk "mengurangi" isi border
         decoration: BoxDecoration(
-          color:
-              backgroundColor ??
-              ConstColors.baseColorDark, // background hitam di tengah
+          color: backgroundColor ?? ConstColors.baseColorDark, // background hitam di tengah
           borderRadius: BorderRadius.circular(borderRadius - borderWidth),
         ),
         padding: padding,
@@ -109,12 +99,7 @@ class GoldGradientButton extends StatelessWidget {
   static const _gradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [
-      Color(0xFFAE8625),
-      Color(0xFFF7EF8A),
-      Color(0xFFD2AC47),
-      Color(0xFFEDC967),
-    ],
+    colors: [Color(0xFFAE8625), Color(0xFFF7EF8A), Color(0xFFD2AC47), Color(0xFFEDC967)],
     stops: [0.0, 0.27, 0.75, 1.0],
   );
 
@@ -129,10 +114,7 @@ class GoldGradientButton extends StatelessWidget {
         padding: EdgeInsets.all(10),
         height: height,
         width: width,
-        decoration: BoxDecoration(
-          gradient: _gradient,
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
+        decoration: BoxDecoration(gradient: _gradient, borderRadius: BorderRadius.circular(borderRadius)),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -144,26 +126,14 @@ class GoldGradientButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // OPTIONAL ICON
-                  if (prefixIcon != null) ...[
-                    prefixIcon!,
-                    const SizedBox(width: 10),
-                  ],
+                  if (prefixIcon != null) ...[prefixIcon!, const SizedBox(width: 10)],
                   Gap(12),
                   Text(
                     text,
-                    style:
-                        textStyle ??
-                        TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                    style: textStyle ?? TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Gap(12),
-                  if (suffixIcon != null) ...[
-                    suffixIcon!,
-                    const SizedBox(width: 10),
-                  ],
+                  if (suffixIcon != null) ...[suffixIcon!, const SizedBox(width: 10)],
                 ],
               ),
             ),
