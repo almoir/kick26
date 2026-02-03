@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:kick26/src/presentation/menu/favorites/favorites_screen.dart';
+import 'package:kick26/src/presentation/menu/history/history_screen.dart';
 import 'package:kick26/src/presentation/menu/widgets/big_menu_card.dart';
 import 'package:kick26/src/presentation/menu/widgets/menu_card_item.dart';
 
@@ -40,9 +42,17 @@ class MenuScreen extends StatelessWidget {
             crossAxisSpacing: 12,
             childAspectRatio: 1.15,
             children: [
-              MenuCardItem(title: "History", icon: Icons.history, onTap: () {}),
+              MenuCardItem(
+                title: "History",
+                icon: Icons.history,
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryScreen())),
+              ),
               MenuCardItem(title: "Collections", icon: Icons.collections_bookmark_outlined, onTap: () {}),
-              MenuCardItem(title: "Favorites", icon: Icons.favorite_border, onTap: () {}),
+              MenuCardItem(
+                title: "Favorites",
+                icon: Icons.favorite_border,
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesScreen())),
+              ),
               MenuCardItem(title: "Notifications", icon: Icons.notifications_none, onTap: () {}),
               MenuCardItem(title: "Legal", icon: Icons.shield_outlined, onTap: () {}),
               MenuCardItem(title: "Reports", icon: Icons.insert_chart_outlined, onTap: () {}),

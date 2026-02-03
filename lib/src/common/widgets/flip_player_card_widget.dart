@@ -2,24 +2,34 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:kick26/src/common/widgets/card_class_widget.dart';
+import 'package:kick26/src/common/icon_paths.dart';
 import 'package:rive/rive.dart' as riv;
 
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/helper.dart';
 import 'package:kick26/src/common/image_paths.dart';
+import 'package:kick26/src/common/widgets/card_class_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/common/widgets/gold_shine_overlay.dart';
 import 'package:kick26/src/data/models/player_model.dart';
 import 'package:kick26/src/presentation/detail/detail_screen.dart';
 
 class FlipPlayerCardWidget extends StatefulWidget {
-  const FlipPlayerCardWidget({super.key, required this.player, required this.players, required this.tag});
+  const FlipPlayerCardWidget({
+    super.key,
+    required this.player,
+    required this.players,
+    required this.tag,
+    this.onTap,
+    this.isFavorite = false,
+  });
 
   final PlayerModel player;
   final List<PlayerModel> players;
   final String tag;
+  final VoidCallback? onTap;
+  final bool isFavorite;
 
   @override
   State<FlipPlayerCardWidget> createState() => _FlipPlayerCardWidgetState();
@@ -57,6 +67,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
     return GestureDetector(
       onDoubleTap: flipCard,
       onTap:
+          widget.onTap ??
           () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -158,16 +169,18 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
                         Text(player.countryCode.toFlag),
                       ],
                     ),
-                    Column(
-                      children: [
-                        GoldGradient(child: Text("41", style: TextStyle(fontSize: 10, fontFamily: poppinsRegular))),
-                        Container(width: 12, height: 1, color: ConstColors.darkGray2),
-                        Text(
-                          "60",
-                          style: TextStyle(color: ConstColors.darkGray, fontSize: 10, fontFamily: poppinsRegular),
+                    widget.isFavorite
+                        ? Image.asset(IconPaths.general.favorites, width: 24, height: 24)
+                        : Column(
+                          children: [
+                            GoldGradient(child: Text("41", style: TextStyle(fontSize: 10, fontFamily: poppinsRegular))),
+                            Container(width: 12, height: 1, color: ConstColors.darkGray2),
+                            Text(
+                              "60",
+                              style: TextStyle(color: ConstColors.darkGray, fontSize: 10, fontFamily: poppinsRegular),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
                   ],
                 ),
               ),

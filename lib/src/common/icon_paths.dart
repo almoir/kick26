@@ -21,6 +21,7 @@ class General {
   String get wallet => '$_basePath/wallet.png';
   String get bank => '$_basePath/bank.png';
   String get successPayment => '$_basePath/success_payment.png';
+  String get favorites => '$_basePath/favorites.png';
 }
 
 class Home {

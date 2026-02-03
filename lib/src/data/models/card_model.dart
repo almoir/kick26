@@ -1,119 +1,126 @@
 class CardModel {
-  final CardInfo? card;
-  final PlayerInfo? player;
-  final ClubInfo? club;
+  final String? id;
+  final CardModelCard? card;
+  final CardModelPlayer? player;
+  final CardModelClub? club;
   final Media? media;
   final Market? market;
   final List<Transaction>? transactions;
   final Metadata? metadata;
 
-  CardModel({this.card, this.player, this.club, this.media, this.market, this.transactions, this.metadata});
+  CardModel({this.id, this.card, this.player, this.club, this.media, this.market, this.transactions, this.metadata});
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
-    card: json["card"] == null ? null : CardInfo.fromJson(json["card"]),
-    player: json["player"] == null ? null : PlayerInfo.fromJson(json["player"]),
-    club: json["club"] == null ? null : ClubInfo.fromJson(json["club"]),
+    id: json["id"],
+    card: json["card"] == null ? null : CardModelCard.fromJson(json["card"]),
+    player: json["player"] == null ? null : CardModelPlayer.fromJson(json["player"]),
+    club: json["club"] == null ? null : CardModelClub.fromJson(json["club"]),
     media: json["media"] == null ? null : Media.fromJson(json["media"]),
     market: json["market"] == null ? null : Market.fromJson(json["market"]),
     transactions:
-        json["Transactions"] == null
+        json["transactions"] == null
             ? []
-            : List<Transaction>.from(json["Transactions"]!.map((x) => Transaction.fromJson(x))),
+            : List<Transaction>.from(json["transactions"]!.map((x) => Transaction.fromJson(x))),
     metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
   );
 
   Map<String, dynamic> toJson() => {
+    "id": id,
     "card": card?.toJson(),
     "player": player?.toJson(),
     "club": club?.toJson(),
     "media": media?.toJson(),
     "market": market?.toJson(),
-    "Transactions": transactions == null ? [] : List<dynamic>.from(transactions!.map((x) => x.toJson())),
+    "transactions": transactions == null ? [] : List<dynamic>.from(transactions!.map((x) => x.toJson())),
     "metadata": metadata?.toJson(),
   };
 }
 
-class CardInfo {
-  final String? id;
+class CardModelCard {
   final String? edition;
   final int? totalIssued;
-  final int? sequenceHnumber;
+  final int? sequenceNumber;
   final String? type;
+  final String? cardClass;
   final DateTime? issuedAt;
   final String? issuerId;
   final String? issuerName;
   final String? approverId;
   final String? approverName;
+  final int? owned;
 
-  CardInfo({
-    this.id,
+  CardModelCard({
     this.edition,
     this.totalIssued,
-    this.sequenceHnumber,
+    this.sequenceNumber,
     this.type,
+    this.cardClass,
     this.issuedAt,
     this.issuerId,
     this.issuerName,
     this.approverId,
     this.approverName,
+    this.owned,
   });
 
-  factory CardInfo.fromJson(Map<String, dynamic> json) => CardInfo(
-    id: json["id"],
+  factory CardModelCard.fromJson(Map<String, dynamic> json) => CardModelCard(
     edition: json["edition"],
     totalIssued: json["totalIssued"],
-    sequenceHnumber: json["sequenceHnumber"],
+    sequenceNumber: json["sequenceNumber"],
     type: json["type"],
+    cardClass: json["class"],
     issuedAt: json["issuedAt"] == null ? null : DateTime.parse(json["issuedAt"]),
     issuerId: json["issuerId"],
     issuerName: json["issuerName"],
     approverId: json["approverId"],
     approverName: json["approverName"],
+    owned: json["owned"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
     "edition": edition,
     "totalIssued": totalIssued,
-    "sequenceHnumber": sequenceHnumber,
+    "sequenceNumber": sequenceNumber,
     "type": type,
+    "class": cardClass,
     "issuedAt": issuedAt?.toIso8601String(),
     "issuerId": issuerId,
     "issuerName": issuerName,
     "approverId": approverId,
     "approverName": approverName,
+    "owned": owned,
   };
 }
 
-class ClubInfo {
-  final String? name;
+class CardModelClub {
   final String? id;
+  final String? name;
   final String? country;
   final String? city;
 
-  ClubInfo({this.name, this.id, this.country, this.city});
+  CardModelClub({this.id, this.name, this.country, this.city});
 
-  factory ClubInfo.fromJson(Map<String, dynamic> json) =>
-      ClubInfo(name: json["name"], id: json["id"], country: json["country"], city: json["city"]);
+  factory CardModelClub.fromJson(Map<String, dynamic> json) =>
+      CardModelClub(id: json["id"], name: json["name"], country: json["country"], city: json["city"]);
 
-  Map<String, dynamic> toJson() => {"name": name, "id": id, "country": country, "city": city};
+  Map<String, dynamic> toJson() => {"id": id, "name": name, "country": country, "city": city};
 }
 
 class Market {
   final int? currentPrice;
   final double? lastTransactionPrice;
-  final double? low;
-  final double? high;
+  final int? low;
+  final int? high;
   final String? currency;
-  final bool? isOnMarket;
-  final bool? isTradable;
-  final bool? isBidEnabled;
+  final double? trend;
+  final bool? isUp;
   final int? floorPrice;
   final double? highestBid;
   final int? totalTrades;
   final int? uniqueOwners;
-  final double? priceChange24H;
-  final bool? isUp;
+  final bool? isOnMarket;
+  final bool? isTradable;
+  final bool? isBidEnabled;
   final DateTime? lastTradedAt;
 
   Market({
@@ -122,51 +129,51 @@ class Market {
     this.low,
     this.high,
     this.currency,
-    this.isOnMarket,
-    this.isTradable,
-    this.isBidEnabled,
+    this.trend,
+    this.isUp,
     this.floorPrice,
     this.highestBid,
     this.totalTrades,
     this.uniqueOwners,
-    this.priceChange24H,
-    this.isUp,
+    this.isOnMarket,
+    this.isTradable,
+    this.isBidEnabled,
     this.lastTradedAt,
   });
 
   factory Market.fromJson(Map<String, dynamic> json) => Market(
     currentPrice: json["currentPrice"],
     lastTransactionPrice: json["lastTransactionPrice"]?.toDouble(),
-    low: json["Low"]?.toDouble(),
-    high: json["High"]?.toDouble(),
+    low: json["low"],
+    high: json["high"],
     currency: json["currency"],
-    isOnMarket: json["isOnMarket"],
-    isTradable: json["isTradable"],
-    isBidEnabled: json["isBidEnabled"],
+    trend: json["trend"]?.toDouble(),
+    isUp: json["isUp"],
     floorPrice: json["floorPrice"],
     highestBid: json["highestBid"]?.toDouble(),
     totalTrades: json["totalTrades"],
     uniqueOwners: json["uniqueOwners"],
-    priceChange24H: json["priceChange24h"]?.toDouble(),
-    isUp: json["isUp"],
+    isOnMarket: json["isOnMarket"],
+    isTradable: json["isTradable"],
+    isBidEnabled: json["isBidEnabled"],
     lastTradedAt: json["lastTradedAt"] == null ? null : DateTime.parse(json["lastTradedAt"]),
   );
 
   Map<String, dynamic> toJson() => {
     "currentPrice": currentPrice,
     "lastTransactionPrice": lastTransactionPrice,
-    "Low": low,
-    "High": high,
+    "low": low,
+    "high": high,
     "currency": currency,
-    "isOnMarket": isOnMarket,
-    "isTradable": isTradable,
-    "isBidEnabled": isBidEnabled,
+    "trend": trend,
+    "isUp": isUp,
     "floorPrice": floorPrice,
     "highestBid": highestBid,
     "totalTrades": totalTrades,
     "uniqueOwners": uniqueOwners,
-    "priceChange24h": priceChange24H,
-    "isUp": isUp,
+    "isOnMarket": isOnMarket,
+    "isTradable": isTradable,
+    "isBidEnabled": isBidEnabled,
     "lastTradedAt": lastTradedAt?.toIso8601String(),
   };
 }
@@ -187,22 +194,22 @@ class Media {
 
 class Images {
   final String? playerProfile;
-  final String? player1;
+  final String? playerCard;
   final String? clubImage;
   final String? clubLogo;
 
-  Images({this.playerProfile, this.player1, this.clubImage, this.clubLogo});
+  Images({this.playerProfile, this.playerCard, this.clubImage, this.clubLogo});
 
   factory Images.fromJson(Map<String, dynamic> json) => Images(
     playerProfile: json["playerProfile"],
-    player1: json["player1"],
+    playerCard: json["playerCard"],
     clubImage: json["clubImage"],
     clubLogo: json["clubLogo"],
   );
 
   Map<String, dynamic> toJson() => {
     "playerProfile": playerProfile,
-    "player1": player1,
+    "playerCard": playerCard,
     "clubImage": clubImage,
     "clubLogo": clubLogo,
   };
@@ -247,74 +254,64 @@ class MetadataCard {
 }
 
 class MetadataClub {
-  final DateTime? allOtherPlayerData;
+  final DateTime? lastUpdated;
   final Match? match;
 
-  MetadataClub({this.allOtherPlayerData, this.match});
+  MetadataClub({this.lastUpdated, this.match});
 
   factory MetadataClub.fromJson(Map<String, dynamic> json) => MetadataClub(
-    allOtherPlayerData:
-        json["all other player data.."] == null ? null : DateTime.parse(json["all other player data.."]),
+    lastUpdated: json["lastUpdated"] == null ? null : DateTime.parse(json["lastUpdated"]),
     match: json["match"] == null ? null : Match.fromJson(json["match"]),
   );
 
-  Map<String, dynamic> toJson() => {
-    "all other player data..": allOtherPlayerData?.toIso8601String(),
-    "match": match?.toJson(),
-  };
+  Map<String, dynamic> toJson() => {"lastUpdated": lastUpdated?.toIso8601String(), "match": match?.toJson()};
 }
 
 class Match {
   final String? last;
   final String? upcoming;
-  final Highlights? highlights;
+  final dynamic highlights;
 
   Match({this.last, this.upcoming, this.highlights});
 
-  factory Match.fromJson(Map<String, dynamic> json) => Match(
-    last: json["last"],
-    upcoming: json["upcoming"],
-    highlights: json["highlights"] == null ? null : Highlights.fromJson(json["highlights"]),
-  );
+  factory Match.fromJson(Map<String, dynamic> json) =>
+      Match(last: json["last"], upcoming: json["upcoming"], highlights: json["highlights"]);
 
-  Map<String, dynamic> toJson() => {"last": last, "upcoming": upcoming, "highlights": highlights?.toJson()};
-}
-
-class Highlights {
-  Highlights();
-
-  factory Highlights.fromJson(Map<String, dynamic> json) => Highlights();
-
-  Map<String, dynamic> toJson() => {};
+  Map<String, dynamic> toJson() => {"last": last, "upcoming": upcoming, "highlights": highlights};
 }
 
 class MetadataPlayer {
-  final DateTime? allOtherPlayerData;
+  final DateTime? lastUpdated;
 
-  MetadataPlayer({this.allOtherPlayerData});
+  MetadataPlayer({this.lastUpdated});
 
-  factory MetadataPlayer.fromJson(Map<String, dynamic> json) => MetadataPlayer(
-    allOtherPlayerData:
-        json["all other player data.."] == null ? null : DateTime.parse(json["all other player data.."]),
-  );
+  factory MetadataPlayer.fromJson(Map<String, dynamic> json) =>
+      MetadataPlayer(lastUpdated: json["lastUpdated"] == null ? null : DateTime.parse(json["lastUpdated"]));
 
-  Map<String, dynamic> toJson() => {"all other player data..": allOtherPlayerData?.toIso8601String()};
+  Map<String, dynamic> toJson() => {"lastUpdated": lastUpdated?.toIso8601String()};
 }
 
-class PlayerInfo {
+class CardModelPlayer {
   final String? playerId;
   final String? name;
+  final String? countryCode;
   final SnapshotBio? snapshotBio;
 
-  PlayerInfo({this.playerId, this.name, this.snapshotBio});
+  CardModelPlayer({this.playerId, this.name, this.countryCode, this.snapshotBio});
 
-  factory PlayerInfo.fromJson(Map<String, dynamic> json) => PlayerInfo(
+  factory CardModelPlayer.fromJson(Map<String, dynamic> json) => CardModelPlayer(
     playerId: json["playerId"],
     name: json["name"],
+    countryCode: json["countryCode"],
     snapshotBio: json["snapshotBio"] == null ? null : SnapshotBio.fromJson(json["snapshotBio"]),
   );
 
-  Map<String, dynamic> toJson() => {"playerId": playerId, "name": name, "snapshotBio": snapshotBio?.toJson()};
+  Map<String, dynamic> toJson() => {
+    "playerId": playerId,
+    "name": name,
+    "countryCode": countryCode,
+    "snapshotBio": snapshotBio?.toJson(),
+  };
 }
 
 class SnapshotBio {
@@ -350,31 +347,31 @@ class SnapshotBio {
 }
 
 class Transaction {
-  final Buyer? seller;
-  final Buyer? buyer;
-  final DateTime? timestamp;
   final String? type;
+  final DateTime? timestamp;
   final double? price;
   final double? priceDelta;
+  final Buyer? seller;
+  final Buyer? buyer;
 
-  Transaction({this.seller, this.buyer, this.timestamp, this.type, this.price, this.priceDelta});
+  Transaction({this.type, this.timestamp, this.price, this.priceDelta, this.seller, this.buyer});
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
-    seller: json["seller"] == null ? null : Buyer.fromJson(json["seller"]),
-    buyer: json["buyer"] == null ? null : Buyer.fromJson(json["buyer"]),
-    timestamp: json["timestamp"] == null ? null : DateTime.parse(json["timestamp"]),
     type: json["type"],
+    timestamp: json["timestamp"] == null ? null : DateTime.parse(json["timestamp"]),
     price: json["price"]?.toDouble(),
     priceDelta: json["priceDelta"]?.toDouble(),
+    seller: json["seller"] == null ? null : Buyer.fromJson(json["seller"]),
+    buyer: json["buyer"] == null ? null : Buyer.fromJson(json["buyer"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "seller": seller?.toJson(),
-    "buyer": buyer?.toJson(),
-    "timestamp": timestamp?.toIso8601String(),
     "type": type,
+    "timestamp": timestamp?.toIso8601String(),
     "price": price,
     "priceDelta": priceDelta,
+    "seller": seller?.toJson(),
+    "buyer": buyer?.toJson(),
   };
 }
 
@@ -385,7 +382,7 @@ class Buyer {
 
   Buyer({this.id, this.name, this.icon});
 
-  factory Buyer.fromJson(Map<String, dynamic> json) => Buyer(id: json["ID"], name: json["Name"], icon: json["icon"]);
+  factory Buyer.fromJson(Map<String, dynamic> json) => Buyer(id: json["id"], name: json["name"], icon: json["icon"]);
 
-  Map<String, dynamic> toJson() => {"ID": id, "Name": name, "icon": icon};
+  Map<String, dynamic> toJson() => {"id": id, "name": name, "icon": icon};
 }
