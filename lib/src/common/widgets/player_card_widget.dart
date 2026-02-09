@@ -7,12 +7,12 @@ import 'package:kick26/src/common/helper.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/card_class_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class PlayerCardWidget extends StatelessWidget {
-  const PlayerCardWidget({super.key, required this.player, this.onTap});
+  const PlayerCardWidget({super.key, required this.card, this.onTap});
 
-  final PlayerModel player;
+  final CardModel card;
   final VoidCallback? onTap;
 
   @override
@@ -41,7 +41,7 @@ class PlayerCardWidget extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(player.image, fit: BoxFit.contain),
+                  child: Image.asset(card.media.images?.playerProfile ?? "", fit: BoxFit.contain),
                 ),
               ),
             ),
@@ -59,10 +59,10 @@ class PlayerCardWidget extends StatelessWidget {
                       children: [
                         Column(
                           children: [
-                            CardClassWidget(cardClass: player.cardClass),
+                            CardClassWidget(cardClass: card.data.cardClass ?? ""),
                             Gap(4),
-                            Image.asset(player.clubImage, height: 16),
-                            Text(player.countryCode.toFlag),
+                            Image.asset(card.media.images?.clubImage ?? "", height: 16),
+                            Text(card.player.countryCode?.toFlag ?? ""),
                           ],
                         ),
                         Column(
@@ -97,7 +97,7 @@ class PlayerCardWidget extends StatelessWidget {
                         children: [
                           GoldGradient(
                             child: Text(
-                              player.name,
+                              card.player.name ?? "",
                               style: TextStyle(fontFamily: poppinsRegular, fontSize: 10),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -107,7 +107,7 @@ class PlayerCardWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TweenAnimationBuilder<double>(
-                                tween: Tween<double>(begin: player.price, end: player.price),
+                                tween: Tween<double>(begin: card.market.currentPrice, end: card.market.currentPrice),
                                 duration: const Duration(milliseconds: 800),
                                 builder: (context, value, child) {
                                   return Text(
@@ -121,11 +121,11 @@ class PlayerCardWidget extends StatelessWidget {
                                 },
                               ),
                               TweenAnimationBuilder<double>(
-                                tween: Tween<double>(begin: player.trend, end: player.trend),
+                                tween: Tween<double>(begin: card.market.trend, end: card.market.trend),
                                 duration: const Duration(milliseconds: 800),
                                 builder: (context, value, child) {
-                                  final isUp = player.isUp;
-                                  final color = isUp ? ConstColors.green : ConstColors.orange;
+                                  final isUp = card.market.isUp;
+                                  final color = (isUp ?? false) ? ConstColors.green : ConstColors.orange;
                                   return Row(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -135,7 +135,7 @@ class PlayerCardWidget extends StatelessWidget {
                                         transitionBuilder:
                                             (child, animation) => ScaleTransition(scale: animation, child: child),
                                         child: Icon(
-                                          isUp ? Icons.arrow_drop_up_sharp : Icons.arrow_drop_down_sharp,
+                                          (isUp ?? false) ? Icons.arrow_drop_up_sharp : Icons.arrow_drop_down_sharp,
                                           key: ValueKey(isUp),
                                           color: color,
                                           size: 10,

@@ -3,7 +3,7 @@ import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/flip_player_card_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
@@ -13,11 +13,11 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
-  List<PlayerModel> players = [];
+  List<CardModel> cards = [];
 
   @override
   void initState() {
-    players = generateDummyPlayers().getRange(0, 10).toList();
+    cards = generateDummyCards();
     super.initState();
   }
 
@@ -48,15 +48,15 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       body: Center(
         child: GridView.builder(
           padding: const EdgeInsets.all(14),
-          itemCount: players.length,
+          itemCount: cards.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: 0.82,
             mainAxisSpacing: 10,
             crossAxisCount: 2,
           ),
           itemBuilder: (context, index) {
-            final player = players[index];
-            return FlipPlayerCardWidget(player: player, players: players, tag: "favorites", isFavorite: true);
+            final card = cards[index];
+            return FlipPlayerCardWidget(card: card, cards: cards, tag: "favorites", isFavorite: true);
           },
         ),
       ),

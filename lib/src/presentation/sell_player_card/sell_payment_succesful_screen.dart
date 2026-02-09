@@ -6,31 +6,31 @@ import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/bottom_navigation/bottom_navigation.dart';
 
 class SellPaymentSuccesfulScreen extends StatefulWidget {
-  const SellPaymentSuccesfulScreen({super.key, required this.player});
+  const SellPaymentSuccesfulScreen({super.key, required this.card});
 
-  final PlayerModel player;
+  final CardModel card;
 
   @override
   State<SellPaymentSuccesfulScreen> createState() => _SellPaymentSuccesfulScreenState();
 }
 
 class _SellPaymentSuccesfulScreenState extends State<SellPaymentSuccesfulScreen> {
-  late PlayerModel player;
+  late CardModel card;
 
   @override
   void initState() {
     super.initState();
-    player = widget.player;
+    card = widget.card;
   }
 
   @override
   Widget build(BuildContext context) {
-    final double platformFee = player.price * 0.05;
-    final double netReceived = player.price - platformFee;
+    final double platformFee = (card.market.currentPrice ?? 0) * 0.05;
+    final double netReceived = (card.market.currentPrice ?? 0) - platformFee;
 
     return Scaffold(
       backgroundColor: ConstColors.baseColorDark,
@@ -74,7 +74,7 @@ class _SellPaymentSuccesfulScreenState extends State<SellPaymentSuccesfulScreen>
                             style: TextStyle(fontFamily: poppinsRegular, fontSize: 12, color: ConstColors.darkGray),
                             children: [
                               const TextSpan(text: "Your sell order for "),
-                              TextSpan(text: player.name, style: const TextStyle(color: ConstColors.light)),
+                              TextSpan(text: card.player.name, style: const TextStyle(color: ConstColors.light)),
                               const TextSpan(text: " has been completed successfully."),
                             ],
                           ),
@@ -111,7 +111,7 @@ class _SellPaymentSuccesfulScreenState extends State<SellPaymentSuccesfulScreen>
                             Divider(color: ConstColors.baseColorDark5),
 
                             Gap(16),
-                            _orderDetailTile("Sell Price", "EUR ${player.price.toStringAsFixed(2)}"),
+                            _orderDetailTile("Sell Price", "EUR ${card.market.currentPrice?.toStringAsFixed(2)}"),
                             _orderDetailTile("Platform Fee", "- EUR ${platformFee.toStringAsFixed(2)}"),
 
                             Gap(6),

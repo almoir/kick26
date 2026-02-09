@@ -5,23 +5,23 @@ import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/common/widgets/player_card_widget.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/bottom_navigation/bottom_navigation.dart';
 
 class BuyPaymentSuccesfulScreen extends StatefulWidget {
-  const BuyPaymentSuccesfulScreen({super.key, required this.player});
-  final PlayerModel player;
+  const BuyPaymentSuccesfulScreen({super.key, required this.card});
+  final CardModel card;
 
   @override
   State<BuyPaymentSuccesfulScreen> createState() => _BuyPaymentSuccesfulScreenState();
 }
 
 class _BuyPaymentSuccesfulScreenState extends State<BuyPaymentSuccesfulScreen> {
-  late PlayerModel player;
+  late CardModel card;
   @override
   void initState() {
     super.initState();
-    player = widget.player;
+    card = widget.card;
   }
 
   @override
@@ -57,10 +57,13 @@ class _BuyPaymentSuccesfulScreenState extends State<BuyPaymentSuccesfulScreen> {
                   text: TextSpan(
                     style: TextStyle(fontFamily: poppinsRegular, fontSize: 12, color: ConstColors.darkGray),
                     children: [
-                      TextSpan(text: player.name, style: TextStyle(color: ConstColors.light)),
+                      TextSpan(text: card.player.name, style: TextStyle(color: ConstColors.light)),
                       TextSpan(text: " 1/40 ", style: TextStyle(color: ConstColors.light)),
                       const TextSpan(text: "card successfully bought for "),
-                      TextSpan(text: "€${player.price.toStringAsFixed(2)}", style: TextStyle(color: ConstColors.gold)),
+                      TextSpan(
+                        text: "€${card.market.currentPrice?.toStringAsFixed(2)}",
+                        style: TextStyle(color: ConstColors.gold),
+                      ),
                     ],
                   ),
                 ),
@@ -83,7 +86,7 @@ class _BuyPaymentSuccesfulScreenState extends State<BuyPaymentSuccesfulScreen> {
                         ),
                       ),
                     ),
-                    Center(child: PlayerCardWidget(player: player)),
+                    Center(child: PlayerCardWidget(card: card)),
                   ],
                 ),
               ),

@@ -4,16 +4,12 @@ import 'package:gap/gap.dart';
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/flip_player_card_widget.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class PlayerCardsSection extends StatelessWidget {
-  const PlayerCardsSection({
-    super.key,
-    required this.players,
-    required this.tabIndex,
-  });
+  const PlayerCardsSection({super.key, required this.cards, required this.tabIndex});
 
-  final List<PlayerModel> players;
+  final List<CardModel> cards;
   final int tabIndex;
 
   @override
@@ -28,15 +24,7 @@ class PlayerCardsSection extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Player Cards",
-                  style: TextStyle(
-                    fontFamily: poppinsRegular,
-                    color: ConstColors.light,
-                  ),
-                ),
-              ],
+              children: [Text("Player Cards", style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.light))],
             ),
           ),
           Expanded(
@@ -46,15 +34,11 @@ class PlayerCardsSection extends StatelessWidget {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                final copy = List<PlayerModel>.from(players);
+                final copy = List<CardModel>.from(cards);
                 copy.shuffle();
                 final shuffle10Players = copy.take(10).toList();
-                final player = shuffle10Players[index];
-                return FlipPlayerCardWidget(
-                  player: player,
-                  players: players,
-                  tag: "player_card_section$tabIndex$index",
-                );
+                final card = shuffle10Players[index];
+                return FlipPlayerCardWidget(card: card, cards: cards, tag: "player_card_section$tabIndex$index");
               },
             ),
           ),

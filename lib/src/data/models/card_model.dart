@@ -1,42 +1,79 @@
-class CardModel {
-  final String? id;
-  final CardModelCard? card;
-  final CardModelPlayer? player;
-  final CardModelClub? club;
-  final Media? media;
-  final Market? market;
-  final List<Transaction>? transactions;
-  final Metadata? metadata;
+import 'dart:math';
 
-  CardModel({this.id, this.card, this.player, this.club, this.media, this.market, this.transactions, this.metadata});
+import 'package:kick26/src/common/dummy_card.dart';
+
+List<CardModel> generateDummyCards() {
+  return dummyCard.map((e) => CardModel.fromJson(e)).toList();
+}
+
+void updateCardTrends(List<CardModel> cards, {Random? random, double maxChangePercent = 3}) {
+  final rnd = random ?? Random();
+  for (final c in cards) {
+    // generate perubahan acak antara -maxChangePercent .. +maxChangePercent
+    final changePercent = (rnd.nextDouble() * (2 * maxChangePercent)) - maxChangePercent;
+    // apply: jika mau trend menunjukkan cumulative atau current change?
+    // Di sini kita set trend = changePercent (current tick), dan price berubah mengikuti changePercent.
+    c.market.trend = double.parse(changePercent.toStringAsFixed(2));
+    c.market.isUp = changePercent >= 0;
+
+    // update price: p.price * (1 + changePercent/100)
+    final newPrice = (c.market.currentPrice ?? 0) * (1 + (changePercent / 100));
+    // optional: bataskan price agar tetap realistis
+    final minPrice = (c.market.currentPrice ?? 0) * 0.5;
+    final maxPrice = (c.market.currentPrice ?? 0) * 2;
+
+    c.market.currentPrice = newPrice.clamp(minPrice, maxPrice);
+  }
+}
+
+class CardModel {
+  final String id;
+  final CardDataModel data;
+  final CardModelPlayer player;
+  final CardModelClub club;
+  final Media media;
+  final Market market;
+  final List<Transaction> transactions;
+  final Metadata metadata;
+
+  CardModel({
+    required this.id,
+    required this.data,
+    required this.player,
+    required this.club,
+    required this.media,
+    required this.market,
+    required this.transactions,
+    required this.metadata,
+  });
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
     id: json["id"],
-    card: json["card"] == null ? null : CardModelCard.fromJson(json["card"]),
-    player: json["player"] == null ? null : CardModelPlayer.fromJson(json["player"]),
-    club: json["club"] == null ? null : CardModelClub.fromJson(json["club"]),
-    media: json["media"] == null ? null : Media.fromJson(json["media"]),
-    market: json["market"] == null ? null : Market.fromJson(json["market"]),
+    data: CardDataModel.fromJson(json["data"]),
+    player: CardModelPlayer.fromJson(json["player"]),
+    club: CardModelClub.fromJson(json["club"]),
+    media: Media.fromJson(json["media"]),
+    market: Market.fromJson(json["market"]),
     transactions:
         json["transactions"] == null
             ? []
             : List<Transaction>.from(json["transactions"]!.map((x) => Transaction.fromJson(x))),
-    metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
+    metadata: Metadata.fromJson(json["metadata"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "card": card?.toJson(),
-    "player": player?.toJson(),
-    "club": club?.toJson(),
-    "media": media?.toJson(),
-    "market": market?.toJson(),
-    "transactions": transactions == null ? [] : List<dynamic>.from(transactions!.map((x) => x.toJson())),
-    "metadata": metadata?.toJson(),
+    "data": data.toJson(),
+    "player": player.toJson(),
+    "club": club.toJson(),
+    "media": media.toJson(),
+    "market": market.toJson(),
+    "transactions": List<dynamic>.from(transactions.map((x) => x.toJson())),
+    "metadata": metadata.toJson(),
   };
 }
 
-class CardModelCard {
+class CardDataModel {
   final String? edition;
   final int? totalIssued;
   final int? sequenceNumber;
@@ -49,7 +86,7 @@ class CardModelCard {
   final String? approverName;
   final int? owned;
 
-  CardModelCard({
+  CardDataModel({
     this.edition,
     this.totalIssued,
     this.sequenceNumber,
@@ -63,7 +100,7 @@ class CardModelCard {
     this.owned,
   });
 
-  factory CardModelCard.fromJson(Map<String, dynamic> json) => CardModelCard(
+  factory CardDataModel.fromJson(Map<String, dynamic> json) => CardDataModel(
     edition: json["edition"],
     totalIssued: json["totalIssued"],
     sequenceNumber: json["sequenceNumber"],
@@ -90,6 +127,8 @@ class CardModelCard {
     "approverName": approverName,
     "owned": owned,
   };
+
+  bool get isOwned => owned != null && owned! > 0;
 }
 
 class CardModelClub {
@@ -107,17 +146,17 @@ class CardModelClub {
 }
 
 class Market {
-  final int? currentPrice;
+  double? currentPrice;
   final double? lastTransactionPrice;
-  final int? low;
-  final int? high;
+  final double? low;
+  final double? high;
   final String? currency;
-  final double? trend;
-  final bool? isUp;
-  final int? floorPrice;
+  double? trend;
+  bool? isUp;
+  final double? floorPrice;
   final double? highestBid;
-  final int? totalTrades;
-  final int? uniqueOwners;
+  final double? totalTrades;
+  final double? uniqueOwners;
   final bool? isOnMarket;
   final bool? isTradable;
   final bool? isBidEnabled;

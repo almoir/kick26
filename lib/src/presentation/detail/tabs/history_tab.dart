@@ -1,41 +1,26 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class HistoryTab extends StatefulWidget {
-  final PlayerModel player;
-  final Map<String, dynamic> card;
+  final CardModel card;
 
-  const HistoryTab({super.key, required this.player, required this.card});
+  const HistoryTab({super.key, required this.card});
 
   @override
   State<HistoryTab> createState() => _HistoryTabState();
 }
 
 class _HistoryTabState extends State<HistoryTab> {
-  String generatePlayerId(String name) {
-    final initials = name.trim().split(RegExp(r'\s+')).map((e) => e.isNotEmpty ? e[0].toUpperCase() : '').join();
-
-    final random = Random().nextInt(900000) + 100000; // 6 digit
-    return "$initials-$random";
-  }
-
-  late PlayerModel player;
-
-  late int totalIssued;
-  late String playerId;
+  late CardModel card;
 
   @override
   void initState() {
-    player = widget.player;
-    totalIssued = 60;
-    playerId = generatePlayerId(player.name);
+    card = widget.card;
     super.initState();
   }
 
@@ -47,17 +32,17 @@ class _HistoryTabState extends State<HistoryTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// TODAY
-          if (player.isOwned)
+          if (card.data.isOwned)
             HistoryCard(
               icon: Icons.shopping_cart,
               title: "Bought",
               description: "Market → You",
-              price: "€${(widget.player.price + 1.25).toStringAsFixed(2)}",
+              price: "€${((widget.card.market.currentPrice ?? 0) + 1.25).toStringAsFixed(2)}",
               date: DateFormat("MMM dd, yyyy").format(DateTime.now()),
               timeStamp: DateFormat("HH:mm").format(DateTime.now()),
-              playerId: playerId,
+              playerId: card.player.playerId ?? "",
               cardNumber: 2,
-              totalIssued: totalIssued,
+              totalIssued: card.data.totalIssued ?? 0,
               isHighlight: true,
             ),
 
@@ -66,12 +51,12 @@ class _HistoryTabState extends State<HistoryTab> {
             icon: Icons.swap_horiz,
             title: "Trade",
             description: "Alex Morgan → Anthony Vargas",
-            price: "€${(widget.player.price - 0.75).toStringAsFixed(2)}",
+            price: "€${((card.market.currentPrice ?? 0) - 0.75).toStringAsFixed(2)}",
             date: "Dec 18, 2025",
             timeStamp: "16:49",
-            playerId: playerId,
+            playerId: card.player.playerId ?? "",
             cardNumber: 2,
-            totalIssued: totalIssued,
+            totalIssued: card.data.totalIssued ?? 0,
           ),
 
           /// 26 NOV 2025
@@ -79,12 +64,12 @@ class _HistoryTabState extends State<HistoryTab> {
             icon: Icons.swap_horiz,
             title: "Trade",
             description: "Market → David Silva",
-            price: "€${(widget.player.price - 1.10).toStringAsFixed(2)}",
+            price: "€${((card.market.currentPrice ?? 0) - 1.10).toStringAsFixed(2)}",
             date: "Nov 26, 2025",
             timeStamp: "18:46",
-            playerId: playerId,
+            playerId: card.player.playerId ?? "",
             cardNumber: 1,
-            totalIssued: totalIssued,
+            totalIssued: card.data.totalIssued ?? 0,
           ),
 
           /// 21 OCT 2025
@@ -92,12 +77,12 @@ class _HistoryTabState extends State<HistoryTab> {
             icon: Icons.swap_horiz,
             title: "Trade",
             description: "David Silva → Alex Morgan",
-            price: "€${widget.player.price.toStringAsFixed(2)}",
+            price: "€${card.market.currentPrice?.toStringAsFixed(2) ?? ""}",
             date: "Oct 21, 2025",
             timeStamp: "13:00",
-            playerId: playerId,
+            playerId: card.player.playerId ?? "",
             cardNumber: 1,
-            totalIssued: totalIssued,
+            totalIssued: card.data.totalIssued ?? 0,
           ),
 
           /// 07 MAR 2025
@@ -105,12 +90,12 @@ class _HistoryTabState extends State<HistoryTab> {
             icon: Icons.swap_horiz,
             title: "Trade",
             description: "Market → Alex Morgan",
-            price: "€${(widget.player.price - 2.15).toStringAsFixed(2)}",
+            price: "€${((card.market.currentPrice ?? 0) - 2.15).toStringAsFixed(2)}",
             date: "Mar 07, 2025",
             timeStamp: "11:00",
-            playerId: playerId,
+            playerId: card.player.playerId ?? "",
             cardNumber: 1,
-            totalIssued: totalIssued,
+            totalIssued: card.data.totalIssued ?? 0,
           ),
         ],
       ),

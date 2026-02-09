@@ -1,15 +1,10 @@
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class TransactionModel {
   final String id;
-  final PlayerModel player;
+  final CardModel card;
   final bool isBuy;
   final DateTime date;
 
-  TransactionModel({
-    required this.id,
-    required this.player,
-    required this.isBuy,
-    required this.date,
-  });
+  TransactionModel({required this.id, required this.card, required this.isBuy, required this.date});
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class ListTilePlayersWidget extends StatelessWidget {
-  const ListTilePlayersWidget({super.key, required this.players});
+  const ListTilePlayersWidget({super.key, required this.cards});
 
-  final List<PlayerModel> players;
+  final List<CardModel> cards;
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +14,11 @@ class ListTilePlayersWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      itemCount: players.length,
+      itemCount: cards.length,
       itemBuilder: (context, index) {
         return Container(
           margin: const EdgeInsets.only(bottom: 12),
-          decoration: BoxDecoration(
-            color: ConstColors.baseColorDark2,
-            borderRadius: BorderRadius.circular(10),
-          ),
+          decoration: BoxDecoration(color: ConstColors.baseColorDark2, borderRadius: BorderRadius.circular(10)),
           child: ListTile(
             contentPadding: const EdgeInsets.all(10),
             leading: Container(
@@ -30,24 +27,16 @@ class ListTilePlayersWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: ConstColors.white,
                 shape: BoxShape.circle,
-                image: DecorationImage(image: AssetImage(players[index].image)),
+                image: DecorationImage(image: AssetImage(cards[index].media.images?.playerProfile ?? "")),
               ),
             ),
             title: Text(
-              players[index].name,
-              style: const TextStyle(
-                color: ConstColors.light,
-                fontFamily: poppinsRegular,
-                fontSize: 12,
-              ),
+              cards[index].player.name ?? "",
+              style: const TextStyle(color: ConstColors.light, fontFamily: poppinsRegular, fontSize: 12),
             ),
             subtitle: Text(
-              players[index].club,
-              style: const TextStyle(
-                color: ConstColors.gray10,
-                fontFamily: poppinsLight,
-                fontSize: 10,
-              ),
+              cards[index].club.name ?? "",
+              style: const TextStyle(color: ConstColors.gray10, fontFamily: poppinsLight, fontSize: 10),
             ),
             trailing: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -57,22 +46,15 @@ class ListTilePlayersWidget extends StatelessWidget {
                   duration: const Duration(milliseconds: 500),
                   decoration: BoxDecoration(
                     color:
-                        players[index].isUp
+                        cards[index].market.isUp ?? false
                             ? ConstColors.gold.withValues(alpha: .2)
                             : ConstColors.orange.withValues(alpha: .2),
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4,
-                    vertical: 2,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   child: Text(
-                    "€${players[index].price.toStringAsFixed(2)}",
-                    style: const TextStyle(
-                      color: ConstColors.light,
-                      fontFamily: poppinsMedium,
-                      fontSize: 12,
-                    ),
+                    "€${cards[index].market.currentPrice?.toStringAsFixed(2)}",
+                    style: const TextStyle(color: ConstColors.light, fontFamily: poppinsMedium, fontSize: 12),
                   ),
                 ),
 
@@ -80,39 +62,26 @@ class ListTilePlayersWidget extends StatelessWidget {
 
                 // 🎯 Animasi tren naik/turun
                 TweenAnimationBuilder<double>(
-                  tween: Tween<double>(
-                    begin: players[index].trend,
-                    end: players[index].trend,
-                  ),
+                  tween: Tween<double>(begin: cards[index].market.trend, end: cards[index].market.trend),
                   duration: const Duration(milliseconds: 800),
                   builder: (context, value, child) {
-                    final isUp = players[index].isUp;
+                    final isUp = cards[index].market.isUp ?? false;
                     final color = isUp ? ConstColors.gold : ConstColors.orange;
                     return Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 300),
-                          transitionBuilder:
-                              (child, animation) => ScaleTransition(
-                                scale: animation,
-                                child: child,
-                              ),
+                          transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
                           child: Icon(
-                            isUp
-                                ? Icons.arrow_drop_up_sharp
-                                : Icons.arrow_drop_down_sharp,
+                            isUp ? Icons.arrow_drop_up_sharp : Icons.arrow_drop_down_sharp,
                             key: ValueKey(isUp),
                             color: color,
                           ),
                         ),
                         Text(
                           value.toStringAsFixed(2),
-                          style: TextStyle(
-                            color: color,
-                            fontFamily: poppinsSemiBold,
-                            fontSize: 10,
-                          ),
+                          style: TextStyle(color: color, fontFamily: poppinsSemiBold, fontSize: 10),
                         ),
                       ],
                     );

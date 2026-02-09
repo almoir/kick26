@@ -4,100 +4,99 @@ import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/helper.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/data/models/transaction_model.dart';
 import 'package:kick26/src/presentation/transcations_history/detail_bottom_sheet/transaction_detail_bottom_sheet.dart';
 import 'package:uuid/uuid.dart';
 
 class TransactionsHistoryScreen extends StatefulWidget {
-  const TransactionsHistoryScreen({super.key, required this.players});
-  final List<PlayerModel> players;
+  const TransactionsHistoryScreen({super.key, required this.cards});
+  final List<CardModel> cards;
 
   @override
-  State<TransactionsHistoryScreen> createState() =>
-      _TransactionsHistoryScreenState();
+  State<TransactionsHistoryScreen> createState() => _TransactionsHistoryScreenState();
 }
 
 class _TransactionsHistoryScreenState extends State<TransactionsHistoryScreen> {
-  late List<PlayerModel> players;
+  late List<CardModel> cards;
   late List<TransactionModel> transactions;
 
   @override
   void initState() {
     super.initState();
 
-    players = generateDummyPlayers();
+    cards = generateDummyCards();
 
     transactions = [
       TransactionModel(
         id: Uuid().v1(),
-        player: players[0],
+        card: cards[0],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(days: 1, hours: 3)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[4],
+        card: cards[4],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 2, hours: 6)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[7],
+        card: cards[7],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(hours: 5)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[2],
+        card: cards[2],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 3, hours: 2)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[9],
+        card: cards[9],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(days: 5, hours: 1)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[3],
+        card: cards[3],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 7)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[10],
+        card: cards[10],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(days: 8, hours: 4)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[1],
+        card: cards[1],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 9, hours: 2)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[5],
+        card: cards[5],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(days: 10)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[6],
+        card: cards[6],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 12, hours: 6)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[8],
+        card: cards[8],
         isBuy: true,
         date: DateTime.now().subtract(const Duration(days: 13)),
       ),
       TransactionModel(
         id: Uuid().v1(),
-        player: players[11],
+        card: cards[11],
         isBuy: false,
         date: DateTime.now().subtract(const Duration(days: 14, hours: 3)),
       ),
@@ -117,24 +116,13 @@ class _TransactionsHistoryScreenState extends State<TransactionsHistoryScreen> {
           child: Container(
             width: 40,
             height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: ConstColors.baseColorDark5),
-            ),
-            child: Center(
-              child: GoldGradient(
-                child: const Icon(Icons.chevron_left, size: 28),
-              ),
-            ),
+            decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: ConstColors.baseColorDark5)),
+            child: Center(child: GoldGradient(child: const Icon(Icons.chevron_left, size: 28))),
           ),
         ),
         title: Text(
           "Transactions History",
-          style: TextStyle(
-            color: ConstColors.light,
-            fontFamily: poppinsSemiBold,
-            fontSize: 15,
-          ),
+          style: TextStyle(color: ConstColors.light, fontFamily: poppinsSemiBold, fontSize: 15),
         ),
         centerTitle: true,
       ),
@@ -146,7 +134,7 @@ class _TransactionsHistoryScreenState extends State<TransactionsHistoryScreen> {
           padding: const EdgeInsets.only(top: 12, bottom: 30),
           itemBuilder: (context, index) {
             final tx = transactions[index];
-            final player = tx.player;
+            final card = tx.card;
 
             return InkWell(
               borderRadius: BorderRadius.circular(14),
@@ -162,17 +150,14 @@ class _TransactionsHistoryScreenState extends State<TransactionsHistoryScreen> {
               child: Container(
                 margin: const EdgeInsets.only(bottom: 14),
                 padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: ConstColors.baseColorDark3,
-                  borderRadius: BorderRadius.circular(14),
-                ),
+                decoration: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(14)),
                 child: Row(
                   children: [
                     // Player Image
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
-                        player.image,
+                        card.media.images?.playerProfile ?? "",
                         width: 55,
                         height: 70,
                         fit: BoxFit.cover,
@@ -188,7 +173,7 @@ class _TransactionsHistoryScreenState extends State<TransactionsHistoryScreen> {
                         children: [
                           // Player Name
                           Text(
-                            player.name,
+                            card.player.name ?? "",
                             style: TextStyle(
                               color: ConstColors.light,
                               fontSize: 14,
@@ -205,18 +190,12 @@ class _TransactionsHistoryScreenState extends State<TransactionsHistoryScreen> {
                               GoldGradientBorder(
                                 borderRadius: 6,
                                 borderWidth: 1,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 4,
-                                ),
+                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                 backgroundColor: ConstColors.baseColorDark3,
                                 child: GoldGradient(
                                   child: Text(
                                     tx.isBuy ? "BUY" : "SELL",
-                                    style: TextStyle(
-                                      fontFamily: poppinsMedium,
-                                      fontSize: 12,
-                                    ),
+                                    style: TextStyle(fontFamily: poppinsMedium, fontSize: 12),
                                   ),
                                 ),
                               ),
@@ -234,8 +213,8 @@ class _TransactionsHistoryScreenState extends State<TransactionsHistoryScreen> {
                       children: [
                         Text(
                           tx.isBuy
-                              ? "- €${formatPrice(player.price)}"
-                              : "+ €${formatPrice(player.price)}",
+                              ? "- €${formatPrice(card.market.currentPrice ?? 0)}"
+                              : "+ €${formatPrice(card.market.currentPrice ?? 0)}",
                           style: TextStyle(
                             fontSize: 13,
                             fontFamily: poppinsSemiBold,
@@ -248,11 +227,7 @@ class _TransactionsHistoryScreenState extends State<TransactionsHistoryScreen> {
                         const SizedBox(height: 6),
                         Text(
                           formatDateTime(tx.date),
-                          style: TextStyle(
-                            color: ConstColors.gray,
-                            fontSize: 10,
-                            fontFamily: poppinsSemiBold,
-                          ),
+                          style: TextStyle(color: ConstColors.gray, fontSize: 10, fontFamily: poppinsSemiBold),
                         ),
                       ],
                     ),

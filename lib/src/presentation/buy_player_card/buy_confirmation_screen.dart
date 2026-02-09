@@ -5,25 +5,25 @@ import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/buy_player_card/buy_payment_succesful_screen.dart';
 
 class BuyConfirmationScreen extends StatefulWidget {
-  const BuyConfirmationScreen({super.key, required this.player});
+  const BuyConfirmationScreen({super.key, required this.card});
 
-  final PlayerModel player;
+  final CardModel card;
 
   @override
   State<BuyConfirmationScreen> createState() => _BuyConfirmationScreenState();
 }
 
 class _BuyConfirmationScreenState extends State<BuyConfirmationScreen> {
-  late PlayerModel player;
+  late CardModel card;
   String paymentMethod = "wallet";
   @override
   void initState() {
     super.initState();
-    player = widget.player;
+    card = widget.card;
   }
 
   @override
@@ -64,19 +64,22 @@ class _BuyConfirmationScreenState extends State<BuyConfirmationScreen> {
                 decoration: BoxDecoration(
                   color: ConstColors.baseColorDark3,
                   shape: BoxShape.circle,
-                  image: DecorationImage(image: AssetImage(player.image)),
-                  border: Border.all(color: getCardClassBorderColor(player.cardClass), width: 2),
+                  image: DecorationImage(image: AssetImage(card.media.images?.playerProfile ?? "")),
+                  border: Border.all(color: getCardClassBorderColor(card.data.cardClass ?? ""), width: 2),
                 ),
               ),
               Gap(16),
-              Text(player.name, style: TextStyle(fontFamily: poppinsMedium, fontSize: 20, color: ConstColors.light)),
+              Text(
+                card.player.name ?? "",
+                style: TextStyle(fontFamily: poppinsMedium, fontSize: 20, color: ConstColors.light),
+              ),
               Gap(6),
               Text(
-                player.club,
+                card.club.name ?? "",
                 style: TextStyle(fontFamily: poppinsRegular, fontSize: 12, color: ConstColors.darkGray),
               ),
               Gap(30),
-              OrderSummarySection(player: player),
+              OrderSummarySection(card: card),
               Gap(30),
               PaymentMethodSection(),
             ],
@@ -98,7 +101,7 @@ class _BuyConfirmationScreenState extends State<BuyConfirmationScreen> {
                   onTap: () {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => BuyPaymentSuccesfulScreen(player: player)),
+                      MaterialPageRoute(builder: (context) => BuyPaymentSuccesfulScreen(card: card)),
                       (Route<dynamic> route) => false,
                     );
                   },
@@ -241,9 +244,9 @@ class _PaymentMethodSectionState extends State<PaymentMethodSection> {
 }
 
 class OrderSummarySection extends StatelessWidget {
-  const OrderSummarySection({super.key, required this.player});
+  const OrderSummarySection({super.key, required this.card});
 
-  final PlayerModel player;
+  final CardModel card;
 
   @override
   Widget build(BuildContext context) {
@@ -260,15 +263,15 @@ class OrderSummarySection extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _summaryTile("Price", "EUR ${player.price.toStringAsFixed(2)}"),
-              _summaryTile("Tax", "EUR ${(player.price * 0.1).floor()}"),
-              _summaryTile("Platform Fee", "EUR ${(player.price * 0.05).floor()}"),
+              _summaryTile("Price", "EUR ${card.market.currentPrice?.toStringAsFixed(2)}"),
+              _summaryTile("Tax", "EUR ${((card.market.currentPrice ?? 0) * 0.1).floor()}"),
+              _summaryTile("Platform Fee", "EUR ${((card.market.currentPrice ?? 0) * 0.05).floor()}"),
               Gap(6),
               Container(width: double.infinity, height: 1, color: ConstColors.baseColorDark5),
               Gap(16),
               _summaryTile(
                 "Total Payment",
-                "EUR ${(player.price + (player.price * 0.1).floor() + (player.price * 0.05).floor()).toStringAsFixed(2)}",
+                "EUR ${((card.market.currentPrice ?? 0) + ((card.market.currentPrice ?? 0) * 0.1).floor() + ((card.market.currentPrice ?? 0) * 0.05).floor()).toStringAsFixed(2)}",
                 isTotal: true,
               ),
             ],

@@ -11,7 +11,7 @@ import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/flip_player_card_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/common/widgets/list_tile_player_widget.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback? onTapTrending;
@@ -24,13 +24,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String choosenMenu = 'Very Rare';
 
-  late List<PlayerModel> players;
-  late List<PlayerModel> ownedPlayers;
-  late List<PlayerModel> notOwnedPlayers;
-  late List<PlayerModel> sClassPlayers;
-  late List<PlayerModel> aClassPlayers;
-  late List<PlayerModel> bClassPlayers;
-  late List<PlayerModel> cClassPlayers;
+  late List<CardModel> cards;
+  late List<CardModel> ownedCards;
+  late List<CardModel> notOwnedCards;
+  late List<CardModel> sClassCards;
+  late List<CardModel> aClassCards;
+  late List<CardModel> bClassCards;
+  late List<CardModel> cClassCards;
 
   Timer? _timer;
   final _rnd = Random();
@@ -38,20 +38,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    players = generateDummyPlayers();
-    ownedPlayers = players.where((player) => player.isOwned).toList();
-    notOwnedPlayers = players.where((player) => !player.isOwned).toList();
-    sClassPlayers = players.where((player) => player.cardClass == 'S').toList();
-    aClassPlayers = players.where((player) => player.cardClass == 'A').toList();
-    bClassPlayers = players.where((player) => player.cardClass == 'B').toList();
-    cClassPlayers = players.where((player) => player.cardClass == 'C').toList();
+    cards = generateDummyCards();
+    ownedCards = cards.where((card) => card.data.isOwned).toList();
+    notOwnedCards = cards.where((card) => !card.data.isOwned).toList();
+    sClassCards = cards.where((card) => card.data.cardClass == 'S').toList();
+    aClassCards = cards.where((card) => card.data.cardClass == 'A').toList();
+    bClassCards = cards.where((card) => card.data.cardClass == 'B').toList();
+    cClassCards = cards.where((card) => card.data.cardClass == 'C').toList();
     // update pertama kali agar tidak kosong (opsional)
-    updatePlayerTrends(players, random: _rnd, maxChangePercent: 3);
+    updateCardTrends(cards, random: _rnd, maxChangePercent: 3);
 
     _timer = Timer.periodic(const Duration(seconds: 5), (_) {
       setState(() {
         // setiap tick, random change kecil
-        updatePlayerTrends(players, random: _rnd, maxChangePercent: 3);
+        updateCardTrends(cards, random: _rnd, maxChangePercent: 3);
       });
     });
   }
@@ -126,61 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(child: Image.asset(ImagePaths.home.chartOutlined)),
                       ],
                     ),
-                    // const Gap(24),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //   children: [
-                    //     GestureDetector(
-                    //       onTap: () {},
-                    //       child: const Column(
-                    //         children: [
-                    //           GoldGradient(child: Icon(Icons.add_circle_outline_outlined, color: ConstColors.light)),
-                    //           GoldGradient(
-                    //             child: Text(
-                    //               'Deposit',
-                    //               style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //     Container(height: 40, width: 1, color: const Color(0xff333333)),
-                    //     GestureDetector(
-                    //       onTap: () {},
-                    //       child: Column(
-                    //         children: [
-                    //           GoldGradient(
-                    //             child: Transform.rotate(
-                    //               angle: -0.5,
-                    //               child: const Icon(Icons.arrow_circle_right_outlined, color: ConstColors.light),
-                    //             ),
-                    //           ),
-                    //           GoldGradient(
-                    //             child: const Text(
-                    //               'Trade',
-                    //               style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //     Container(height: 40, width: 1, color: const Color(0xff333333)),
-                    //     GestureDetector(
-                    //       onTap: () {},
-                    //       child: Column(
-                    //         children: [
-                    //           Image.asset(IconPaths.home.explore, height: 24),
-                    //           GoldGradient(
-                    //             child: const Text(
-                    //               'Explore',
-                    //               style: TextStyle(color: ConstColors.light, fontFamily: poppinsLight, fontSize: 12),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
@@ -222,8 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: 5,
                   padding: const EdgeInsets.only(left: 16),
                   itemBuilder: (context, index) {
-                    final player = ownedPlayers[index];
-                    return FlipPlayerCardWidget(player: player, players: players, tag: "home_screen");
+                    final card = ownedCards[index];
+                    return FlipPlayerCardWidget(card: card, cards: cards, tag: "home_screen");
                   },
                 ),
               ),
@@ -261,10 +206,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 400,
                 child: TabBarView(
                   children: [
-                    ListTilePlayersWidget(players: sClassPlayers),
-                    ListTilePlayersWidget(players: aClassPlayers),
-                    ListTilePlayersWidget(players: bClassPlayers),
-                    ListTilePlayersWidget(players: cClassPlayers),
+                    ListTilePlayersWidget(cards: sClassCards),
+                    ListTilePlayersWidget(cards: aClassCards),
+                    ListTilePlayersWidget(cards: bClassCards),
+                    ListTilePlayersWidget(cards: cClassCards),
                   ],
                 ),
               ),

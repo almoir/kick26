@@ -5,15 +5,14 @@ import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/card_class_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class OverviewTab extends StatelessWidget {
-  const OverviewTab({super.key, required this.player, required this.players, required this.tag, required this.card});
+  const OverviewTab({super.key, required this.card, required this.cards, required this.tag});
 
-  final PlayerModel player;
-  final List<PlayerModel> players;
+  final CardModel card;
+  final List<CardModel> cards;
   final String tag;
-  final Map<String, dynamic> card;
 
   String _s(dynamic v, {String fallback = "-"}) {
     if (v == null) return fallback;
@@ -32,9 +31,6 @@ class OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardData = card['card'];
-    final market = card['market'];
-
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -52,29 +48,29 @@ class OverviewTab extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Hero(tag: tag, child: Image.asset(player.image, height: 96)),
+                Hero(tag: tag, child: Image.asset(card.media.images?.playerProfile ?? "", height: 96)),
                 const Gap(12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CardClassWidget(cardClass: player.cardClass),
+                      CardClassWidget(cardClass: card.data.cardClass ?? "C"),
                       const Gap(6),
                       Text(
-                        player.name,
+                        card.player.name ?? "",
                         style: TextStyle(fontFamily: poppinsSemiBold, fontSize: 15, color: ConstColors.light),
                       ),
                       const Gap(2),
                       Text(
-                        player.club,
+                        card.club.name ?? "",
                         style: TextStyle(fontFamily: poppinsRegular, fontSize: 11, color: ConstColors.gray),
                       ),
                       const Gap(8),
                       Row(
                         children: [
-                          _TagChip(_s(cardData['edition'])),
+                          _TagChip(_s(card.data.edition)),
                           const Gap(6),
-                          _TagChip("#${cardData['sequenceNumber']}/${cardData['totalIssued']}"),
+                          _TagChip("#${card.data.sequenceNumber}/${card.data.totalIssued}"),
                         ],
                       ),
                     ],
@@ -98,16 +94,16 @@ class OverviewTab extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _MetaInfo("Issuer", _s(cardData['issuerName'])),
-                _MetaInfo("Edition", _upper(cardData['edition'])),
+                _MetaInfo("Issuer", _s(card.data.issuerName)),
+                _MetaInfo("Edition", _upper(card.data.edition)),
                 _MetaInfo(
                   "Type",
                   _upper(
-                    player.cardClass == "S"
+                    card.data.cardClass == "S"
                         ? "GOLD"
-                        : player.cardClass == "A"
+                        : card.data.cardClass == "A"
                         ? "DIAMOND"
-                        : player.cardClass == "B"
+                        : card.data.cardClass == "B"
                         ? "SILVER"
                         : "BRONZE",
                   ),
@@ -130,9 +126,9 @@ class OverviewTab extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _MarketInfo("Floor Price", _euro(market['floorPrice'])),
-                _MarketInfo("Last Sale", _euro(market['lastTransactionPrice'])),
-                _MarketInfo("Highest Bid", _euro(market['highestBid']), color: ConstColors.green2),
+                _MarketInfo("Floor Price", _euro(card.market.floorPrice)),
+                _MarketInfo("Last Sale", _euro(card.market.lastTransactionPrice)),
+                _MarketInfo("Highest Bid", _euro(card.market.highestBid), color: ConstColors.green2),
               ],
             ),
           ),
@@ -147,9 +143,9 @@ class OverviewTab extends StatelessWidget {
 
           Row(
             children: [
-              _StatCard("Games", player.games.toString()),
-              _StatCard("Goals", player.goals.toString()),
-              _StatCard("Assists", player.assists.toString()),
+              _StatCard("Games", (card.player.snapshotBio?.games ?? 0).toString()),
+              _StatCard("Goals", (card.player.snapshotBio?.goals ?? 0).toString()),
+              _StatCard("Assists", (card.player.snapshotBio?.assists ?? 0).toString()),
             ],
           ),
 
@@ -157,9 +153,13 @@ class OverviewTab extends StatelessWidget {
 
           Row(
             children: [
-              _StatCard("Trend", "${player.trend}%", valueColor: player.isUp ? ConstColors.green2 : ConstColors.orange),
-              _StatCard("Age", "${player.age}"),
-              _StatCard("Height", "${player.height}cm"),
+              _StatCard(
+                "Trend",
+                "${card.market.trend}%",
+                valueColor: (card.market.isUp ?? false) ? ConstColors.green2 : ConstColors.orange,
+              ),
+              _StatCard("Age", "${card.player.snapshotBio?.age ?? 0}"),
+              _StatCard("Height", "${card.player.snapshotBio?.height ?? 0}cm"),
             ],
           ),
 
@@ -175,9 +175,9 @@ class OverviewTab extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(12)),
             child: Text(
-              "${player.name} continues to deliver consistent performances, "
-              "recording ${player.goals} goals and ${player.assists} assists "
-              "across ${player.games} matches this season.",
+              "${card.player.name} continues to deliver consistent performances, "
+              "recording ${card.player.snapshotBio?.goals ?? 0} goals and ${card.player.snapshotBio?.assists ?? 0} assists "
+              "across ${card.player.snapshotBio?.games ?? 0} matches this season.",
               style: TextStyle(fontFamily: poppinsRegular, fontSize: 12, color: ConstColors.darkGray, height: 1.4),
             ),
           ),

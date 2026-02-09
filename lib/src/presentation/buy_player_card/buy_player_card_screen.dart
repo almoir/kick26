@@ -6,25 +6,25 @@ import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/card_class_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/buy_player_card/buy_confirmation_screen.dart';
 
 class BuyPlayerCardScreen extends StatefulWidget {
-  const BuyPlayerCardScreen({super.key, required this.player});
+  const BuyPlayerCardScreen({super.key, required this.card});
 
-  final PlayerModel player;
+  final CardModel card;
 
   @override
   State<BuyPlayerCardScreen> createState() => _BuyPlayerCardScreenState();
 }
 
 class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
-  late PlayerModel player;
+  late CardModel card;
   String paymentMethod = "wallet";
   @override
   void initState() {
     super.initState();
-    player = widget.player;
+    card = widget.card;
   }
 
   @override
@@ -82,10 +82,10 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                           decoration: BoxDecoration(
                             color: ConstColors.baseColorDark3,
                             shape: BoxShape.circle,
-                            image: DecorationImage(image: AssetImage(player.image)),
+                            image: DecorationImage(image: AssetImage(card.media.images?.playerProfile ?? "")),
                           ),
                         ),
-                        Positioned(bottom: 0, right: 0, child: CardClassWidget(cardClass: player.cardClass)),
+                        Positioned(bottom: 0, right: 0, child: CardClassWidget(cardClass: card.data.cardClass ?? "")),
                       ],
                     ),
                     Gap(8),
@@ -95,7 +95,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            player.name,
+                            card.player.name ?? "",
                             style: TextStyle(
                               color: ConstColors.light,
                               fontFamily: poppinsMedium,
@@ -124,7 +124,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                         Gap(4),
                         GoldGradient(
                           child: Text(
-                            "€${player.price.toStringAsFixed(2)}",
+                            "€${card.market.currentPrice?.toStringAsFixed(2)}",
                             style: TextStyle(fontFamily: poppinsRegular, fontSize: 12),
                           ),
                         ),
@@ -261,7 +261,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                         children: [
                           GoldGradient(
                             child: Text(
-                              player.price.toStringAsFixed(2),
+                              card.market.currentPrice?.toStringAsFixed(2) ?? "",
                               style: TextStyle(color: ConstColors.light, fontFamily: poppinsMedium, fontSize: 12),
                             ),
                           ),
@@ -271,14 +271,14 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Icon(
-                                player.isUp ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                                color: player.isUp ? ConstColors.green : ConstColors.orange,
+                                (card.market.isUp ?? false) ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                                color: (card.market.isUp ?? false) ? ConstColors.green : ConstColors.orange,
                                 size: 14,
                               ),
                               Text(
-                                "(${player.isUp ? "+" : ""}${player.trend.toStringAsFixed(2)})",
+                                "(${(card.market.isUp ?? false) ? "+" : ""}${card.market.trend?.toStringAsFixed(2)})",
                                 style: TextStyle(
-                                  color: player.isUp ? ConstColors.green : ConstColors.orange,
+                                  color: (card.market.isUp ?? false) ? ConstColors.green : ConstColors.orange,
                                   fontFamily: poppinsRegular,
                                   fontSize: 10,
                                 ),
@@ -327,7 +327,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "€${player.price.toStringAsFixed(2)}",
+                        "€${card.market.currentPrice?.toStringAsFixed(2)}",
                         style: TextStyle(color: ConstColors.light, fontFamily: poppinsMedium, fontSize: 16),
                       ),
                       Gap(4),
@@ -336,14 +336,14 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
-                            player.isUp ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                            color: player.isUp ? ConstColors.green : ConstColors.orange,
+                            (card.market.isUp ?? false) ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                            color: (card.market.isUp ?? false) ? ConstColors.green : ConstColors.orange,
                             size: 20,
                           ),
                           Text(
-                            "(${player.isUp ? "+" : ""}${player.trend.toStringAsFixed(2)})",
+                            "(${(card.market.isUp ?? false) ? "+" : ""}${card.market.trend?.toStringAsFixed(2)})",
                             style: TextStyle(
-                              color: player.isUp ? ConstColors.green : ConstColors.orange,
+                              color: (card.market.isUp ?? false) ? ConstColors.green : ConstColors.orange,
                               fontFamily: poppinsRegular,
                               fontSize: 12,
                             ),
@@ -420,7 +420,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                     decoration: BoxDecoration(
                       color: ConstColors.baseColorDark3,
                       shape: BoxShape.circle,
-                      image: DecorationImage(image: AssetImage(player.image)),
+                      image: DecorationImage(image: AssetImage(card.media.images?.playerProfile ?? "")),
                     ),
                   ),
                   Gap(10),
@@ -428,7 +428,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        player.name,
+                        card.player.name ?? "",
                         style: TextStyle(
                           color: ConstColors.light,
                           fontFamily: poppinsMedium,
@@ -438,7 +438,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                       ),
                       Gap(4),
                       Text(
-                        "12/40",
+                        "${card.data.sequenceNumber}/${card.data.totalIssued}",
                         style: TextStyle(color: ConstColors.darkGray, fontFamily: poppinsRegular, fontSize: 10),
                       ),
                     ],
@@ -447,7 +447,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                   Spacer(),
                   GoldGradient(
                     child: Text(
-                      "€${player.price.toStringAsFixed(2)}",
+                      "€${card.market.currentPrice?.toStringAsFixed(2)}",
                       style: TextStyle(fontFamily: poppinsRegular, fontSize: 12),
                     ),
                   ),
@@ -473,7 +473,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                     style: TextStyle(color: ConstColors.darkGray, fontFamily: poppinsRegular, fontSize: 12),
                   ),
                   Text(
-                    "€${(player.price * 0.1).toStringAsFixed(2)}",
+                    "€${((card.market.currentPrice ?? 0) * 0.1).toStringAsFixed(2)}",
                     style: TextStyle(color: ConstColors.light, fontFamily: poppinsMedium, fontSize: 12),
                   ),
                 ],
@@ -487,7 +487,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                     style: TextStyle(color: ConstColors.darkGray, fontFamily: poppinsRegular, fontSize: 12),
                   ),
                   Text(
-                    "€${(player.price * 0.05).toStringAsFixed(2)}",
+                    "€${((card.market.currentPrice ?? 0) * 0.05).toStringAsFixed(2)}",
                     style: TextStyle(color: ConstColors.light, fontFamily: poppinsMedium, fontSize: 12),
                   ),
                 ],
@@ -501,7 +501,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                     style: TextStyle(color: ConstColors.darkGray, fontFamily: poppinsRegular, fontSize: 14),
                   ),
                   Text(
-                    "€${(player.price + (player.price * 0.1).floor() + (player.price * 0.05).floor()).toStringAsFixed(2)}",
+                    "€${((card.market.currentPrice ?? 0) + ((card.market.currentPrice ?? 0) * 0.1).floor() + ((card.market.currentPrice ?? 0) * 0.05).floor()).toStringAsFixed(2)}",
                     style: TextStyle(color: ConstColors.light, fontFamily: poppinsMedium, fontSize: 14),
                   ),
                 ],
@@ -511,10 +511,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                 height: 48,
                 text: "Buy Instantly",
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => BuyConfirmationScreen(player: player)),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => BuyConfirmationScreen(card: card)));
                 },
               ),
               Gap(8),

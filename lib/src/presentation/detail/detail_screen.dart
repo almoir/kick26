@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:kick26/src/common/colors.dart';
-import 'package:kick26/src/common/dummy.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/buy_player_card/buy_player_card_screen.dart';
 import 'package:kick26/src/presentation/detail/tabs/history_tab.dart';
 import 'package:kick26/src/presentation/detail/tabs/market_tab.dart';
@@ -15,10 +14,10 @@ import 'package:kick26/src/presentation/detail/widgets/detail_player_tab_bar.dar
 import 'package:kick26/src/presentation/sell_player_card/sell_player_card_screen.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({super.key, required this.player, required this.players, required this.tag});
+  const DetailScreen({super.key, required this.card, required this.cards, required this.tag});
 
-  final PlayerModel player;
-  final List<PlayerModel> players;
+  final CardModel card;
+  final List<CardModel> cards;
   final String tag;
 
   @override
@@ -26,14 +25,14 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderStateMixin {
-  late PlayerModel player;
-  late List<PlayerModel> notOwnedPlayers;
+  late CardModel card;
+  late List<CardModel> notOwnedCards;
 
   @override
   void initState() {
     super.initState();
-    player = widget.player;
-    notOwnedPlayers = widget.players.where((p) => !p.isOwned).toList();
+    card = widget.card;
+    notOwnedCards = widget.cards.where((c) => !c.data.isOwned).toList();
   }
 
   @override
@@ -74,27 +73,10 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
               Expanded(
                 child: TabBarView(
                   children: [
-                    OverviewTab(
-                      player: player,
-                      players: notOwnedPlayers,
-                      tag: widget.tag,
-                      card: dummyCard, // NEW
-                    ),
-                    MarketTab(
-                      players: notOwnedPlayers,
-                      player: player,
-                      card: dummyCard, // NEW
-                    ),
-                    PlayerTab(
-                      player: player,
-                      notOwnedPlayers: notOwnedPlayers,
-                      tag: widget.tag,
-                      card: dummyCard, // OPTIONAL
-                    ),
-                    HistoryTab(
-                      player: player,
-                      card: dummyCard, // NEW
-                    ),
+                    OverviewTab(card: card, cards: notOwnedCards, tag: widget.tag),
+                    MarketTab(card: card, cards: notOwnedCards),
+                    PlayerTab(card: card, notOwnedCards: notOwnedCards, tag: widget.tag),
+                    HistoryTab(card: card),
                   ],
                 ),
               ),
@@ -108,13 +90,13 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                player.isOwned
+                card.data.isOwned
                     ? Flexible(
                       child: GestureDetector(
                         onTap:
                             () => Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SellPlayerCardScreen(player: player)),
+                              MaterialPageRoute(builder: (context) => SellPlayerCardScreen(card: card)),
                             ),
                         child: SizedBox(
                           height: 48,
@@ -130,16 +112,13 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
                       ),
                     )
                     : SizedBox(),
-                player.isOwned ? Gap(10) : SizedBox(),
+                card.data.isOwned ? Gap(10) : SizedBox(),
                 Flexible(
                   child: GoldGradientButton(
                     height: 48,
                     text: "Buy",
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BuyPlayerCardScreen(player: player)),
-                      );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => BuyPlayerCardScreen(card: card)));
                     },
                   ),
                 ),

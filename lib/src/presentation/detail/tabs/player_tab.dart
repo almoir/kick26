@@ -5,25 +5,18 @@ import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/helper.dart';
 import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/image_paths.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/detail/sections/overview_section.dart';
 import 'package:kick26/src/presentation/detail/widgets/detail_player_card_widget.dart';
 
 import '../../../common/fonts_family.dart';
 
 class PlayerTab extends StatelessWidget {
-  const PlayerTab({
-    super.key,
-    required this.player,
-    required this.notOwnedPlayers,
-    required this.tag,
-    required this.card,
-  });
+  const PlayerTab({super.key, required this.card, required this.notOwnedCards, required this.tag});
 
-  final PlayerModel player;
-  final List<PlayerModel> notOwnedPlayers;
+  final CardModel card;
+  final List<CardModel> notOwnedCards;
   final String tag;
-  final Map<String, dynamic> card;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +25,7 @@ class PlayerTab extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            OverviewSection(player: player, tag: tag),
+            OverviewSection(card: card, tag: tag),
             Gap(16),
             Column(
               children: [
@@ -42,7 +35,7 @@ class PlayerTab extends StatelessWidget {
                       child: DetailPlayerCardWidget(
                         name: "Age",
                         icon: IconPaths.detailPlayer.calendar,
-                        title: "${player.age} Year",
+                        title: "${card.player.snapshotBio?.age ?? 0} Year",
                         subtitle: "Dec 20, 1998",
                       ),
                     ),
@@ -60,7 +53,7 @@ class PlayerTab extends StatelessWidget {
                       child: DetailPlayerCardWidget(
                         name: "Height",
                         icon: IconPaths.detailPlayer.height,
-                        title: "${player.height}m",
+                        title: "${card.player.snapshotBio?.height ?? 0}m",
                         subtitle: "(5 ft 10 inches)",
                       ),
                     ),
@@ -72,7 +65,7 @@ class PlayerTab extends StatelessWidget {
                   decoration: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(10)),
                   child: Row(
                     children: [
-                      Image.asset(player.clubImage, height: 69, width: 49, fit: BoxFit.contain),
+                      Image.asset(card.media.images?.clubImage ?? "", height: 69, width: 49, fit: BoxFit.contain),
                       const SizedBox(width: 8),
 
                       Expanded(
@@ -80,7 +73,7 @@ class PlayerTab extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              player.club,
+                              card.club.name ?? "",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontFamily: poppinsMedium, fontSize: 12, color: ConstColors.light),
@@ -105,7 +98,7 @@ class PlayerTab extends StatelessWidget {
 
                             const SizedBox(height: 8),
 
-                            InfoRow(label: "League Level:", value: "${player.countryCode.toFlag} First Tier"),
+                            InfoRow(label: "League Level:", value: "${card.player.countryCode?.toFlag} First Tier"),
                             InfoRow(label: "Joined:", value: "Jul 1, 2024"),
                             InfoRow(label: "Contract Exp:", value: "Jun 30, 2029"),
                           ],

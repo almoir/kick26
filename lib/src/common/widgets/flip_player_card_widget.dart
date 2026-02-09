@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:kick26/src/common/icon_paths.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:rive/rive.dart' as riv;
 
 import 'package:kick26/src/common/colors.dart';
@@ -12,21 +13,20 @@ import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/card_class_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/common/widgets/gold_shine_overlay.dart';
-import 'package:kick26/src/data/models/player_model.dart';
 import 'package:kick26/src/presentation/detail/detail_screen.dart';
 
 class FlipPlayerCardWidget extends StatefulWidget {
   const FlipPlayerCardWidget({
     super.key,
-    required this.player,
-    required this.players,
+    required this.card,
+    required this.cards,
     required this.tag,
     this.onTap,
     this.isFavorite = false,
   });
 
-  final PlayerModel player;
-  final List<PlayerModel> players;
+  final CardModel card;
+  final List<CardModel> cards;
   final String tag;
   final VoidCallback? onTap;
   final bool isFavorite;
@@ -62,7 +62,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
 
   @override
   Widget build(BuildContext context) {
-    final player = widget.player;
+    final card = widget.card;
 
     return GestureDetector(
       onDoubleTap: flipCard,
@@ -70,9 +70,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
           widget.onTap ??
           () => Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => DetailScreen(player: player, players: widget.players, tag: widget.tag),
-            ),
+            MaterialPageRoute(builder: (context) => DetailScreen(card: card, cards: widget.cards, tag: widget.tag)),
           ),
       child: AnimatedBuilder(
         animation: _controller,
@@ -88,11 +86,11 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
                   ..rotateY(angle),
             child:
                 isFrontSide
-                    ? _buildFront(player)
+                    ? _buildFront(card)
                     : Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.identity()..rotateY(pi),
-                      child: _buildBack(player),
+                      child: _buildBack(card),
                     ),
           );
         },
@@ -103,7 +101,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
   // ==============================
   // FRONT SIDE (Card Asli Kamu)
   // ==============================
-  Widget _buildFront(PlayerModel player) {
+  Widget _buildFront(CardModel card) {
     return Stack(
       children: [
         Container(
@@ -119,25 +117,25 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
             ),
             borderRadius: BorderRadius.circular(20),
             image:
-                player.cardClass != "S"
+                card.data.cardClass != "S"
                     ? DecorationImage(image: AssetImage(ImagePaths.home.borderCard), fit: BoxFit.cover)
                     : null,
           ),
-          child: player.cardClass == "S" ? _buildSCardFront(player) : _buildCardFront(player),
+          child: card.data.cardClass == "S" ? _buildSCardFront(card) : _buildCardFront(card),
         ),
 
-        player.cardClass == "S"
+        card.data.cardClass == "S"
             ? SizedBox(width: 140, height: 180, child: riv.RiveAnimation.asset('assets/animations/cardgold.riv'))
             : SizedBox(),
       ],
     );
   }
 
-  Widget _buildSCardFront(PlayerModel player) {
-    return GoldShineOverlay(child: _buildCardFront(player));
+  Widget _buildSCardFront(CardModel card) {
+    return GoldShineOverlay(child: _buildCardFront(card));
   }
 
-  Widget _buildCardFront(PlayerModel player) {
+  Widget _buildCardFront(CardModel card) {
     return Stack(
       children: [
         Positioned.fill(
@@ -145,7 +143,10 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
             alignment: Alignment.bottomCenter,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Hero(tag: "${widget.tag}_${player.id}", child: Image.asset(player.image, fit: BoxFit.contain)),
+              child: Hero(
+                tag: "${widget.tag}_${card.id}",
+                child: Image.asset(card.media.images!.playerProfile!, fit: BoxFit.contain),
+              ),
             ),
           ),
         ),
@@ -163,10 +164,10 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
                   children: [
                     Column(
                       children: [
-                        CardClassWidget(cardClass: player.cardClass),
+                        CardClassWidget(cardClass: card.data.cardClass!),
                         const Gap(4),
-                        Image.asset(player.clubImage, height: 16),
-                        Text(player.countryCode.toFlag),
+                        Image.asset(card.media.images!.clubImage!, height: 16),
+                        Text(card.player.countryCode?.toFlag ?? ""),
                       ],
                     ),
                     widget.isFavorite
@@ -202,7 +203,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
                     children: [
                       GoldGradient(
                         child: Text(
-                          player.name,
+                          card.player.name ?? "",
                           style: TextStyle(fontFamily: poppinsRegular, fontSize: 10),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -212,23 +213,23 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "€${formatPrice(player.price)}",
+                            "€${formatPrice(card.market.currentPrice ?? 0)}",
                             style: const TextStyle(color: ConstColors.light, fontFamily: poppinsMedium, fontSize: 12),
                           ),
 
                           Row(
                             children: [
                               Icon(
-                                player.isUp ? Icons.arrow_drop_up_sharp : Icons.arrow_drop_down_sharp,
-                                color: player.isUp ? ConstColors.green : ConstColors.orange,
+                                (card.market.isUp ?? false) ? Icons.arrow_drop_up_sharp : Icons.arrow_drop_down_sharp,
+                                color: (card.market.isUp ?? false) ? ConstColors.green : ConstColors.orange,
                                 size: 12,
                               ),
                               Text(
-                                "${player.trend.toStringAsFixed(2)}%",
+                                "${card.market.trend?.toStringAsFixed(2) ?? 0}%",
                                 style: TextStyle(
                                   fontFamily: poppinsSemiBold,
                                   fontSize: 8,
-                                  color: player.isUp ? ConstColors.green : ConstColors.orange,
+                                  color: (card.market.isUp ?? false) ? ConstColors.green : ConstColors.orange,
                                 ),
                               ),
                             ],
@@ -249,7 +250,7 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
   // ==============================
   // BACK SIDE (Stats Dinamis)
   // ==============================
-  Widget _buildBack(PlayerModel player) {
+  Widget _buildBack(CardModel card) {
     return Stack(
       children: [
         Container(
@@ -265,24 +266,24 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
             ),
             borderRadius: BorderRadius.circular(20),
             image:
-                player.cardClass != "S"
+                card.data.cardClass != "S"
                     ? DecorationImage(image: AssetImage(ImagePaths.home.borderCard), fit: BoxFit.cover)
                     : null,
           ),
-          child: player.cardClass == "S" ? _buildSCardBack(player) : _buildCardBack(player),
+          child: card.data.cardClass == "S" ? _buildSCardBack(card) : _buildCardBack(card),
         ),
-        player.cardClass == "S"
+        card.data.cardClass == "S"
             ? SizedBox(width: 140, height: 180, child: riv.RiveAnimation.asset('assets/animations/cardgold.riv'))
             : SizedBox(),
       ],
     );
   }
 
-  Widget _buildSCardBack(PlayerModel player) {
-    return GoldShineOverlay(child: _buildCardBack(player));
+  Widget _buildSCardBack(CardModel card) {
+    return GoldShineOverlay(child: _buildCardBack(card));
   }
 
-  Widget _buildCardBack(PlayerModel player) {
+  Widget _buildCardBack(CardModel card) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -290,12 +291,12 @@ class _FlipPlayerCardWidgetState extends State<FlipPlayerCardWidget> with Single
         const Gap(10),
 
         // === Contoh stats dinamis dari API player model ===
-        _statTile("Height", "${player.height}m"),
-        _statTile("Weight", "${player.weight}kg"),
-        _statTile("Age", "${player.age}yo"),
-        _statTile("Games", "${player.games}"),
-        _statTile("Goals", "${player.goals}"),
-        _statTile("Assits", "${player.assists}"),
+        _statTile("Height", "${card.player.snapshotBio?.height}m"),
+        _statTile("Weight", "${card.player.snapshotBio?.weight}kg"),
+        _statTile("Age", "${card.player.snapshotBio?.age}yo"),
+        _statTile("Games", "${card.player.snapshotBio?.games}"),
+        _statTile("Goals", "${card.player.snapshotBio?.goals}"),
+        _statTile("Assists", "${card.player.snapshotBio?.assists}"),
       ],
     );
   }

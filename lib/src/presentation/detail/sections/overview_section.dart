@@ -7,19 +7,19 @@ import 'package:kick26/src/common/helper.dart';
 import 'package:kick26/src/common/widgets/card_class_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/common/widgets/gold_shine_overlay.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class OverviewSection extends StatelessWidget {
-  const OverviewSection({super.key, required this.player, required this.tag});
+  const OverviewSection({super.key, required this.card, required this.tag});
 
-  final PlayerModel player;
+  final CardModel card;
   final String tag;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(10)),
-      child: player.cardClass == "S" ? _buildSCardClass(context) : _buildCardClass(context),
+      child: card.data.cardClass == "S" ? _buildSCardClass(context) : _buildCardClass(context),
     );
   }
 
@@ -34,8 +34,12 @@ class OverviewSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: "${tag}_${player.id}",
-              child: Image.asset(player.image, width: MediaQuery.sizeOf(context).width * 0.475, height: 200),
+              tag: "${tag}_${card.id}",
+              child: Image.asset(
+                card.media.images?.playerProfile ?? "",
+                width: MediaQuery.sizeOf(context).width * 0.475,
+                height: 200,
+              ),
             ),
             Flexible(
               child: Padding(
@@ -77,29 +81,35 @@ class OverviewSection extends StatelessWidget {
                               height: 24,
                               decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.transparent),
                               child: Center(
-                                child: Text(player.countryCode.toFlag, style: const TextStyle(fontSize: 18)),
+                                child: Text(
+                                  card.player.countryCode?.toFlag ?? "",
+                                  style: const TextStyle(fontSize: 18),
+                                ),
                               ),
                             ),
                           ),
 
                           // CLUB LOGO
-                          Positioned(left: 0, child: Image.asset(player.clubImage, width: 20, height: 24)),
+                          Positioned(
+                            left: 0,
+                            child: Image.asset(card.media.images?.clubImage ?? "", width: 20, height: 24),
+                          ),
                         ],
                       ),
                     ),
                     Gap(10),
                     Text(
-                      player.name.split(' ').first,
+                      (card.player.name ?? "").split(' ').first,
                       style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 12),
                     ),
                     Text(
-                      player.name.split(' ').last,
+                      (card.player.name ?? "").split(' ').last,
                       style: TextStyle(fontFamily: poppinsSemiBold, color: ConstColors.white, fontSize: 18),
                     ),
                     Gap(10),
                     Row(
                       children: [
-                        CardClassWidget(cardClass: player.cardClass),
+                        CardClassWidget(cardClass: card.data.cardClass ?? ""),
                         Gap(12),
                         Container(width: 1, height: 16, color: ConstColors.baseColorDark5),
                         Gap(10),
@@ -135,7 +145,10 @@ class OverviewSection extends StatelessWidget {
                 // HEIGHT
                 Column(
                   children: [
-                    Text("${player.height}m", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
+                    Text(
+                      "${card.player.snapshotBio?.height ?? 0}m",
+                      style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white),
+                    ),
                     Text(
                       "Height",
                       style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),
@@ -145,7 +158,10 @@ class OverviewSection extends StatelessWidget {
                 // WEIGHT
                 Column(
                   children: [
-                    Text("${player.weight}kg", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
+                    Text(
+                      "${card.player.snapshotBio?.weight ?? 0}kg",
+                      style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white),
+                    ),
                     Text(
                       "Weight",
                       style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),
@@ -155,7 +171,10 @@ class OverviewSection extends StatelessWidget {
                 // AGE
                 Column(
                   children: [
-                    Text("${player.age}yo", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
+                    Text(
+                      "${card.player.snapshotBio?.age ?? 0}yo",
+                      style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white),
+                    ),
                     Text("Age", style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10)),
                   ],
                 ),
@@ -163,7 +182,10 @@ class OverviewSection extends StatelessWidget {
                 // GAMES
                 Column(
                   children: [
-                    Text("${player.games}", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
+                    Text(
+                      "${card.player.snapshotBio?.games ?? 0}",
+                      style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white),
+                    ),
                     Text(
                       "Games",
                       style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),
@@ -173,7 +195,10 @@ class OverviewSection extends StatelessWidget {
                 // GOALS
                 Column(
                   children: [
-                    Text("${player.goals}", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
+                    Text(
+                      "${card.player.snapshotBio?.goals ?? 0}",
+                      style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white),
+                    ),
                     Text(
                       "Goals",
                       style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),
@@ -183,7 +208,10 @@ class OverviewSection extends StatelessWidget {
                 // ASSISTS
                 Column(
                   children: [
-                    Text("${player.assists}", style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white)),
+                    Text(
+                      "${card.player.snapshotBio?.assists ?? 0}",
+                      style: TextStyle(fontFamily: poppinsSemiBold, color: Colors.white),
+                    ),
                     Text(
                       "Assists",
                       style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.gray10, fontSize: 10),

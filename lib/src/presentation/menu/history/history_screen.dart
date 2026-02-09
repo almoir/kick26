@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/menu/history/widgets/history_tab_widget.dart';
 
 import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -15,16 +15,16 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  List<PlayerModel> players1 = [];
-  List<PlayerModel> players2 = [];
-  List<PlayerModel> players3 = [];
-  List<PlayerModel> players4 = [];
+  List<CardModel> cards1 = [];
+  List<CardModel> cards2 = [];
+  List<CardModel> cards3 = [];
+  List<CardModel> cards4 = [];
   @override
   void initState() {
-    players1 = generateDummyPlayers().getRange(10, 20).toList();
-    players2 = generateDummyPlayers().getRange(20, 30).toList();
-    players3 = generateDummyPlayers().getRange(30, 40).toList();
-    players4 = generateDummyPlayers().getRange(40, 50).toList();
+    cards1 = generateDummyCards().getRange(10, 20).toList();
+    cards2 = generateDummyCards().getRange(20, 30).toList();
+    cards3 = generateDummyCards().getRange(30, 40).toList();
+    cards4 = generateDummyCards().getRange(40, 50).toList();
     super.initState();
   }
 
@@ -83,10 +83,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
               Expanded(
                 child: TabBarView(
                   children: [
-                    HistoryTabWidget(players: players1, tag: "all"),
-                    HistoryTabWidget(players: players2, tag: "purchase"),
-                    HistoryTabWidget(players: players3, tag: "bid"),
-                    HistoryTabWidget(players: players4, tag: "sale"),
+                    HistoryTabWidget(cards: cards1, tag: "all"),
+                    HistoryTabWidget(cards: cards2, tag: "purchase"),
+                    HistoryTabWidget(cards: cards3, tag: "bid"),
+                    HistoryTabWidget(cards: cards4, tag: "sale"),
                   ],
                 ),
               ),

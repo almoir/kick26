@@ -9,23 +9,18 @@ import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/widgets/flip_player_card_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/common/widgets/tab_bar_widget.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/market/market_search_screen.dart';
 import 'package:kick26/src/presentation/market/widgets/list_player_widget.dart';
 import 'package:kick26/src/presentation/market/widgets/search_field_widget.dart';
 
-void updatePlayerPrices(
-  List<PlayerModel> players, {
-  required Random random,
-  double maxChangePercent = 3,
-}) {
-  for (var p in players) {
-    final oldPrice = p.price;
-    final changePercent =
-        (random.nextDouble() * maxChangePercent) * (random.nextBool() ? 1 : -1);
-    final newPrice = p.price * (1 + (changePercent / 100));
-    p.price = newPrice.clamp(0, double.infinity);
-    p.isUp = newPrice > oldPrice;
+void updateCardPrices(List<CardModel> cards, {required Random random, double maxChangePercent = 3}) {
+  for (var card in cards) {
+    final oldPrice = card.market.currentPrice;
+    final changePercent = (random.nextDouble() * maxChangePercent) * (random.nextBool() ? 1 : -1);
+    final newPrice = card.market.currentPrice ?? 0 * (1 + (changePercent / 100));
+    card.market.currentPrice = newPrice.clamp(0, double.infinity);
+    card.market.isUp = newPrice > (oldPrice?.toDouble() ?? 0);
   }
 }
 
@@ -36,12 +31,11 @@ class MarketScreen extends StatefulWidget {
   State<MarketScreen> createState() => _MarketScreenState();
 }
 
-class _MarketScreenState extends State<MarketScreen>
-    with SingleTickerProviderStateMixin {
+class _MarketScreenState extends State<MarketScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  late List<PlayerModel> players;
-  late List<PlayerModel> ownedPlayers;
-  late List<PlayerModel> notOwnedPlayers;
+  late List<CardModel> cards;
+  late List<CardModel> ownedCards;
+  late List<CardModel> notOwnedCards;
   Timer? _timer;
   final _rnd = Random();
 
@@ -50,14 +44,14 @@ class _MarketScreenState extends State<MarketScreen>
     super.initState();
     _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
 
-    players = generateDummyPlayers();
-    ownedPlayers = players.where((player) => player.isOwned).toList();
-    notOwnedPlayers = players.where((player) => !player.isOwned).toList();
+    cards = generateDummyCards();
+    ownedCards = cards.where((card) => card.data.isOwned).toList();
+    notOwnedCards = cards.where((card) => !card.data.isOwned).toList();
 
     // 🔹 Update harga tiap 5 detik
     _timer = Timer.periodic(const Duration(seconds: 5), (_) {
       setState(() {
-        updatePlayerPrices(players, random: _rnd);
+        updateCardPrices(cards, random: _rnd);
       });
     });
   }
@@ -83,10 +77,7 @@ class _MarketScreenState extends State<MarketScreen>
               onTap:
                   () => Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => MarketSearchScreen(players: players),
-                    ),
+                    MaterialPageRoute(builder: (context) => MarketSearchScreen(cards: cards)),
                   ),
             ),
           ),
@@ -103,13 +94,7 @@ class _MarketScreenState extends State<MarketScreen>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Top Selling",
-                        style: TextStyle(
-                          fontFamily: poppinsRegular,
-                          color: ConstColors.light,
-                        ),
-                      ),
+                      Text("Top Selling", style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.light)),
                       InkWell(
                         onTap: () {},
                         child: Container(
@@ -120,13 +105,7 @@ class _MarketScreenState extends State<MarketScreen>
                             color: ConstColors.gold.withValues(alpha: 0.2),
                           ),
                           child: Center(
-                            child: GoldGradient(
-                              child: Image.asset(
-                                IconPaths.home.arrowRight2,
-                                width: 14,
-                                height: 14,
-                              ),
-                            ),
+                            child: GoldGradient(child: Image.asset(IconPaths.home.arrowRight2, width: 14, height: 14)),
                           ),
                         ),
                       ),
@@ -140,12 +119,8 @@ class _MarketScreenState extends State<MarketScreen>
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     itemBuilder: (context, index) {
-                      final player = notOwnedPlayers.sublist(10, 20)[index];
-                      return FlipPlayerCardWidget(
-                        player: player,
-                        players: players,
-                        tag: "market_screen_1",
-                      );
+                      final card = notOwnedCards.sublist(10, 20)[index];
+                      return FlipPlayerCardWidget(card: card, cards: cards, tag: "market_screen_1");
                     },
                   ),
                 ),
@@ -165,13 +140,7 @@ class _MarketScreenState extends State<MarketScreen>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Trendings",
-                        style: TextStyle(
-                          fontFamily: poppinsRegular,
-                          color: ConstColors.light,
-                        ),
-                      ),
+                      Text("Trendings", style: TextStyle(fontFamily: poppinsRegular, color: ConstColors.light)),
                       InkWell(
                         onTap: () {},
                         child: Container(
@@ -182,13 +151,7 @@ class _MarketScreenState extends State<MarketScreen>
                             color: ConstColors.gold.withValues(alpha: 0.2),
                           ),
                           child: Center(
-                            child: GoldGradient(
-                              child: Image.asset(
-                                IconPaths.home.arrowRight2,
-                                width: 14,
-                                height: 14,
-                              ),
-                            ),
+                            child: GoldGradient(child: Image.asset(IconPaths.home.arrowRight2, width: 14, height: 14)),
                           ),
                         ),
                       ),
@@ -202,12 +165,8 @@ class _MarketScreenState extends State<MarketScreen>
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     itemBuilder: (context, index) {
-                      final player = notOwnedPlayers.sublist(30, 40)[index];
-                      return FlipPlayerCardWidget(
-                        player: player,
-                        players: players,
-                        tag: "market_screen_2",
-                      );
+                      final card = notOwnedCards.sublist(30, 40)[index];
+                      return FlipPlayerCardWidget(card: card, cards: cards, tag: "market_screen_2");
                     },
                   ),
                 ),
@@ -222,12 +181,7 @@ class _MarketScreenState extends State<MarketScreen>
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TabBarWidget(
               tabController: _tabController,
-              tabs: const [
-                Tab(text: "All"),
-                Tab(text: "Top Selling"),
-                Tab(text: "Trending"),
-                Tab(text: "New"),
-              ],
+              tabs: const [Tab(text: "All"), Tab(text: "Top Selling"), Tab(text: "Trending"), Tab(text: "New")],
             ),
           ),
 
@@ -236,10 +190,10 @@ class _MarketScreenState extends State<MarketScreen>
             child: TabBarView(
               controller: _tabController,
               children: [
-                ListPlayersWidget(players: notOwnedPlayers),
-                ListPlayersWidget(players: notOwnedPlayers.sublist(6, 12)),
-                ListPlayersWidget(players: notOwnedPlayers.sublist(12, 18)),
-                ListPlayersWidget(players: notOwnedPlayers.sublist(18, 24)),
+                ListPlayersWidget(cards: notOwnedCards),
+                ListPlayersWidget(cards: notOwnedCards.sublist(6, 12)),
+                ListPlayersWidget(cards: notOwnedCards.sublist(12, 18)),
+                ListPlayersWidget(cards: notOwnedCards.sublist(18, 24)),
               ],
             ),
           ),

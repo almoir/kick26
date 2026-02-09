@@ -4,7 +4,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Trent Alexander-Arnold
   {
     "id": "UUID_TRENT",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 100,
       "sequenceNumber": 1,
@@ -64,8 +64,8 @@ final List<Map<String, dynamic>> dummyCard = [
         "timestamp": "2024-12-12T10:15:30Z",
         "price": 100.0,
         "priceDelta": 0,
-        "seller": null,
-        "buyer": {"id": "KICK26_PLATFORM", "name": "Kick26 Official", "icon": "cdn/platform.png"},
+        "seller": {"id": "KICK26_PLATFORM", "name": "Kick26 Official", "icon": "cdn/platform.png"},
+        "buyer": {"id": "USER_47211", "name": "Jan Goed", "icon": "cdn/user/jan.png"},
       },
       {
         "transactionType": "sale",
@@ -89,7 +89,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Kylian Mbappé
   {
     "id": "UUID_MBAPPE",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 1,
@@ -149,7 +149,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Viktor Gyökeres
   {
     "id": "UUID_GYOKERES",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 1,
@@ -209,7 +209,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Julián Álvarez
   {
     "id": "UUID_ALVAREZ",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 1,
@@ -269,7 +269,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Erling Haaland
   {
     "id": "UUID_HAALAND",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 1,
@@ -329,7 +329,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Vinícius Jr
   {
     "id": "UUID_VINICIUS",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 12,
@@ -397,7 +397,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Bukayo Saka
   {
     "id": "UUID_SAKA",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 34,
@@ -465,7 +465,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Pedri González
   {
     "id": "UUID_PEDRI",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 56,
@@ -533,7 +533,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Florian Wirtz
   {
     "id": "UUID_WIRTZ",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 78,
@@ -593,7 +593,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Jude Bellingham
   {
     "id": "UUID_BELLINGHAM",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 5,
@@ -653,7 +653,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Phil Foden
   {
     "id": "UUID_FODEN",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 14,
@@ -721,7 +721,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Lautaro Martínez
   {
     "id": "UUID_LAUTARO",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 87,
@@ -789,7 +789,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Khvicha Kvaratskhelia
   {
     "id": "UUID_KVARA",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 203,
@@ -857,7 +857,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Rafael Leão
   {
     "id": "UUID_LEAO",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 311,
@@ -925,7 +925,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Jamal Musiala
   {
     "id": "UUID_MUSIALA",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 5,
@@ -993,7 +993,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Rodrygo Goes
   {
     "id": "UUID_RODRYGO",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 42,
@@ -1061,7 +1061,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Martin Ødegaard
   {
     "id": "UUID_ODEGAARD",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 19,
@@ -1129,7 +1129,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // João Félix
   {
     "id": "UUID_FELIX",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 214,
@@ -1197,7 +1197,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Gavi
   {
     "id": "UUID_GAVI",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 301,
@@ -1265,7 +1265,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Marcus Rashford
   {
     "id": "UUID_RASHFORD",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 412,
@@ -1333,7 +1333,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Leroy Sané
   {
     "id": "UUID_SANE",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 123,
@@ -1401,7 +1401,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Ferran Torres
   {
     "id": "UUID_TORRES",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 145,
@@ -1469,7 +1469,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Federico Valverde
   {
     "id": "UUID_VALVERDE",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 123,
@@ -1537,7 +1537,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Declan Rice
   {
     "id": "UUID_RICE",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 145,
@@ -1605,7 +1605,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Enzo Fernández
   {
     "id": "UUID_ENZO",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -1673,7 +1673,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Christopher Nkunku
   {
     "id": "UUID_NKUNKU",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -1741,7 +1741,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Alejandro Garnacho
   {
     "id": "UUID_GARNACHO",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -1801,7 +1801,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Nico Williams
   {
     "id": "UUID_WILLIAMS",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -1869,7 +1869,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Xavi Simons
   {
     "id": "UUID_SIMONS",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -1937,7 +1937,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Rasmus Højlund
   {
     "id": "UUID_HOJLUND",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -2005,7 +2005,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Frenkie de Jong
   {
     "id": "UUID_DE_JONG",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -2073,7 +2073,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Joshua Kimmich
   {
     "id": "UUID_KIMMICH",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -2141,7 +2141,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Casemiro
   {
     "id": "UUID_CASEMIRO",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -2209,7 +2209,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Sandro Tonali
   {
     "id": "UUID_TONALI",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -2273,10 +2273,11 @@ final List<Map<String, dynamic>> dummyCard = [
       },
     },
   },
+
   // Bernardo Silva
   {
     "id": "UUID_BERNARDO",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -2340,10 +2341,11 @@ final List<Map<String, dynamic>> dummyCard = [
       },
     },
   },
+
   // Jack Grealish
   {
     "id": "UUID_GREALISH",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -2411,7 +2413,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Bruno Fernandes
   {
     "id": "UUID_FERNANDES",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 156,
@@ -2479,7 +2481,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Mohamed Salah
   {
     "id": "UUID_SALAH",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 157,
@@ -2547,7 +2549,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Darwin Núñez
   {
     "id": "UUID_NUNEZ",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 158,
@@ -2615,7 +2617,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Son Heung-min
   {
     "id": "UUID_SON",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 159,
@@ -2683,7 +2685,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Harry Kane
   {
     "id": "UUID_KANE",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 160,
@@ -2751,7 +2753,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Mason Mount
   {
     "id": "UUID_MOUNT",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 161,
@@ -2819,7 +2821,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Kai Havertz
   {
     "id": "UUID_HAVERTZ",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 162,
@@ -2887,7 +2889,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Raheem Sterling
   {
     "id": "UUID_STERLING",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 163,
@@ -2955,7 +2957,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Antony
   {
     "id": "UUID_ANTONY",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 164,
@@ -3023,7 +3025,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Dominik Szoboszlai
   {
     "id": "UUID_SZOBOSZLAI",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 165,
@@ -3091,7 +3093,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Diogo Jota
   {
     "id": "UUID_JOTA",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 166,
@@ -3159,7 +3161,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Ousmane Dembélé
   {
     "id": "UUID_DEMBELE",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 167,
@@ -3227,7 +3229,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Achraf Hakimi
   {
     "id": "UUID_HAKIMI",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 168,
@@ -3295,7 +3297,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Theo Hernández
   {
     "id": "UUID_HERNANDEZ",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 169,
@@ -3363,7 +3365,7 @@ final List<Map<String, dynamic>> dummyCard = [
   // Eduardo Camavinga
   {
     "id": "UUID_CAMAVINGA",
-    "card": {
+    "data": {
       "edition": "2024",
       "totalIssued": 1000,
       "sequenceNumber": 170,

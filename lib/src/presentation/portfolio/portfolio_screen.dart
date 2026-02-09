@@ -3,12 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:kick26/src/common/colors.dart';
-import 'package:kick26/src/common/dummy.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/flip_player_card_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/detail/detail_screen.dart';
 import 'package:kick26/src/presentation/transcations_history/transactions_history_screen.dart';
 
@@ -20,21 +19,20 @@ class PortfolioScreen extends StatefulWidget {
 }
 
 class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProviderStateMixin {
-  final List<Map<String, dynamic>> _players = dummyPlayers.where((p) => p['owned'] > 0).toList();
-
-  late List<PlayerModel> players;
-  late List<PlayerModel> ownedPlayers;
-  late List<PlayerModel> notOwnedPlayers;
+  late List<CardModel> cards;
+  late List<CardModel> ownedCards;
+  late List<CardModel> notOwnedCards;
   late AnimationController _controller;
   bool isCardView = true;
+  Color flashColor = Colors.transparent;
 
   @override
   void initState() {
     super.initState();
     _simulatePriceChange();
-    players = generateDummyPlayers();
-    ownedPlayers = players.where((player) => player.isOwned).toList();
-    notOwnedPlayers = players.where((player) => !player.isOwned).toList();
+    cards = generateDummyCards();
+    ownedCards = cards.where((card) => card.data.isOwned).toList();
+    notOwnedCards = cards.where((card) => !card.data.isOwned).toList();
     _controller = AnimationController(duration: const Duration(milliseconds: 600), vsync: this);
   }
 
@@ -58,15 +56,14 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
     Future.delayed(const Duration(seconds: 3), () {
       if (!mounted) return;
       setState(() {
-        for (var player in _players) {
+        for (var card in cards) {
           final isUp = Random().nextBool();
           final newPrice =
-              (double.tryParse(player['price'].replaceAll('€', '').replaceAll(',', '')) ?? 1000) +
-              (isUp ? Random().nextDouble() * 10 : -Random().nextDouble() * 10);
-          player['price'] = '€${newPrice.toStringAsFixed(2)}';
-          player['isUp'] = isUp;
-          player['trend'] = '${isUp ? '+' : '-'}${(Random().nextDouble() * 2).toStringAsFixed(2)}%';
-          player['flashColor'] =
+              (card.market.currentPrice ?? 1000) + (isUp ? Random().nextDouble() * 10 : -Random().nextDouble() * 10);
+          card.market.currentPrice = newPrice;
+          card.market.isUp = isUp;
+          card.market.trend = Random().nextDouble() * 2;
+          flashColor =
               isUp ? ConstColors.goldGradient2.withValues(alpha: 0.3) : ConstColors.orange.withValues(alpha: 0.3);
         }
       });
@@ -117,7 +114,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => TransactionsHistoryScreen(players: players.reversed.toList()),
+                                builder: (context) => TransactionsHistoryScreen(cards: cards.reversed.toList()),
                               ),
                             );
                           },
@@ -231,10 +228,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
                                     crossAxisCount: 2,
                                   ),
                                   itemBuilder: (context, index) {
-                                    final player = ownedPlayers[index];
+                                    final card = ownedCards[index];
                                     return FlipPlayerCardWidget(
-                                      player: player,
-                                      players: players,
+                                      card: card,
+                                      cards: cards,
                                       tag: "portfolio_screen_card_view",
                                     );
                                   },
@@ -263,11 +260,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 10,
       itemBuilder: (context, index) {
-        final player = _players[index];
-        final isUp = player['isUp'] ?? true;
-        final flashColor = player['flashColor'] ?? Colors.transparent;
-        final reversePlayer = players.reversed.toList();
-        final playerModel = reversePlayer[index];
+        final card = cards[index];
+        final isUp = card.market.isUp ?? true;
+        final reverseCards = cards.reversed.toList();
+        final cardModel = reverseCards[index];
 
         return GestureDetector(
           onTap: () {
@@ -275,8 +271,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
               context,
               MaterialPageRoute(
                 builder:
-                    (context) =>
-                        DetailScreen(player: playerModel, players: players, tag: "portfolio_screen_financial_view"),
+                    (context) => DetailScreen(card: cardModel, cards: cards, tag: "portfolio_screen_financial_view"),
               ),
             );
           },
@@ -285,7 +280,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
             curve: Curves.easeOut,
             margin: const EdgeInsets.only(bottom: 10),
             padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(color: flashColor.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+            decoration: BoxDecoration(
+              color: flashColor.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: Row(
               children: [
                 Container(
@@ -294,7 +292,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
                   decoration: BoxDecoration(color: ConstColors.white, borderRadius: BorderRadius.circular(50)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
-                    child: Image.asset(player['image'] ?? '', height: 50),
+                    child: Image.asset(card.media.images?.playerProfile ?? '', height: 50),
                   ),
                 ),
                 const Gap(10),
@@ -303,11 +301,11 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        player['name'] ?? '',
+                        card.player.name ?? '',
                         style: const TextStyle(color: ConstColors.light, fontFamily: poppinsRegular, fontSize: 12),
                       ),
                       Text(
-                        player['club'] ?? '',
+                        card.club.name ?? '',
                         style: const TextStyle(color: ConstColors.gray10, fontFamily: poppinsLight, fontSize: 10),
                       ),
                     ],
@@ -320,7 +318,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          player['price'] ?? '',
+                          (card.market.currentPrice?.toStringAsFixed(2) ?? "0"),
                           style: TextStyle(
                             color: isUp ? ConstColors.goldGradient2 : ConstColors.orange,
                             fontFamily: poppinsSemiBold,
@@ -334,7 +332,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
                       ],
                     ),
                     Text(
-                      player['trend'].toString(),
+                      card.market.trend.toString(),
                       style: TextStyle(
                         color: isUp ? ConstColors.goldGradient2 : ConstColors.orange,
                         fontFamily: poppinsSemiBold,

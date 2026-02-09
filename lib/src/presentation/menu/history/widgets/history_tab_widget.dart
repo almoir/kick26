@@ -4,29 +4,28 @@ import 'package:kick26/src/common/colors.dart';
 import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/flip_player_card_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/detail/detail_screen.dart';
-import 'package:uuid/uuid.dart';
 
 class HistoryTabWidget extends StatelessWidget {
-  const HistoryTabWidget({super.key, required this.players, required this.tag});
+  const HistoryTabWidget({super.key, required this.cards, required this.tag});
 
-  final List<PlayerModel> players;
+  final List<CardModel> cards;
   final String tag;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: players.length,
+      itemCount: cards.length,
       itemBuilder: (context, index) {
-        final player = players[index];
+        final card = cards[index];
         return GestureDetector(
           onTap:
               () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DetailScreen(player: player, players: players, tag: 'history_tab_$tag'),
+                  builder: (context) => DetailScreen(card: card, cards: cards, tag: 'history_tab_$tag'),
                 ),
               ),
           child: Container(
@@ -40,14 +39,14 @@ class HistoryTabWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                FlipPlayerCardWidget(player: players[index], players: players, tag: 'history_tab_$tag'),
+                FlipPlayerCardWidget(card: card, cards: cards, tag: 'history_tab_$tag'),
                 Gap(4),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        player.name,
+                        card.player.name ?? "",
                         style: TextStyle(
                           color: ConstColors.white,
                           fontFamily: poppinsSemiBold,
@@ -57,7 +56,7 @@ class HistoryTabWidget extends StatelessWidget {
                       ),
                       Gap(4),
                       Text(
-                        player.club,
+                        card.club.name ?? "",
                         style: TextStyle(color: ConstColors.lightGray, fontFamily: poppinsRegular, fontSize: 12),
                       ),
                       Gap(10),
@@ -104,7 +103,7 @@ class HistoryTabWidget extends StatelessWidget {
                               border: Border.all(color: ConstColors.lightGray),
                             ),
                             child: Text(
-                              "${player.age} y.o",
+                              "${card.player.snapshotBio?.age ?? 0} y.o",
                               style: TextStyle(color: ConstColors.lightGray, fontFamily: poppinsRegular, fontSize: 10),
                             ),
                           ),
@@ -119,7 +118,7 @@ class HistoryTabWidget extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              Uuid().v4(),
+                              card.id,
                               style: TextStyle(color: ConstColors.white, fontSize: 12, overflow: TextOverflow.ellipsis),
                             ),
                           ),
@@ -158,7 +157,7 @@ class HistoryTabWidget extends StatelessWidget {
                               color: ConstColors.baseColorDark5,
                             ),
                             Text(
-                              "€${player.price.toStringAsFixed(2)}",
+                              "€${card.market.currentPrice?.toStringAsFixed(2)}",
                               style: TextStyle(color: ConstColors.white, fontFamily: poppinsMedium),
                             ),
                           ],

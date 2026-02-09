@@ -6,14 +6,13 @@ import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/icon_paths.dart';
 import 'package:kick26/src/common/image_paths.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class MarketTab extends StatelessWidget {
-  const MarketTab({super.key, required this.players, required this.player, required this.card});
+  const MarketTab({super.key, required this.cards, required this.card});
 
-  final List<PlayerModel> players;
-  final PlayerModel player;
-  final Map<String, dynamic> card;
+  final List<CardModel> cards;
+  final CardModel card;
 
   String _euro(dynamic v) {
     if (v == null) return "€-";
@@ -27,11 +26,6 @@ class MarketTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final market = card['market'] ?? {};
-
-    final bool isUp = market['isUp'] == true;
-    final Color trendColor = isUp ? ConstColors.green2 : ConstColors.orange;
-
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -50,11 +44,11 @@ class MarketTab extends StatelessWidget {
             /// ============================
             Row(
               children: [
-                _FlagChip("On Market", market['isOnMarket'] == true),
+                _FlagChip("On Market", card.market.isOnMarket == true),
                 const Gap(8),
-                _FlagChip("Tradable", market['isTradable'] == true),
+                _FlagChip("Tradable", card.market.isTradable == true),
                 const Gap(8),
-                _FlagChip("Bid Enabled", market['isBidEnabled'] == true),
+                _FlagChip("Bid Enabled", card.market.isBidEnabled == true),
               ],
             ),
 
@@ -78,9 +72,9 @@ class MarketTab extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _PriceMetric("Current", _euro(market['currentPrice'])),
-                      _PriceMetric("Floor", _euro(market['floorPrice'])),
-                      _PriceMetric("Highest Bid", _euro(market['highestBid']), valueColor: ConstColors.green2),
+                      _PriceMetric("Current", _euro(card.market.currentPrice)),
+                      _PriceMetric("Floor", _euro(card.market.floorPrice)),
+                      _PriceMetric("Highest Bid", _euro(card.market.highestBid), valueColor: ConstColors.green2),
                     ],
                   ),
 
@@ -89,9 +83,9 @@ class MarketTab extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _PriceMetric("24h Change", "${market['priceChange24h'] ?? "-"}%", valueColor: trendColor),
-                      _PriceMetric("Low", _euro(market['Low'])),
-                      _PriceMetric("High", _euro(market['High'])),
+                      _PriceMetric("24h Change", "${card.market.trend}%", valueColor: ConstColors.green2),
+                      _PriceMetric("Low", _euro(card.market.low)),
+                      _PriceMetric("High", _euro(card.market.high)),
                     ],
                   ),
                 ],
@@ -118,16 +112,16 @@ class MarketTab extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _Stat("Trades", _s(market['totalTrades'])),
-                      _Stat("Owners", _s(market['uniqueOwners'])),
-                      _Stat("Currency", _s(market['currency'])),
+                      _Stat("Trades", _s(card.market.totalTrades)),
+                      _Stat("Owners", _s(card.market.uniqueOwners)),
+                      _Stat("Currency", _s(card.market.currency)),
                     ],
                   ),
 
                   const Gap(12),
 
                   Text(
-                    "Last traded at ${_s(market['lastTradedAt'])}",
+                    "Last traded at ${_s(card.market.lastTradedAt)}",
                     style: TextStyle(fontFamily: poppinsRegular, fontSize: 11, color: ConstColors.darkGray),
                   ),
                 ],
@@ -191,7 +185,7 @@ class MarketTab extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                           child: Text(
-                            "${_euro(market['highestBid'])} trade executed",
+                            "${_euro(card.market.highestBid)} trade executed",
                             style: TextStyle(color: ConstColors.darkGray, fontSize: 12),
                           ),
                         ),

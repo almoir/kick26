@@ -13,7 +13,7 @@ class TransactionDetailBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final player = transaction.player;
+    final card = transaction.card;
 
     return DraggableScrollableSheet(
       initialChildSize: 0.65,
@@ -35,10 +35,7 @@ class TransactionDetailBottomSheet extends StatelessWidget {
                   width: 40,
                   height: 4,
                   margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                    color: ConstColors.gray,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+                  decoration: BoxDecoration(color: ConstColors.gray, borderRadius: BorderRadius.circular(20)),
                 ),
               ),
 
@@ -54,7 +51,7 @@ class TransactionDetailBottomSheet extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: Image.asset(
-                              player.image,
+                              card.media.images?.playerProfile ?? "",
                               width: 85,
                               height: 110,
                               fit: BoxFit.cover,
@@ -66,20 +63,16 @@ class TransactionDetailBottomSheet extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  player.name,
-                                  style: TextStyle(
-                                    color: ConstColors.light,
-                                    fontFamily: poppinsSemiBold,
-                                    fontSize: 18,
-                                  ),
+                                  card.player.name ?? "",
+                                  style: TextStyle(color: ConstColors.light, fontFamily: poppinsSemiBold, fontSize: 18),
                                 ),
                                 const SizedBox(height: 4),
                                 Row(
                                   children: [
-                                    Image.asset(player.clubImage, height: 20),
+                                    Image.asset(card.media.images?.clubImage ?? "", height: 20),
                                     Gap(8),
                                     Text(
-                                      player.club,
+                                      card.club.name ?? "",
                                       style: TextStyle(
                                         color: ConstColors.gray,
                                         fontSize: 12,
@@ -93,31 +86,20 @@ class TransactionDetailBottomSheet extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(
-                                      transaction.isBuy
-                                          ? Icons.call_made
-                                          : Icons.call_received,
-                                      color:
-                                          transaction.isBuy
-                                              ? ConstColors.orange
-                                              : ConstColors.green,
+                                      transaction.isBuy ? Icons.call_made : Icons.call_received,
+                                      color: transaction.isBuy ? ConstColors.orange : ConstColors.green,
                                       size: 18,
                                     ),
                                     Gap(6),
                                     Text(
-                                      transaction.isBuy
-                                          ? "Buy Transaction"
-                                          : "Sell Transaction",
+                                      transaction.isBuy ? "Buy Transaction" : "Sell Transaction",
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontFamily: poppinsMedium,
                                         color:
                                             transaction.isBuy
-                                                ? ConstColors.orange.withValues(
-                                                  alpha: 0.8,
-                                                )
-                                                : ConstColors.green.withValues(
-                                                  alpha: 0.8,
-                                                ),
+                                                ? ConstColors.orange.withValues(alpha: 0.8)
+                                                : ConstColors.green.withValues(alpha: 0.8),
                                       ),
                                     ),
                                   ],
@@ -136,18 +118,13 @@ class TransactionDetailBottomSheet extends StatelessWidget {
                         children: [
                           _detailRow("Transaction ID", transaction.id),
                           _divider(),
-                          _detailRow(
-                            "Type",
-                            transaction.isBuy ? "BUY" : "SELL",
-                          ),
+                          _detailRow("Type", transaction.isBuy ? "BUY" : "SELL"),
                           _divider(),
                           _detailRow(
+                            transaction.isBuy ? "Amount Paid" : "Amount Received",
                             transaction.isBuy
-                                ? "Amount Paid"
-                                : "Amount Received",
-                            transaction.isBuy
-                                ? "- €${formatPrice(player.price)}"
-                                : "+ €${formatPrice(player.price)}",
+                                ? "- €${formatPrice(card.market.currentPrice ?? 0)}"
+                                : "+ €${formatPrice(card.market.currentPrice ?? 0)}",
                             valueColor:
                                 transaction.isBuy
                                     ? ConstColors.orange.withValues(alpha: .8)
@@ -167,10 +144,7 @@ class TransactionDetailBottomSheet extends StatelessWidget {
                         child: GoldGradient(
                           child: Text(
                             "Transaction Completed",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: poppinsSemiBold,
-                            ),
+                            style: TextStyle(fontSize: 14, fontFamily: poppinsSemiBold),
                           ),
                         ),
                       ),
@@ -180,11 +154,7 @@ class TransactionDetailBottomSheet extends StatelessWidget {
                       Center(
                         child: Text(
                           "This transaction has been recorded successfully.",
-                          style: TextStyle(
-                            color: ConstColors.gray10,
-                            fontSize: 11,
-                            fontFamily: poppinsMedium,
-                          ),
+                          style: TextStyle(color: ConstColors.gray10, fontSize: 11, fontFamily: poppinsMedium),
                         ),
                       ),
 
@@ -202,27 +172,14 @@ class TransactionDetailBottomSheet extends StatelessWidget {
 
   // ---------------- Widgets ----------------
 
-  Widget _detailSection({
-    required String title,
-    required List<Widget> children,
-  }) {
+  Widget _detailSection({required String title, required List<Widget> children}) {
     return Container(
       padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: ConstColors.baseColorDark3,
-        borderRadius: BorderRadius.circular(16),
-      ),
+      decoration: BoxDecoration(color: ConstColors.baseColorDark3, borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: ConstColors.light,
-              fontFamily: poppinsSemiBold,
-              fontSize: 15,
-            ),
-          ),
+          Text(title, style: TextStyle(color: ConstColors.light, fontFamily: poppinsSemiBold, fontSize: 15)),
           const SizedBox(height: 12),
           ...children,
         ],
@@ -236,14 +193,7 @@ class TransactionDetailBottomSheet extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: ConstColors.gray10,
-              fontFamily: poppinsMedium,
-              fontSize: 12,
-            ),
-          ),
+          Text(title, style: TextStyle(color: ConstColors.gray10, fontFamily: poppinsMedium, fontSize: 12)),
           Gap(30),
           Flexible(
             child: Text(
@@ -262,10 +212,6 @@ class TransactionDetailBottomSheet extends StatelessWidget {
   }
 
   Widget _divider() {
-    return Container(
-      height: 1,
-      margin: const EdgeInsets.symmetric(vertical: 6),
-      color: ConstColors.baseColorDark5,
-    );
+    return Container(height: 1, margin: const EdgeInsets.symmetric(vertical: 6), color: ConstColors.baseColorDark5);
   }
 }

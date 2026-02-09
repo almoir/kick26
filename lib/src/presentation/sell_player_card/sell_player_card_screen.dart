@@ -6,19 +6,19 @@ import 'package:kick26/src/common/fonts_family.dart';
 import 'package:kick26/src/common/widgets/card_class_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/common/widgets/player_card_widget.dart';
-import 'package:kick26/src/data/models/player_model.dart';
+import 'package:kick26/src/data/models/card_model.dart';
 
 class SellPlayerCardScreen extends StatefulWidget {
-  const SellPlayerCardScreen({super.key, required this.player});
+  const SellPlayerCardScreen({super.key, required this.card});
 
-  final PlayerModel player;
+  final CardModel card;
 
   @override
   State<SellPlayerCardScreen> createState() => _SellPlayerCardScreenState();
 }
 
 class _SellPlayerCardScreenState extends State<SellPlayerCardScreen> {
-  late PlayerModel player;
+  late CardModel card;
   String payoutMethod = "wallet";
   late int selectedPrice;
   late double sellPrice;
@@ -26,9 +26,9 @@ class _SellPlayerCardScreenState extends State<SellPlayerCardScreen> {
   @override
   void initState() {
     super.initState();
-    player = widget.player;
+    card = widget.card;
     selectedPrice = 3;
-    sellPrice = player.price;
+    sellPrice = card.market.currentPrice ?? 0;
   }
 
   @override
@@ -77,10 +77,10 @@ class _SellPlayerCardScreenState extends State<SellPlayerCardScreen> {
                           decoration: BoxDecoration(
                             color: ConstColors.baseColorDark3,
                             shape: BoxShape.circle,
-                            image: DecorationImage(image: AssetImage(player.image)),
+                            image: DecorationImage(image: AssetImage(card.media.images?.playerProfile ?? "")),
                           ),
                         ),
-                        Positioned(bottom: 0, right: 0, child: CardClassWidget(cardClass: player.cardClass)),
+                        Positioned(bottom: 0, right: 0, child: CardClassWidget(cardClass: card.data.cardClass ?? "")),
                       ],
                     ),
                     Gap(8),
@@ -90,7 +90,7 @@ class _SellPlayerCardScreenState extends State<SellPlayerCardScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            player.name,
+                            card.player.name ?? "",
                             style: TextStyle(
                               color: ConstColors.light,
                               fontFamily: poppinsMedium,
@@ -100,7 +100,7 @@ class _SellPlayerCardScreenState extends State<SellPlayerCardScreen> {
                           ),
                           Gap(4),
                           Text(
-                            "Limited \u00B7 40 cards total",
+                            "Limited \u00B7 ${card.data.totalIssued ?? 0} cards total",
                             style: TextStyle(color: ConstColors.darkGray, fontFamily: poppinsRegular, fontSize: 10),
                           ),
                         ],
@@ -119,7 +119,7 @@ class _SellPlayerCardScreenState extends State<SellPlayerCardScreen> {
                         Gap(4),
                         GoldGradient(
                           child: Text(
-                            "€${player.price.toStringAsFixed(2)}",
+                            "€${card.market.currentPrice?.toStringAsFixed(2)}",
                             style: TextStyle(fontFamily: poppinsRegular, fontSize: 12),
                           ),
                         ),
@@ -148,44 +148,34 @@ class _SellPlayerCardScreenState extends State<SellPlayerCardScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  PlayerCardWidget(player: player),
+                  PlayerCardWidget(card: card),
 
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          SummaryCardWidget(title: "Price", player: player),
+                          SummaryCardWidget(title: "Price", card: card),
                           Gap(4),
-                          SummaryCardWidget(title: "Average", subtitle: "Refreshed Now", player: player),
+                          SummaryCardWidget(title: "Average", subtitle: "Refreshed Now", card: card),
                         ],
                       ),
                       Gap(4),
 
                       Row(
                         children: [
-                          SummaryCardWidget(title: "Recent", subtitle: "2h ago", player: player),
+                          SummaryCardWidget(title: "Recent", subtitle: "2h ago", card: card),
                           Gap(4),
-                          SummaryCardWidget(title: "Your Activity", subtitle: "Bought For", player: player),
+                          SummaryCardWidget(title: "Your Activity", subtitle: "Bought For", card: card),
                         ],
                       ),
                       Gap(4),
 
                       Row(
                         children: [
-                          SummaryCardWidget(
-                            title: "Rarity Serial",
-                            content: "1/40",
-                            subtitle: "(#1 Mint)",
-                            player: player,
-                          ),
+                          SummaryCardWidget(title: "Rarity Serial", content: "1/40", subtitle: "(#1 Mint)", card: card),
                           Gap(4),
-                          SummaryCardWidget(
-                            title: "Rarity Serial",
-                            content: "1/40",
-                            subtitle: "(#1 Mint)",
-                            player: player,
-                          ),
+                          SummaryCardWidget(title: "Rarity Serial", content: "1/40", subtitle: "(#1 Mint)", card: card),
                         ],
                       ),
                       Gap(4),
@@ -224,25 +214,27 @@ class _SellPlayerCardScreenState extends State<SellPlayerCardScreen> {
                       children: [
                         SellPriceWidget(
                           isSelected: selectedPrice == 1,
-                          price: (player.price - player.price * .5).toStringAsFixed(2),
+                          price: ((card.market.currentPrice ?? 0) - (card.market.currentPrice ?? 0) * .5)
+                              .toStringAsFixed(2),
                           onTap: () {
                             selectedPrice = 1;
-                            sellPrice = player.price - player.price * .5;
+                            sellPrice = (card.market.currentPrice ?? 0) - (card.market.currentPrice ?? 0) * .5;
                             setState(() {});
                           },
                         ),
                         SellPriceWidget(
                           isSelected: selectedPrice == 2,
-                          price: (player.price - player.price * .25).toStringAsFixed(2),
+                          price: ((card.market.currentPrice ?? 0) - (card.market.currentPrice ?? 0) * .25)
+                              .toStringAsFixed(2),
                           onTap: () {
                             selectedPrice = 2;
-                            sellPrice = player.price - player.price * .25;
+                            sellPrice = (card.market.currentPrice ?? 0) - (card.market.currentPrice ?? 0) * .25;
                             setState(() {});
                           },
                         ),
                         SellPriceWidget(
                           isSelected: selectedPrice == 3,
-                          price: (player.price).toStringAsFixed(2),
+                          price: card.market.currentPrice?.toStringAsFixed(2) ?? "",
                           onTap: () {
                             selectedPrice = 3;
                             setState(() {});
@@ -250,10 +242,11 @@ class _SellPlayerCardScreenState extends State<SellPlayerCardScreen> {
                         ),
                         SellPriceWidget(
                           isSelected: selectedPrice == 4,
-                          price: (player.price + player.price * .15).toStringAsFixed(2),
+                          price: ((card.market.currentPrice ?? 0) + (card.market.currentPrice ?? 0) * .15)
+                              .toStringAsFixed(2),
                           onTap: () {
                             selectedPrice = 4;
-                            sellPrice = player.price + player.price * .15;
+                            sellPrice = (card.market.currentPrice ?? 0) + (card.market.currentPrice ?? 0) * .15;
                             setState(() {});
                           },
                         ),
@@ -336,12 +329,12 @@ class SellPriceWidget extends StatelessWidget {
 }
 
 class SummaryCardWidget extends StatelessWidget {
-  const SummaryCardWidget({super.key, required this.title, this.subtitle, this.content, required this.player});
+  const SummaryCardWidget({super.key, required this.title, this.subtitle, this.content, required this.card});
 
   final String title;
   final String? subtitle;
   final String? content;
-  final PlayerModel player;
+  final CardModel card;
 
   @override
   Widget build(BuildContext context) {
@@ -355,7 +348,7 @@ class SummaryCardWidget extends StatelessWidget {
           Text(title, style: TextStyle(fontSize: 10, fontFamily: poppinsRegular, color: ConstColors.gray10)),
           GoldGradient(
             child: Text(
-              content ?? "€${player.price.toStringAsFixed(2)}",
+              content ?? "€${card.market.currentPrice?.toStringAsFixed(2) ?? 0}",
               style: TextStyle(fontSize: 12, fontFamily: poppinsRegular),
             ),
           ),
@@ -367,14 +360,14 @@ class SummaryCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
-                    player.isUp ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                    color: player.isUp ? ConstColors.green : ConstColors.orange,
+                    (card.market.isUp ?? false) ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                    color: (card.market.isUp ?? false) ? ConstColors.green : ConstColors.orange,
                     size: 10,
                   ),
                   Text(
-                    "(${player.isUp ? "+" : ""}${player.trend.toStringAsFixed(2)})",
+                    "(${(card.market.isUp ?? false) ? "+" : ""}${card.market.trend?.toStringAsFixed(2) ?? 0})",
                     style: TextStyle(
-                      color: player.isUp ? ConstColors.green : ConstColors.orange,
+                      color: (card.market.isUp ?? false) ? ConstColors.green : ConstColors.orange,
                       fontFamily: poppinsRegular,
                       fontSize: 8,
                     ),
