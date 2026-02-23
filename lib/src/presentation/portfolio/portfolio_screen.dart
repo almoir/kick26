@@ -219,7 +219,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
                         child:
                             isFrontSide
                                 ? GridView.builder(
-                                  itemCount: 10,
+                                  itemCount: ownedCards.length,
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -258,9 +258,9 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
+      itemCount: ownedCards.length,
       itemBuilder: (context, index) {
-        final card = cards[index];
+        final card = ownedCards[index];
         final isUp = card.market.isUp ?? true;
         final reverseCards = cards.reversed.toList();
         final cardModel = reverseCards[index];
@@ -317,6 +317,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        Icon(
+                          isUp ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                          color: isUp ? ConstColors.goldGradient2 : ConstColors.orange,
+                        ),
                         Text(
                           (card.market.currentPrice?.toStringAsFixed(2) ?? "0"),
                           style: TextStyle(
@@ -325,14 +329,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> with SingleTickerProv
                             fontSize: 12,
                           ),
                         ),
-                        Icon(
-                          isUp ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                          color: isUp ? ConstColors.goldGradient2 : ConstColors.orange,
-                        ),
                       ],
                     ),
                     Text(
-                      card.market.trend.toString(),
+                      card.market.trend?.toStringAsFixed(2) ?? "0",
                       style: TextStyle(
                         color: isUp ? ConstColors.goldGradient2 : ConstColors.orange,
                         fontFamily: poppinsSemiBold,

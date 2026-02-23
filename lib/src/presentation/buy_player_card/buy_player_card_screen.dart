@@ -8,6 +8,7 @@ import 'package:kick26/src/common/widgets/card_class_widget.dart';
 import 'package:kick26/src/common/widgets/gold_gradient.dart';
 import 'package:kick26/src/data/models/card_model.dart';
 import 'package:kick26/src/presentation/buy_player_card/buy_confirmation_screen.dart';
+import 'package:kick26/src/presentation/buy_player_card/instant_purchase_screen.dart';
 
 class BuyPlayerCardScreen extends StatefulWidget {
   const BuyPlayerCardScreen({super.key, required this.card});
@@ -511,7 +512,7 @@ class _BuyPlayerCardScreenState extends State<BuyPlayerCardScreen> {
                 height: 48,
                 text: "Buy Instantly",
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => BuyConfirmationScreen(card: card)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => InstantPurchaseScreen(card: card)));
                 },
               ),
               Gap(8),
