@@ -155,8 +155,8 @@ class Market {
   bool? isUp;
   final double? floorPrice;
   final double? highestBid;
-  final double? totalTrades;
-  final double? uniqueOwners;
+  final int? totalTrades;
+  final int? uniqueOwners;
   final bool? isOnMarket;
   final bool? isTradable;
   final bool? isBidEnabled;
